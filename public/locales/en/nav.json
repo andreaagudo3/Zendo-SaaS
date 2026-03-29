@@ -1,0 +1,28 @@
+{
+  "navbar": {
+    "home":       "Home",
+    "properties": "Properties",
+    "contact":    "Contact",
+    "admin":      "Admin",
+    "ariaLabel":  "Main navigation",
+    "openMenu":   "Open menu",
+    "closeMenu":  "Close menu",
+    "logoAriaLabel": "{{name}} – Home"
+  },
+  "footer": {
+    "description":   "Real estate management in {{zone}} ({{province}}).",
+    "nav":           "Navigation",
+    "contact":       "Contact",
+    "copyright":     "© {{year}} {{name}}. All rights reserved.",
+    "privacy":       "Privacy",
+    "cookies":       "Cookies",
+    "terms":         "Terms",
+    "links": {
+      "home":       "Home",
+      "properties": "Properties",
+      "sale":       "For sale",
+      "rent":       "For rent",
+      "contact":    "Contact"
+    }
+  }
+}

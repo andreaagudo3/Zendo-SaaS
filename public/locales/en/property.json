@@ -1,0 +1,46 @@
+{
+  "backAriaLabel": "Go back to previous page",
+  "notFound": {
+    "icon":    "🏚️",
+    "title":   "Property not found",
+    "cta":     "View all properties"
+  },
+  "features": {
+    "bedrooms_one":   "{{count}} bedroom",
+    "bedrooms_other": "{{count}} bedrooms",
+    "bathrooms_one":  "{{count}} bathroom",
+    "bathrooms_other":"{{count}} bathrooms",
+    "size":           "{{size}} m²"
+  },
+  "description": {
+    "title": "Description"
+  },
+  "header": {
+    "forSale":  "For Sale",
+    "forRent":  "For Rent",
+    "mapsAriaLabel": "View on Google Maps",
+    "status": {
+      "reserved": "Reserved",
+      "sold":     "Sold"
+    }
+  },
+  "contact": {
+    "title":           "Interested in this property?",
+    "subtitle":        "Leave us your details and we will contact you within 24 hours.",
+    "namePlaceholder": "Your full name",
+    "nameLabel":       "Name",
+    "phonePlaceholder":"Your phone",
+    "phoneLabel":      "Phone",
+    "emailPlaceholder":"Your email",
+    "emailLabel":      "Email",
+    "messagePlaceholder": "Tell us how we can help you...",
+    "messageLabel":    "Message",
+    "messageDefault":  "Hello, I would like to receive more information about the property {{title}}.",
+    "sendBtn":         "Send inquiry",
+    "sending":         "Sending...",
+    "successTitle":    "Message sent!",
+    "successMsg":      "We will contact you shortly.",
+    "errorMsg":        "An error occurred. Please try again.",
+    "required":        "This field is required"
+  }
+}

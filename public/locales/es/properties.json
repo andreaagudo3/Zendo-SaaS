@@ -6,7 +6,7 @@
   "filters": {
     "title":        "Filtros",
     "location":     "Ubicación",
-    "bedrooms":     "Habitaciones",
+    "bedroomsLabel": "Habitaciones",
     "maxPrice":     "Precio máximo",
     "maxPriceVal":  "— {{price}}",
     "maxPriceNone": "— Sin límite",

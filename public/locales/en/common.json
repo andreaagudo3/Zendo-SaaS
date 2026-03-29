@@ -1,0 +1,55 @@
+{
+  "btn": {
+    "search":       "Search",
+    "viewAll":      "View all",
+    "back":         "Back",
+    "contact":      "Speak with an advisor",
+    "send":         "Send message",
+    "sending":      "Sending...",
+    "clearFilters": "Clear filters",
+    "applyFilters": "Apply filters",
+    "newProperty":  "+ New property",
+    "edit":         "Edit",
+    "delete":       "Delete",
+    "save":         "Save",
+    "cancel":       "Cancel"
+  },
+  "status": {
+    "available": "Available",
+    "reserved":  "Reserved",
+    "sold":      "Sold"
+  },
+  "listing": {
+    "sale": "Buy",
+    "rent": "Rent",
+    "all":  "All"
+  },
+  "type": {
+    "sale": "Sale",
+    "rent": "Rent"
+  },
+  "location": {
+    "any":       "Any location",
+    "unknown":   "Location unavailable"
+  },
+  "ui": {
+    "loading":          "Loading...",
+    "noResults":        "No results",
+    "tryOtherFilters":  "Try modifying the filters",
+    "previous":         "← Previous",
+    "next":             "Next →",
+    "page":             "Page {{n}} of {{total}}",
+    "resultsCount_one": "{{count}} result",
+    "resultsCount_other": "{{count}} results",
+    "searching":        "Searching...",
+    "featured":         "Featured",
+    "published":        "Published",
+    "notPublished":     "Not published",
+    "bedrooms_one":     "{{count}} bed",
+    "bedrooms_other":   "{{count}} beds",
+    "bathrooms_one":    "{{count}} bath",
+    "bathrooms_other":  "{{count}} baths",
+    "sizeM2":           "{{size}} m²",
+    "priceOnRequest":   "Price on request"
+  }
+}

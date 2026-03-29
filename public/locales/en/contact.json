@@ -1,0 +1,38 @@
+{
+  "hero": {
+    "eyebrow":  "Contact",
+    "title":    "Let's talk",
+    "subtitle": "We are here to help you find the perfect property or manage yours."
+  },
+  "info": {
+    "phone":   "Phone",
+    "email":   "Email",
+    "address": "Address",
+    "hours":   "Hours",
+    "hoursVal":"Monday to Friday · 9:00 AM – 6:00 PM"
+  },
+  "form": {
+    "title":            "Send us a message",
+    "namePlaceholder":  "Your name",
+    "nameLabel":        "Name *",
+    "phonePlaceholder": "Your phone (optional)",
+    "phoneLabel":       "Phone",
+    "emailPlaceholder": "you@email.com",
+    "emailLabel":       "Email *",
+    "messagePlaceholder":"How can we help you?",
+    "messageLabel":     "Message *",
+    "sendBtn":          "Send message",
+    "sending":          "Sending...",
+    "privacy":          "By sending you accept our",
+    "privacyLink":      "privacy policy"
+  },
+  "success": {
+    "title":   "Message received!",
+    "message": "An advisor will contact you within 24 hours.",
+    "again":   "Send another message"
+  },
+  "error": {
+    "message": "The message could not be sent. Please try again or call us directly.",
+    "retry":   "Try again"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "page": {
+    "title":    "Properties",
+    "subtitle": "{{count}} {{label}}"
+  },
+  "filters": {
+    "title":        "Filters",
+    "location":     "Location",
+    "bedroomsLabel": "Bedrooms",
+    "maxPrice":     "Max price",
+    "maxPriceVal":  "— {{price}}",
+    "maxPriceNone": "— No limit",
+    "noLimit":      "No limit",
+    "priceMin":     "€50,000",
+    "moreFilters":  "More filters",
+    "moreFiltersCount":  "More filters ({{count}})",
+    "dragToAdjust": "Drag to adjust",
+    "dragSubtitle": "Drag to adjust the budget",
+    "bedrooms": {
+      "any":    "Any",
+      "studio": "Studio",
+      "1":      "1",
+      "2":      "2",
+      "3":      "3",
+      "4plus":  "4+"
+    }
+  },
+  "chips": {
+    "type":     "Type: {{value}}",
+    "bedrooms": "{{value}}+ beds",
+    "location": "{{value}}",
+    "maxPrice": "Up to {{value}}",
+    "clearAll": "Clear all"
+  },
+  "empty": {
+    "icon":    "🏠",
+    "title":   "No results",
+    "message": "Try modifying the filters"
+  }
+}

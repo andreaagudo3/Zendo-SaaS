@@ -1,0 +1,20 @@
+{
+  "hero": {
+    "eyebrow":   "{{zone}} ({{province}})",
+    "title":     "Find your home",
+    "titleSpan": "in {{zone}}",
+    "subtitle":  "Discover exclusive properties. Buy, rent or invest with expert advice.",
+    "logoAlt":   "{{name}} Real Estate",
+    "searchAriaLabel": "Search properties"
+  },
+  "featured": {
+    "eyebrow":  "Special selection",
+    "title":    "Featured Properties"
+  },
+  "cta": {
+    "title":    "Want to sell or rent your property?",
+    "subtitle": "Our team of expert advisors will guide you through the entire process, hassle-free.",
+    "btn":      "Speak with an advisor",
+    "btnAriaLabel": "Contact a real estate advisor"
+  }
+}

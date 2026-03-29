@@ -24,7 +24,7 @@ i18n
   .use(initReactI18next)
   .init({
     fallbackLng: 'es',
-    supportedLngs: ['es'],      // añade 'en', 'fr'… cuando tengas las traducciones
+    supportedLngs: ['es', 'en'],      // Añadido inglés
     ns: ['common', 'home', 'properties', 'property', 'contact', 'nav'],
     defaultNS: 'common',
 
