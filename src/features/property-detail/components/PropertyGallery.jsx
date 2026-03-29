@@ -1,4 +1,8 @@
+import { useTranslation } from 'react-i18next'
+
 export function PropertyGallery({ gallery, activeImage, setActiveImage, isGalleryOpen, setIsGalleryOpen, touchHandlers, title }) {
+  const { t } = useTranslation('property')
+
   if (gallery.length === 0) return null
 
   return (
@@ -24,7 +28,7 @@ export function PropertyGallery({ gallery, activeImage, setActiveImage, isGaller
                 type="button"
                 onClick={(e) => { e.stopPropagation(); setActiveImage((i) => Math.max(i - 1, 0)) }}
                 disabled={activeImage === 0}
-                aria-label="Imagen anterior"
+                aria-label={t('gallery.prevImage', 'Imagen anterior')}
                 className="absolute left-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm shadow-md text-slate-700 opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -36,7 +40,7 @@ export function PropertyGallery({ gallery, activeImage, setActiveImage, isGaller
                 type="button"
                 onClick={(e) => { e.stopPropagation(); setActiveImage((i) => Math.min(i + 1, gallery.length - 1)) }}
                 disabled={activeImage === gallery.length - 1}
-                aria-label="Imagen siguiente"
+                aria-label={t('gallery.nextImage', 'Imagen siguiente')}
                 className="absolute right-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm shadow-md text-slate-700 opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -52,7 +56,7 @@ export function PropertyGallery({ gallery, activeImage, setActiveImage, isGaller
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                   </svg>
-                  Ver fotos
+                  {t('gallery.viewPhotos', 'Ver fotos')}
                 </span>
               </div>
             </>
@@ -67,7 +71,7 @@ export function PropertyGallery({ gallery, activeImage, setActiveImage, isGaller
                 key={i}
                 type="button"
                 onClick={() => setActiveImage(i)}
-                aria-label={`Ver imagen ${i + 1}`}
+                aria-label={t('gallery.viewImage', 'Ver imagen {{n}}', { n: i + 1 })}
                 aria-pressed={activeImage === i}
                 className={`flex-shrink-0 w-24 h-16 rounded-xl overflow-hidden border-2 transition-all ${activeImage === i ? 'border-primary-600 shadow-md' : 'border-transparent opacity-60 hover:opacity-100'}`}
               >
@@ -89,7 +93,7 @@ export function PropertyGallery({ gallery, activeImage, setActiveImage, isGaller
             <button
               onClick={() => setIsGalleryOpen(false)}
               className="text-white hover:text-slate-300 p-2"
-              aria-label="Cerrar galería"
+              aria-label={t('gallery.close', 'Cerrar galería')}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -103,7 +107,7 @@ export function PropertyGallery({ gallery, activeImage, setActiveImage, isGaller
           >
             <img
               src={gallery[activeImage]}
-              alt={`Vista ampliada ${activeImage + 1}`}
+              alt={t('gallery.expandedView', 'Vista ampliada {{n}}', { n: activeImage + 1 })}
               className="max-w-full max-h-full object-contain pointer-events-none"
             />
           </div>

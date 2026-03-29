@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+
 /**
  * HierarchicalLocationSelect — selector de ubicación con jerarquía provincia → localidad.
  *
@@ -16,22 +18,25 @@ export function HierarchicalLocationSelect({
   value,
   onChange,
   className = '',
-  allLabel = 'Todas las ubicaciones',
+  allLabel,
 }) {
+  const { t } = useTranslation('common')
+  const finalAllLabel = allLabel || t('location.any', 'Todas las ubicaciones')
+
   return (
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
       className={className}
-      aria-label="Filtrar por ubicación"
+      aria-label={t('location.filterAria', 'Filtrar por ubicación')}
     >
-      <option value="all">{allLabel}</option>
+      <option value="all">{finalAllLabel}</option>
 
       {provinces.map((prov) => (
         <optgroup key={prov.id} label={`— ${prov.name} —`}>
           {/* Opción de seleccionar toda la provincia */}
           <option value={`prov:${prov.id}`}>
-            Toda la provincia de {prov.name}
+            {t('location.entireProvince', 'Toda la provincia de {{name}}', { name: prov.name })}
           </option>
           {/* Localidades de esa provincia */}
           {prov.locations.map((loc) => (

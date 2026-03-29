@@ -150,13 +150,13 @@ export function PropertyContactForm({ propertyTitle }) {
         )}
 
         <div className="pt-4 border-t border-slate-100 text-center">
-          <p className="text-xs text-slate-400 mb-2">O llámanos directamente</p>
+          <p className="text-xs text-slate-400 mb-2">{t('contact.orCallDirectly', 'O llámanos directamente')}</p>
           {SITE.phones.map((p, i) => (
             <span key={p.href}>
               <a
                 href={p.href}
                 className="text-primary-700 font-semibold text-lg hover:text-primary-900 transition-colors"
-                aria-label={`Llamar al ${p.number}`}
+                aria-label={t('contact.callAria', 'Llamar al {{n}}', { n: p.number })}
               >
                 {p.number}
               </a>

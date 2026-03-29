@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { HierarchicalLocationSelect } from './HierarchicalLocationSelect'
 
 const PRICE_FORMAT = new Intl.NumberFormat('es-ES', {
@@ -20,6 +21,7 @@ const PRICE_FORMAT = new Intl.NumberFormat('es-ES', {
  *   onApply   — fn(partialFilters) — solo se aplica al pulsar "Aplicar filtros"
  */
 export function PropertyFiltersModal({ isOpen, onClose, filters, provinces = [], onApply }) {
+  const { t } = useTranslation(['properties', 'common'])
   // Estado local — no se aplica hasta pulsar "Aplicar filtros"
   const [local, setLocal] = useState({
     locationFilter: filters.locationFilter,
@@ -113,7 +115,7 @@ export function PropertyFiltersModal({ isOpen, onClose, filters, provinces = [],
               <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
             </svg>
           </button>
-          <h1 className="flex-1 text-base font-bold text-slate-900">Filtros</h1>
+          <h1 className="flex-1 text-base font-bold text-slate-900">{t('properties:filters.title', 'Filtros')}</h1>
           {/* Botón cerrar (derecha) */}
           <button
             type="button"
@@ -132,7 +134,7 @@ export function PropertyFiltersModal({ isOpen, onClose, filters, provinces = [],
 
           {/* Ubicación */}
           <section className="px-5 py-6">
-            <h2 className="text-sm font-bold text-slate-900 mb-4">Ubicación</h2>
+            <h2 className="text-sm font-bold text-slate-900 mb-4">{t('properties:filters.location', 'Ubicación')}</h2>
             <HierarchicalLocationSelect
               provinces={provinces}
               value={local.locationFilter}
@@ -143,17 +145,17 @@ export function PropertyFiltersModal({ isOpen, onClose, filters, provinces = [],
 
           {/* Habitaciones */}
           <section className="px-5 py-6">
-            <h2 className="text-sm font-bold text-slate-900 mb-4">Habitaciones</h2>
+            <h2 className="text-sm font-bold text-slate-900 mb-4">{t('properties:filters.bedroomsLabel', 'Habitaciones')}</h2>
             <PillGroup
               value={local.bedrooms}
               onChange={(v) => set('bedrooms', v)}
               options={[
-                { v: 'all', label: 'Cualquiera' },
-                { v: '0',   label: 'Estudio' },
+                { v: 'all', label: t('properties:filters.bedrooms.any', 'Cualquiera') },
+                { v: '0',   label: t('properties:filters.bedrooms.studio', 'Estudio') },
                 { v: '1',   label: '1' },
                 { v: '2',   label: '2' },
                 { v: '3',   label: '3' },
-                { v: '4',   label: '4+' },
+                { v: '4',   label: t('properties:filters.bedrooms.4plus', '4+') },
               ]}
             />
           </section>
@@ -161,12 +163,12 @@ export function PropertyFiltersModal({ isOpen, onClose, filters, provinces = [],
           {/* Precio */}
           <section className="px-5 py-6">
             <h2 className="text-sm font-bold text-slate-900 mb-1">
-              Precio máximo{' '}
+              {t('properties:filters.maxPrice', 'Precio máximo')}{' '}
               <span className="text-primary-700">
-                {local.maxPrice >= 2_000_000 ? '— Sin límite' : `— ${PRICE_FORMAT.format(local.maxPrice)}`}
+                {local.maxPrice >= 2_000_000 ? t('properties:filters.maxPriceNone', '— Sin límite') : `— ${PRICE_FORMAT.format(local.maxPrice)}`}
               </span>
             </h2>
-            <p className="text-xs text-slate-400 mb-4">Arrastra para ajustar</p>
+            <p className="text-xs text-slate-400 mb-4">{t('properties:filters.dragToAdjust', 'Arrastra para ajustar')}</p>
             <input
               type="range"
               min={50_000}
@@ -177,8 +179,8 @@ export function PropertyFiltersModal({ isOpen, onClose, filters, provinces = [],
               className="w-full accent-primary-700 cursor-pointer"
             />
             <div className="flex justify-between text-xs text-slate-400 mt-2">
-              <span>50.000 €</span>
-              <span>Sin límite</span>
+              <span>{t('properties:filters.priceMin', '50.000 €')}</span>
+              <span>{t('properties:filters.noLimit', 'Sin límite')}</span>
             </div>
           </section>
 
@@ -191,14 +193,14 @@ export function PropertyFiltersModal({ isOpen, onClose, filters, provinces = [],
             onClick={handleReset}
             className="text-sm font-medium text-slate-500 hover:text-slate-900 underline underline-offset-2 transition-colors whitespace-nowrap"
           >
-            Limpiar filtros
+            {t('common:btn.clearFilters', 'Limpiar filtros')}
           </button>
           <button
             type="button"
             onClick={handleApply}
             className="flex-1 py-3.5 bg-primary-700 hover:bg-primary-800 text-white font-bold text-sm rounded-xl transition-colors"
           >
-            Aplicar filtros
+            {t('common:btn.applyFilters', 'Aplicar filtros')}
           </button>
         </div>
       </div>
@@ -223,7 +225,7 @@ export function PropertyFiltersModal({ isOpen, onClose, filters, provinces = [],
         >
           {/* Header */}
           <div className="shrink-0 flex items-center justify-between px-6 py-4 border-b border-slate-100">
-            <h2 className="text-base font-bold text-slate-900">Filtros</h2>
+            <h2 className="text-base font-bold text-slate-900">{t('properties:filters.title', 'Filtros')}</h2>
             <button
               type="button"
               onClick={onClose}
@@ -240,7 +242,7 @@ export function PropertyFiltersModal({ isOpen, onClose, filters, provinces = [],
           <div className="flex-1 overflow-y-auto px-6 py-6 space-y-8">
 
             <div>
-              <label className="text-sm font-semibold text-slate-800 block mb-3">Ubicación</label>
+              <label className="text-sm font-semibold text-slate-800 block mb-3">{t('properties:filters.location', 'Ubicación')}</label>
               <HierarchicalLocationSelect
                 provinces={provinces}
                 value={local.locationFilter}
@@ -250,29 +252,29 @@ export function PropertyFiltersModal({ isOpen, onClose, filters, provinces = [],
             </div>
 
             <fieldset>
-              <legend className="text-sm font-semibold text-slate-800 mb-3">Habitaciones</legend>
+              <legend className="text-sm font-semibold text-slate-800 mb-3">{t('properties:filters.bedroomsLabel', 'Habitaciones')}</legend>
               <PillGroup
                 value={local.bedrooms}
                 onChange={(v) => set('bedrooms', v)}
                 options={[
-                  { v: 'all', label: 'Cualquiera' },
-                  { v: '0',   label: 'Estudio' },
+                  { v: 'all', label: t('properties:filters.bedrooms.any', 'Cualquiera') },
+                  { v: '0',   label: t('properties:filters.bedrooms.studio', 'Estudio') },
                   { v: '1',   label: '1' },
                   { v: '2',   label: '2' },
                   { v: '3',   label: '3' },
-                  { v: '4',   label: '4+' },
+                  { v: '4',   label: t('properties:filters.bedrooms.4plus', '4+') },
                 ]}
               />
             </fieldset>
 
             <div>
               <p className="text-sm font-semibold text-slate-800 mb-1">
-                Precio máximo:{' '}
+                {t('properties:filters.maxPrice', 'Precio máximo')}:{' '}
                 <span className="text-primary-700 font-bold">
-                  {local.maxPrice >= 2_000_000 ? 'Sin límite' : PRICE_FORMAT.format(local.maxPrice)}
+                  {local.maxPrice >= 2_000_000 ? t('properties:filters.noLimit', 'Sin límite') : PRICE_FORMAT.format(local.maxPrice)}
                 </span>
               </p>
-              <p className="text-xs text-slate-400 mb-3">Arrastra para ajustar el presupuesto</p>
+              <p className="text-xs text-slate-400 mb-3">{t('properties:filters.dragSubtitle', 'Arrastra para ajustar el presupuesto')}</p>
               <input
                 type="range"
                 min={50_000}
@@ -283,8 +285,8 @@ export function PropertyFiltersModal({ isOpen, onClose, filters, provinces = [],
                 className="w-full accent-primary-700 cursor-pointer"
               />
               <div className="flex justify-between text-xs text-slate-400 mt-1">
-                <span>50.000 €</span>
-                <span>Sin límite</span>
+                <span>{t('properties:filters.priceMin', '50.000 €')}</span>
+                <span>{t('properties:filters.noLimit', 'Sin límite')}</span>
               </div>
             </div>
 
@@ -297,14 +299,14 @@ export function PropertyFiltersModal({ isOpen, onClose, filters, provinces = [],
               onClick={handleReset}
               className="text-sm text-slate-500 hover:text-slate-800 underline underline-offset-2 transition-colors whitespace-nowrap"
             >
-              Limpiar filtros
+              {t('common:btn.clearFilters', 'Limpiar filtros')}
             </button>
             <button
               type="button"
               onClick={handleApply}
               className="flex-1 py-3 bg-primary-700 hover:bg-primary-800 text-white font-semibold text-sm rounded-xl transition-colors"
             >
-              Aplicar filtros
+              {t('common:btn.applyFilters', 'Aplicar filtros')}
             </button>
           </div>
         </div>

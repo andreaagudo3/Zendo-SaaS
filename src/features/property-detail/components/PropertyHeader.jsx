@@ -56,7 +56,7 @@ export function PropertyHeader({ title, listing_type, price, status, locationStr
       {price != null && (
         <p className="text-4xl font-extrabold text-slate-950 mt-4">
           {formatPrice(price)}
-          {listing_type === 'rent' && <span className="text-lg font-normal text-slate-500 ml-1">/mes</span>}
+          {listing_type === 'rent' && <span className="text-lg font-normal text-slate-500 ml-1">{t('header.perMonth', '/mes')}</span>}
         </p>
       )}
     </header>

@@ -27,7 +27,7 @@ export function PropertyFeatures({ bedrooms, bathrooms, size_m2 }) {
 
   return (
     <section aria-label="Características del inmueble">
-      <h2 className="text-lg font-semibold text-slate-900 mb-4">Características</h2>
+      <h2 className="text-lg font-semibold text-slate-900 mb-4">{t('features.title', 'Características')}</h2>
       <dl className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {SPECS.map(({ icon, label, title: specTitle }) => (
           <div key={specTitle} className="bg-white border border-slate-100 rounded-2xl p-4 text-center shadow-sm">

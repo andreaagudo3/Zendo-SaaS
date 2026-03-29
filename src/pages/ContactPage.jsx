@@ -11,38 +11,7 @@ const INITIAL_FORM = {
   message: '',
 }
 
-const SUBJECTS = [
-  'Quiero comprar una propiedad',
-  'Quiero alquilar una propiedad',
-  'Quiero vender mi propiedad',
-  'Quiero poner mi piso en alquiler',
-  'Asesoría hipotecaria',
-  'Otro',
-]
 
-const INFO_BLOCKS = [
-  {
-    icon: '📍',
-    title: 'Zona',
-    lines: [
-      { text: SITE.zone },
-      { text: `${SITE.province}, ${SITE.country}` },
-    ],
-  },
-  {
-    icon: '📞',
-    title: 'Teléfono',
-    lines: SITE.phones.map((p) => ({ text: p.number, href: p.href })),
-  },
-  {
-    icon: '✉️',
-    title: 'Email',
-    lines: [
-      { text: SITE.email.address, href: `mailto:${SITE.email.address}` },
-      { text: 'Respuesta en menos de 24 h' },
-    ],
-  },
-]
 
 /**
  * ContactPage — full contact form with validation and visual feedback.
@@ -52,6 +21,39 @@ export default function ContactPage() {
   const [form, setForm] = useState(INITIAL_FORM)
   const [errors, setErrors] = useState({})
   const [submitState, setSubmitState] = useState('idle') // idle | submitting | success | error
+
+  const SUBJECTS = [
+    t('subjects.buy', 'Quiero comprar una propiedad'),
+    t('subjects.rent', 'Quiero alquilar una propiedad'),
+    t('subjects.sell', 'Quiero vender mi propiedad'),
+    t('subjects.let', 'Quiero poner mi piso en alquiler'),
+    t('subjects.mortgage', 'Asesoría hipotecaria'),
+    t('subjects.other', 'Otro'),
+  ]
+
+  const INFO_BLOCKS = [
+    {
+      icon: '📍',
+      title: t('info.address'),
+      lines: [
+        { text: SITE.zone },
+        { text: `${SITE.province}, ${SITE.country}` },
+      ],
+    },
+    {
+      icon: '📞',
+      title: t('info.phone'),
+      lines: SITE.phones.map((p) => ({ text: p.number, href: p.href })),
+    },
+    {
+      icon: '✉️',
+      title: t('info.email'),
+      lines: [
+        { text: SITE.email.address, href: `mailto:${SITE.email.address}` },
+        { text: t('info.hoursVal') },
+      ],
+    },
+  ]
 
   function validate() {
     const errs = {}
@@ -115,10 +117,10 @@ export default function ContactPage() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       {/* Page header */}
       <header className="max-w-2xl mb-14">
-        <p className="text-primary-700 font-semibold text-sm tracking-wide uppercase mb-2">Contacto</p>
-        <h1 className="text-4xl font-bold text-slate-950 mb-3">Hablemos</h1>
+        <p className="text-primary-700 font-semibold text-sm tracking-wide uppercase mb-2">{t('hero.eyebrow')}</p>
+        <h1 className="text-4xl font-bold text-slate-950 mb-3">{t('hero.title')}</h1>
         <p className="text-slate-500 text-lg">
-          ¿Tienes alguna pregunta? Nuestro equipo de asesores está disponible para ayudarte a encontrar la propiedad perfecta.
+          {t('hero.subtitle')}
         </p>
       </header>
 
@@ -158,17 +160,17 @@ export default function ContactPage() {
                   </div>
                 </div>
                 <h2 className="text-2xl font-bold text-emerald-900 mb-2 animate-fade-up" style={{ animationDelay: '0.2s' }}>
-                  ¡Mensaje recibido!
+                  {t('success.title')}
                 </h2>
                 <p className="text-emerald-700 animate-fade-up" style={{ animationDelay: '0.35s' }}>
-                  Un asesor se pondrá en contacto contigo en menos de 24 horas.
+                  {t('success.message')}
                 </p>
                 <button
                   onClick={() => setSubmitState('idle')}
                   className="mt-6 px-6 py-2.5 rounded-xl bg-emerald-600 text-white text-sm font-semibold hover:bg-emerald-700 transition-colors animate-fade-up"
                   style={{ animationDelay: '0.5s' }}
                 >
-                  Enviar otro mensaje
+                  {t('success.again')}
                 </button>
               </div>
             </div>
@@ -180,7 +182,7 @@ export default function ContactPage() {
             >
               {submitState === 'error' && (
                 <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm mb-6 animate-fade-up">
-                  Hubo un problema al enviar el mensaje. Por favor, comprueba tu conexión e inténtalo de nuevo.
+                  {t('error.message')}
                 </div>
               )}
 
@@ -188,7 +190,7 @@ export default function ContactPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-1">
-                    Nombre completo <span aria-hidden="true" className="text-red-500">*</span>
+                    {t('form.nameLabel')} <span aria-hidden="true" className="text-red-500">*</span>
                   </label>
                   <input
                     id="name"
@@ -198,7 +200,7 @@ export default function ContactPage() {
                     autoComplete="name"
                     value={form.name}
                     onChange={handleChange}
-                    placeholder="María García"
+                    placeholder={t('form.namePlaceholder')}
                     className={inputClass('name')}
                     aria-invalid={!!errors.name}
                     aria-describedby={errors.name ? 'name-error' : undefined}
@@ -209,7 +211,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">
-                    Email <span aria-hidden="true" className="text-red-500">*</span>
+                    {t('form.emailLabel')} <span aria-hidden="true" className="text-red-500">*</span>
                   </label>
                   <input
                     id="email"
@@ -219,7 +221,7 @@ export default function ContactPage() {
                     autoComplete="email"
                     value={form.email}
                     onChange={handleChange}
-                    placeholder="maria@ejemplo.com"
+                    placeholder={t('form.emailPlaceholder')}
                     className={inputClass('email')}
                     aria-invalid={!!errors.email}
                     aria-describedby={errors.email ? 'email-error' : undefined}
@@ -233,7 +235,7 @@ export default function ContactPage() {
               {/* Phone */}
               <div>
                 <label htmlFor="phone" className="block text-sm font-medium text-slate-700 mb-1">
-                  Teléfono <span className="text-slate-400 font-normal">(opcional)</span>
+                  {t('form.phoneLabel')}
                 </label>
                 <input
                   id="phone"
@@ -242,7 +244,7 @@ export default function ContactPage() {
                   autoComplete="tel"
                   value={form.phone}
                   onChange={handleChange}
-                  placeholder="+34 600 000 000"
+                  placeholder={t('form.phonePlaceholder')}
                   className={inputClass('phone')}
                 />
               </div>
@@ -250,7 +252,7 @@ export default function ContactPage() {
               {/* Subject */}
               <div>
                 <label htmlFor="subject" className="block text-sm font-medium text-slate-700 mb-1">
-                  Asunto <span aria-hidden="true" className="text-red-500">*</span>
+                  {t('form.subjectLabel', 'Asunto')} <span aria-hidden="true" className="text-red-500">*</span>
                 </label>
                 <select
                   id="subject"
@@ -262,7 +264,7 @@ export default function ContactPage() {
                   aria-invalid={!!errors.subject}
                   aria-describedby={errors.subject ? 'subject-error' : undefined}
                 >
-                  <option value="" disabled>Selecciona una opción</option>
+                  <option value="" disabled>{t('form.subjectPlaceholder', 'Selecciona una opción')}</option>
                   {SUBJECTS.map((s) => (
                     <option key={s} value={s}>{s}</option>
                   ))}
@@ -275,7 +277,7 @@ export default function ContactPage() {
               {/* Message */}
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-1">
-                  Mensaje <span aria-hidden="true" className="text-red-500">*</span>
+                  {t('form.messageLabel')} <span aria-hidden="true" className="text-red-500">*</span>
                 </label>
                 <textarea
                   id="message"
@@ -284,7 +286,7 @@ export default function ContactPage() {
                   rows={5}
                   value={form.message}
                   onChange={handleChange}
-                  placeholder="Cuéntanos en qué podemos ayudarte…"
+                  placeholder={t('form.messagePlaceholder')}
                   className={`${inputClass('message')} resize-none`}
                   aria-invalid={!!errors.message}
                   aria-describedby={errors.message ? 'message-error' : undefined}
@@ -299,7 +301,7 @@ export default function ContactPage() {
                 type="submit"
                 disabled={submitState === 'submitting'}
                 className="w-full py-3.5 rounded-xl bg-primary-700 text-white font-semibold hover:bg-primary-800 disabled:opacity-60 disabled:cursor-not-allowed transition-colors text-sm"
-                aria-label="Enviar mensaje de contacto"
+                aria-label={t('form.sendBtn')}
               >
                 {submitState === 'submitting' ? (
                   <span className="flex items-center justify-center gap-2">
@@ -307,9 +309,9 @@ export default function ContactPage() {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z" />
                     </svg>
-                    Enviando…
+                    {t('form.sending')}
                   </span>
-                ) : 'Enviar mensaje'}
+                ) : t('form.sendBtn')}
               </button>
             </form>
           )}
