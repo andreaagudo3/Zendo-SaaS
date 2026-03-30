@@ -47,7 +47,7 @@ export const SITE = {
    * para rediseñar toda la web automáticamente.
    */
   branding: {
-    primaryColor: '#0ea5e9',   // Azul moderno (el que estaba antes)
+    primaryColor: '#23c698',   // Verde agua / Teal
     secondaryColor: '#64748b', // Tono neutro / Slate
   },
 
