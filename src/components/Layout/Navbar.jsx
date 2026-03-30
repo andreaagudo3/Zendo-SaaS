@@ -1,21 +1,24 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { SITE } from '../../config/siteConfig'
+import { useTenant }      from '../../context/TenantContext'
 import { LanguageSwitcher } from '../shared/LanguageSwitcher'
-import { useThemeStore } from '../../store/themeStore'
+import { useThemeStore }  from '../../store/themeStore'
 
 /**
  * Navbar — sticky glassmorphism navigation bar.
+ * All business data (name, phone, email, address) comes from the tenant
+ * resolved by TenantProvider — no static siteConfig import.
  */
 export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const { t } = useTranslation('nav')
-  const theme = useThemeStore((s) => s.theme)
+  const { t }   = useTranslation('nav')
+  const theme   = useThemeStore((s) => s.theme)
+  const tenant  = useTenant()
 
-  const isMinimal = theme === 'MINIMAL'
+  const isMinimal   = theme === 'MINIMAL'
   const isCorporate = theme === 'CORPORATE'
-  const isPortal = theme === 'PORTAL'
+  const isPortal    = theme === 'PORTAL'
 
   const NAV_LINKS = [
     { to: '/',           label: t('navbar.home') },
@@ -35,37 +38,32 @@ export function Navbar() {
     isPortal ? 'h-6 md:h-7 max-h-[28px]' : 'h-8 md:h-9 max-h-[36px]'
   }`
 
+  const fullName  = tenant?.full_name ?? tenant?.name ?? ''
+  const emailHref = tenant?.email ? `mailto:${tenant.email}` : '#'
+
   return (
     <header className={headerClass} role="banner">
       {/* ── Corporate TopBar ── */}
       {isCorporate && (
         <div className="bg-secondary-900 text-secondary-100 text-xs py-2 px-4 sm:px-6 lg:px-8 flex justify-between items-center transition-colors">
           <div className="flex gap-4">
-            <a href={SITE.email.href} className="hover:text-white transition-colors">{SITE.email.address}</a>
-            <a href={SITE.phones[0]?.href} className="hover:text-white transition-colors">{SITE.phones[0]?.number}</a>
+            <a href={emailHref} className="hover:text-white transition-colors">{tenant?.email}</a>
+            <a href={tenant?.phones?.[0]?.href} className="hover:text-white transition-colors">
+              {tenant?.phones?.[0]?.number}
+            </a>
           </div>
-          <div className="hidden sm:block">
-            {SITE.address}
-          </div>
+          <div className="hidden sm:block">{tenant?.address}</div>
         </div>
       )}
 
-      <nav
-        className={navClass}
-        role="navigation"
-        aria-label={t('navbar.ariaLabel')}
-      >
+      <nav className={navClass} role="navigation" aria-label={t('navbar.ariaLabel')}>
         {/* Logo */}
         <Link
           to="/"
           className="flex items-center hover:opacity-80 transition-opacity"
-          aria-label={t('navbar.logoAriaLabel', { name: SITE.fullName })}
+          aria-label={t('navbar.logoAriaLabel', { name: fullName })}
         >
-          <img
-            src="/logo.png"
-            alt={SITE.fullName}
-            className={logoClass}
-          />
+          <img src="/logo.png" alt={fullName} className={logoClass} />
         </Link>
 
         {/* Desktop links */}

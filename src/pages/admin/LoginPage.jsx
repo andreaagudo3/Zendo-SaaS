@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { signIn } from '../../services/adminService'
-import { SITE } from '../../config/siteConfig'
+import { signIn }    from '../../services/adminService'
+import { useTenant } from '../../context/TenantContext'
 
 /**
  * LoginPage — Acceso al panel de administración via Supabase Auth.
  */
 export default function LoginPage() {
   const navigate = useNavigate()
+  const tenant   = useTenant()
   const [form, setForm] = useState({ email: '', password: '' })
   const [status, setStatus] = useState('idle') // idle | loading | error
   const [errorMsg, setErrorMsg] = useState('')
@@ -32,7 +33,7 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="text-center mb-8">
-          <img src="/logo.png" alt={SITE.name} className="h-14 mx-auto brightness-0 invert" />
+          <img src="/logo.png" alt={tenant?.name ?? ''} className="h-14 mx-auto brightness-0 invert" />
           <p className="text-secondary-400 text-sm mt-3">Panel de Administración</p>
         </div>
 

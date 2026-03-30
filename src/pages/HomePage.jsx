@@ -7,7 +7,7 @@ import { getProvincesWithLocations } from '../services/propertyService'
 import { PropertyCard } from '../components/shared/PropertyCard'
 import { SkeletonCard } from '../components/shared/SkeletonCard'
 import { HierarchicalLocationSelect } from '../components/search/HierarchicalLocationSelect'
-import { SITE } from '../config/siteConfig'
+import { useTenant }    from '../context/TenantContext'
 import { useThemeStore } from '../store/themeStore'
 
 /**
@@ -43,10 +43,11 @@ export default function HomePage() {
     { value: 'rent', label: t('common:listing.rent') },
   ]
 
+  const tenant = useTenant()
   const theme = useThemeStore((s) => s.theme)
-  const isMinimal = theme === 'MINIMAL'
+  const isMinimal   = theme === 'MINIMAL'
   const isCorporate = theme === 'CORPORATE'
-  const isPortal = theme === 'PORTAL'
+  const isPortal    = theme === 'PORTAL'
 
   const renderSearchForm = (layoutType) => {
     const isCorp = layoutType === 'CORPORATE'
@@ -131,14 +132,14 @@ export default function HomePage() {
           
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28 md:py-40 text-center space-y-8">
             <div className="flex flex-col items-center justify-center gap-8 mb-10 md:mb-16">
-              <img src="/logo.png" alt={t('home:hero.logoAlt', { name: SITE.name })} className="h-16 md:h-20 max-h-[80px] w-auto object-contain brightness-0 invert" />
+              <img src="/logo.png" alt={t('home:hero.logoAlt', { name: tenant?.name })} className="h-16 md:h-20 max-h-[80px] w-auto object-contain brightness-0 invert" />
               <p className="inline-block px-4 py-1.5 rounded-full bg-primary-700/20 text-primary-300 text-sm font-medium tracking-wide border border-primary-600/30">
-                {t('home:hero.eyebrow', { zone: SITE.zone, province: SITE.province })}
+                {t('home:hero.eyebrow', { zone: tenant?.zone, province: tenant?.province })}
               </p>
             </div>
             <h1 id="hero-heading" className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white leading-tight">
               {t('home:hero.title')}
-              <span className="block text-primary-400 mt-1">{t('home:hero.titleSpan', { zone: SITE.heroZone })}</span>
+              <span className="block text-primary-400 mt-1">{t('home:hero.titleSpan', { zone: tenant?.zone })}</span>
             </h1>
             <p className="max-w-2xl mx-auto text-lg text-secondary-300">
               {t('home:hero.subtitle')}
@@ -157,11 +158,11 @@ export default function HomePage() {
               {/* Left: Text & Search (Order 2 on mobile, 1 on desktop) */}
               <div className="flex flex-col justify-center order-2 lg:order-1">
                 <p className="text-primary-700 font-bold tracking-widest uppercase text-xs sm:text-sm mb-4">
-                  {t('home:hero.eyebrow', { zone: SITE.zone, province: SITE.province })}
+                  {t('home:hero.eyebrow', { zone: tenant?.zone, province: tenant?.province })}
                 </p>
                 <h1 id="hero-heading" className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-secondary-950 leading-tight mb-6">
                   {t('home:hero.title')}
-                  <span className="block text-primary-700 mt-2">{t('home:hero.titleSpan', { zone: SITE.heroZone })}</span>
+                  <span className="block text-primary-700 mt-2">{t('home:hero.titleSpan', { zone: tenant?.zone })}</span>
                 </h1>
                 <p className="text-lg text-secondary-600 mb-10 max-w-lg leading-relaxed">
                   {t('home:hero.subtitle')}
@@ -175,8 +176,8 @@ export default function HomePage() {
                   {/* Decorative offset block */}
                   <div className="absolute inset-0 bg-secondary-100 translate-x-4 translate-y-4 sm:translate-x-6 sm:translate-y-6" aria-hidden="true" />
                   <img 
-                    src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80" 
-                    alt={t('home:hero.logoAlt', { name: SITE.name })} 
+                    src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80"
+                    alt={t('home:hero.logoAlt', { name: tenant?.name })} 
                     className="absolute inset-0 w-full h-full object-cover border border-secondary-200 z-10"
                   />
                   {/* Small architectural badge */}
@@ -199,7 +200,7 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-overlay" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&q=80')" }} aria-hidden="true" />
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-36 flex flex-col items-center">
              <h1 id="hero-heading" className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white text-center mb-6 drop-shadow-lg">
-               {t('home:hero.title')} <span className="text-primary-400">{t('home:hero.titleSpan', { zone: SITE.heroZone })}</span>
+               {t('home:hero.title')} <span className="text-primary-400">{t('home:hero.titleSpan', { zone: tenant?.zone })}</span>
              </h1>
              <p className="text-lg sm:text-xl text-secondary-100 mb-10 md:mb-14 text-center max-w-3xl drop-shadow-md">
                {t('home:hero.subtitle')}

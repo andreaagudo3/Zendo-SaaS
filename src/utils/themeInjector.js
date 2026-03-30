@@ -1,3 +1,6 @@
+// themeTokens (border-radius, shadows, fonts) are layout constants shared
+// across all tenants. Tenant-specific data (colors, name, contact) is resolved
+// at runtime via TenantContext — NOT read from here.
 import { SITE } from '../config/siteConfig'
 
 function hexToRgb(hex) {
@@ -49,13 +52,14 @@ function generateShades(baseHex, name) {
 
 /**
  * Genera y aplica variables CSS dinámicas basadas en el sistema de temas.
+ *
+ * @param {string} themeName    — 'MINIMAL' | 'CORPORATE' | 'PORTAL'
+ * @param {string} primaryHex  — Primary brand color (from tenant.primary_color)
+ * @param {string} secondaryHex — Neutral/secondary color (from tenant.secondary_color)
  */
-export function injectTheme(themeName = SITE.theme || 'MINIMAL', primaryHex = SITE.branding?.primaryColor || '#0ea5e9') {
+export function injectTheme(themeName = 'MINIMAL', primaryHex = '#23c698', secondaryHex = '#64748b') {
   const tokens = SITE.themeTokens[themeName];
   if (!tokens) return;
-  
-  // 1. Colores globales independientes del layout
-  const secondaryHex = SITE.branding?.secondaryColor || '#64748b';
 
   generateShades(primaryHex, 'primary');
   generateShades(secondaryHex, 'secondary');

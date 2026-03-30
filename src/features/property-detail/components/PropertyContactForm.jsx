@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { sendContactEmail } from '../../../services/contactService'
-import { SITE } from '../../../config/siteConfig'
+import { useTenant } from '../../../context/TenantContext'
 
 const CONTACT_INITIAL = { name: '', email: '', phone: '', message: '' }
 
 export function PropertyContactForm({ propertyTitle }) {
-  const { t } = useTranslation('property')
+  const { t }   = useTranslation('property')
+  const tenant  = useTenant()
+  const phones  = tenant?.phones ?? []
   const [contactForm, setContactForm] = useState(CONTACT_INITIAL)
   const [contactErrors, setContactErrors] = useState({})
   const [submitState, setSubmitState] = useState('idle')
@@ -151,7 +153,7 @@ export function PropertyContactForm({ propertyTitle }) {
 
         <div className="pt-4 border-t border-secondary-100 text-center">
           <p className="text-xs text-secondary-400 mb-2">{t('contact.orCallDirectly', 'O llámanos directamente')}</p>
-          {SITE.phones.map((p, i) => (
+          {phones.map((p, i) => (
             <span key={p.href}>
               <a
                 href={p.href}
@@ -160,7 +162,7 @@ export function PropertyContactForm({ propertyTitle }) {
               >
                 {p.number}
               </a>
-              {i < SITE.phones.length - 1 && <span className="text-secondary-300 mx-2">·</span>}
+              {i < phones.length - 1 && <span className="text-secondary-300 mx-2">·</span>}
             </span>
           ))}
         </div>

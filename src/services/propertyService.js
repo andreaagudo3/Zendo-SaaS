@@ -11,8 +11,9 @@
  */
 
 import { supabase } from './supabaseClient'
+import { getPropertyImagesFromDB } from './imageService'
 
-// Imagen de reserva cuando el bucket no tiene archivos para la propiedad
+// Fallback when no images exist in storage or DB
 const PLACEHOLDER_IMAGE = '/images/property-placeholder.jpg'
 
 // ─── Configuración ───────────────────────────────────────────────────────────
@@ -107,21 +108,38 @@ export async function getPropertyImages(referenceCode) {
 // ─── Helpers internos ────────────────────────────────────────────────────────
 
 /**
- * Enriquece un array de propiedades con images[] y coverImage en paralelo.
+ * Enriches a property array with images[] and coverImage.
+ *
+ * Strategy (in priority order):
+ *   1. property_images table  — new multi-tenant system
+ *   2. Supabase Storage scan  — legacy fallback (reference_code folder)
+ *
+ * This dual-lookup guarantees backward compatibility while tenants
+ * migrate their images to the new system.
+ *
  * @param {object[]} properties
  * @returns {Promise<object[]>}
  */
 async function withImages(properties) {
   if (!properties || properties.length === 0) return []
 
-  console.debug(`[withImages] Cargando imágenes para ${properties.length} propiedades:`,
-    properties.map((p) => p.reference_code))
-
   return Promise.all(
     properties.map(async (property) => {
+      // 1. Try the new property_images table
+      const dbImages = await getPropertyImagesFromDB(property.id)
+
+      if (dbImages.length > 0) {
+        const cover = dbImages.find((i) => i.is_cover) ?? dbImages[0]
+        return {
+          ...property,
+          images:     dbImages.map((i) => i.url),
+          coverImage: cover.url,
+        }
+      }
+
+      // 2. Legacy fallback: scan Storage bucket by reference_code
       const images = await getPropertyImages(property.reference_code)
       const coverImage = images.length > 0 ? images[0] : PLACEHOLDER_IMAGE
-      console.debug(`[withImages] ref=${property.reference_code} → ${images.length} imágenes, coverImage=${coverImage}`)
       return { ...property, images, coverImage }
     })
   )
@@ -188,8 +206,20 @@ export async function getPropertyBySlug(slug) {
 
   if (!data) return null
 
+  // Try new property_images table first
+  const dbImages = await getPropertyImagesFromDB(data.id)
+  if (dbImages.length > 0) {
+    const cover = dbImages.find((i) => i.is_cover) ?? dbImages[0]
+    return {
+      ...data,
+      images:     dbImages.map((i) => i.url),
+      coverImage: cover.url,
+    }
+  }
+
+  // Legacy fallback
   const images = await getPropertyImages(data.reference_code)
-  return { ...data, images }
+  return { ...data, images, coverImage: images[0] ?? PLACEHOLDER_IMAGE }
 }
 
 /**

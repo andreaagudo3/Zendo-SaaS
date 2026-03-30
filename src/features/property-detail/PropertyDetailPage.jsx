@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import { usePropertiesStore } from '../../store/propertiesStore'
 import { useProperties } from '../../services/useProperties'
 import { usePropertyImages } from './hooks/usePropertyImages'
-import { SITE } from '../../config/siteConfig'
 import { useThemeStore } from '../../store/themeStore'
 
 // Components

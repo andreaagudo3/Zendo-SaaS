@@ -1,11 +1,12 @@
 import { useTranslation } from 'react-i18next'
-import { SITE } from '../../config/siteConfig'
+import { useTenant } from '../../context/TenantContext'
 
 export function LanguageSwitcher() {
   const { i18n } = useTranslation()
+  const tenant = useTenant()
   const currentLang = i18n.language || 'es'
 
-  if (!SITE.features.i18n) return null
+  if (!tenant?.features?.i18n) return null
 
   return (
     <div className="flex items-center gap-1.5 text-sm font-medium mr-2">

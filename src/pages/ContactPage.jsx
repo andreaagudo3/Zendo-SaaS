@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { SITE } from '../config/siteConfig'
+import { useTenant }      from '../context/TenantContext'
 import { sendContactEmail } from '../services/contactService'
 import { useThemeStore } from '../store/themeStore'
 
@@ -18,10 +18,13 @@ const INITIAL_FORM = {
  * ContactPage — full contact form with validation and visual feedback.
  */
 export default function ContactPage() {
-  const { t } = useTranslation('contact')
+  const { t }  = useTranslation('contact')
+  const tenant = useTenant()
   const [form, setForm] = useState(INITIAL_FORM)
   const [errors, setErrors] = useState({})
   const [submitState, setSubmitState] = useState('idle') // idle | submitting | success | error
+
+  const phones = tenant?.phones ?? []
 
   const SUBJECTS = [
     t('subjects.buy', 'Quiero comprar una propiedad'),
@@ -37,20 +40,20 @@ export default function ContactPage() {
       icon: '📍',
       title: t('info.address'),
       lines: [
-        { text: SITE.zone },
-        { text: `${SITE.province}, ${SITE.country}` },
+        { text: tenant?.zone },
+        { text: `${tenant?.province ?? ''}, ${tenant?.country ?? ''}` },
       ],
     },
     {
       icon: '📞',
       title: t('info.phone'),
-      lines: SITE.phones.map((p) => ({ text: p.number, href: p.href })),
+      lines: phones.map((p) => ({ text: p.number, href: p.href })),
     },
     {
       icon: '✉️',
       title: t('info.email'),
       lines: [
-        { text: SITE.email.address, href: `mailto:${SITE.email.address}` },
+        { text: tenant?.email, href: tenant?.email ? `mailto:${tenant.email}` : '#' },
         { text: t('info.hoursVal') },
       ],
     },

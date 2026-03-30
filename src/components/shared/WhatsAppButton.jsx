@@ -1,9 +1,10 @@
-import { SITE } from '../../config/siteConfig'
+import { useTenant } from '../../context/TenantContext'
 
 export function WhatsAppButton() {
-  if (!SITE.features.whatsappButton) return null;
+  const tenant = useTenant()
+  if (!tenant?.features?.whatsappButton) return null;
 
-  const phone = SITE.phones[0]?.href?.replace('tel:', '') || '';
+  const phone = tenant?.phones?.[0]?.href?.replace('tel:', '') || '';
   const message = 'Hola, necesito más información sobre las propiedades.';
   const link = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 

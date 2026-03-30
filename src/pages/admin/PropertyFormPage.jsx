@@ -4,10 +4,11 @@ import {
   createProperty, updateProperty,
   getAllProperties, getProvinces, createLocation, createProvince
 } from '../../services/adminService'
-import { supabase } from '../../services/supabaseClient'
+import { supabase }     from '../../services/supabaseClient'
+import { useTenant }    from '../../context/TenantContext'
 import { slugify, generateReferenceCode } from '../../utils/slugify'
-import ImageUploader from '../../components/admin/ImageUploader'
-import AdminLayout from './AdminLayout'
+import ImageUploader    from '../../components/admin/ImageUploader'
+import AdminLayout      from './AdminLayout'
 
 const EMPTY_FORM = {
   title: '', description: '', price: '',
@@ -18,49 +19,60 @@ const EMPTY_FORM = {
 }
 
 /**
- * PropertyFormPage — Formulario unificado para crear y editar propiedades.
- * Modo crear: /admin/new
- * Modo editar: /admin/edit/:id
+ * PropertyFormPage — unified create / edit form for properties.
+ *
+ * Create mode (/admin/new):
+ *   - Saves property → redirects to /admin/edit/:id
+ *   - User then uploads images in edit mode (where property.id is available)
+ *
+ * Edit mode (/admin/edit/:id):
+ *   - Loads existing property data
+ *   - ImageUploader is fully functional (property.id + slug are known)
  */
 export default function PropertyFormPage() {
   const { id } = useParams()
   const isEdit = Boolean(id)
   const navigate = useNavigate()
+  const tenant = useTenant()
 
-  const [form, setForm] = useState(EMPTY_FORM)
+  const [form, setForm]                 = useState(EMPTY_FORM)
   const [referenceCode, setReferenceCode] = useState('')
-  const [status, setStatus] = useState('idle') // idle | saving | success | error
-  const [errorMsg, setErrorMsg] = useState('')
-  const [loadingProp, setLoadingProp] = useState(isEdit)
-  
-  // Locations Data
-  const [provinces, setProvinces] = useState([])
-  const [locations, setLocations] = useState([])
+  const [propertySlug, setPropertySlug] = useState('') // slug for the saved property
+  const [status, setStatus]             = useState('idle') // idle | saving | success | error
+  const [errorMsg, setErrorMsg]         = useState('')
+  const [loadingProp, setLoadingProp]   = useState(isEdit)
+
+  // Locations data
+  const [provinces, setProvinces]           = useState([])
+  const [locations, setLocations]           = useState([])
   const [selectedProvince, setSelectedProvince] = useState('')
-  
-  // New Province Inline Form
-  const [isAddingProvince, setIsAddingProvince] = useState(false)
-  const [newProvinceName, setNewProvinceName] = useState('')
-  const [isSavingProvince, setIsSavingProvince] = useState(false)
 
-  // New Location Inline Form
-  const [isAddingLocation, setIsAddingLocation] = useState(false)
-  const [newLocationName, setNewLocationName] = useState('')
-  const [isSavingLocation, setIsSavingLocation] = useState(false)
+  // Inline province creation
+  const [isAddingProvince, setIsAddingProvince]   = useState(false)
+  const [newProvinceName, setNewProvinceName]       = useState('')
+  const [isSavingProvince, setIsSavingProvince]     = useState(false)
 
-  // Cargar lista de Provincias y Localidades al montar
+  // Inline location creation
+  const [isAddingLocation, setIsAddingLocation]   = useState(false)
+  const [newLocationName, setNewLocationName]       = useState('')
+  const [isSavingLocation, setIsSavingLocation]     = useState(false)
+
+  // Load provinces and locations on mount
   useEffect(() => {
     async function fetchData() {
       const provs = await getProvinces()
       setProvinces(provs)
 
-      const { data } = await supabase.from('locations').select('id, name, province_id').order('name')
+      const { data } = await supabase
+        .from('locations')
+        .select('id, name, province_id')
+        .order('name')
       if (data) setLocations(data)
     }
     fetchData()
   }, [])
 
-  // Cargar propiedad en modo edición
+  // Load property in edit mode
   useEffect(() => {
     if (!isEdit) {
       setReferenceCode(generateReferenceCode())
@@ -71,34 +83,35 @@ export default function PropertyFormPage() {
       if (!prop) { navigate('/admin'); return }
 
       setReferenceCode(prop.reference_code ?? '')
+      setPropertySlug(prop.slug ?? '')
       setForm({
-        title:         prop.title ?? '',
-        description:   prop.description ?? '',
-        price:         prop.price ?? '',
-        location_id:   prop.location_id ?? '',
-        bedrooms:      prop.bedrooms ?? '',
-        bathrooms:     prop.bathrooms ?? '',
-        size_m2:       prop.size_m2 ?? '',
-        listing_type:  prop.listing_type ?? 'sale',
+        title:         prop.title         ?? '',
+        description:   prop.description   ?? '',
+        price:         prop.price         ?? '',
+        location_id:   prop.location_id   ?? '',
+        bedrooms:      prop.bedrooms      ?? '',
+        bathrooms:     prop.bathrooms     ?? '',
+        size_m2:       prop.size_m2       ?? '',
+        listing_type:  prop.listing_type  ?? 'sale',
         property_type: prop.property_type ?? '',
-        status:        prop.status ?? 'available',
-        published:     prop.published ?? false,
-        featured:      prop.featured ?? false,
+        status:        prop.status        ?? 'available',
+        published:     prop.published     ?? false,
+        featured:      prop.featured      ?? false,
       })
-      // Buscar a qué provincia pertenece la localidad actual para setear el primer select
+
+      // Resolve selected province from the current location
       if (prop.location_id && locations.length > 0) {
-        const loc = locations.find(l => l.id === prop.location_id)
+        const loc = locations.find((l) => l.id === prop.location_id)
         if (loc) setSelectedProvince(loc.province_id)
       }
       setLoadingProp(false)
     })
-  }, [id, isEdit, navigate, locations]) // Added locations to dependency array
+  }, [id, isEdit, navigate, locations])
 
   function handleChange(e) {
     const { name, value, type, checked } = e.target
     setForm((prev) => ({ ...prev, [name]: type === 'checkbox' ? checked : value }))
-    
-    // Si cambia la localidad desde el select, cierra el prompt de crear nueva
+
     if (name === 'location_id' && value) {
       setIsAddingLocation(false)
       setNewLocationName('')
@@ -116,15 +129,17 @@ export default function PropertyFormPage() {
       return
     }
 
+    const generatedSlug = slugify(form.title)
+
     const payload = {
       title:         form.title.trim(),
       description:   form.description.trim() || null,
       price:         form.price !== '' ? Number(form.price) : null,
       location_id:   form.location_id || null,
-      bedrooms:      form.bedrooms !== '' ? Number(form.bedrooms) : null,
+      bedrooms:      form.bedrooms  !== '' ? Number(form.bedrooms)  : null,
       bathrooms:     form.bathrooms !== '' ? Number(form.bathrooms) : null,
-      size_m2:       form.size_m2 !== '' ? Number(form.size_m2) : null,
-      listing_type:  form.listing_type || null,
+      size_m2:       form.size_m2   !== '' ? Number(form.size_m2)   : null,
+      listing_type:  form.listing_type  || null,
       property_type: form.property_type.trim() || null,
       status:        form.status,
       published:     form.published,
@@ -138,85 +153,83 @@ export default function PropertyFormPage() {
       result = await createProperty({
         ...payload,
         reference_code: referenceCode,
-        slug: slugify(form.title),
+        slug:           generatedSlug,
       })
     }
 
     if (result.error) {
       setErrorMsg(result.error.message)
       setStatus('error')
-    } else {
-      setStatus('success')
+      return
+    }
+
+    setStatus('success')
+
+    if (isEdit) {
+      // Stay on edit page briefly, then go back to admin list
       setTimeout(() => navigate('/admin'), 1000)
+    } else {
+      // Redirect to edit mode so the user can upload images immediately
+      // (ImageUploader requires property.id which is only available after DB insert)
+      setTimeout(() => navigate(`/admin/edit/${result.data.id}`), 800)
     }
   }
 
-  // ─── Helpers localizaciones ───────────────────────────────────────
+  // ─── Location helpers ─────────────────────────────────────────────────────
+
   const filteredLocations = selectedProvince
-    ? locations.filter(l => l.province_id === selectedProvince)
+    ? locations.filter((l) => l.province_id === selectedProvince)
     : []
 
-  const handleProvinceChange = (e) => {
+  function handleProvinceChange(e) {
     const provId = e.target.value
     setSelectedProvince(provId)
-    // Reseteamos locality si cambiamos de provincia
-    setForm(prev => ({ ...prev, location_id: '' }))
-    
-    // Cierra popups si elige del select
-    if (provId) {
-      setIsAddingProvince(false)
-      setNewProvinceName('')
-    }
+    setForm((prev) => ({ ...prev, location_id: '' }))
+    if (provId) { setIsAddingProvince(false); setNewProvinceName('') }
     setIsAddingLocation(false)
     setNewLocationName('')
   }
 
-  const handleAddProvince = async (e) => {
+  async function handleAddProvince(e) {
     e.preventDefault()
     if (!newProvinceName.trim()) return
-
     setIsSavingProvince(true)
     const { data, error } = await createProvince(newProvinceName.trim())
     setIsSavingProvince(false)
-
-    if (error) {
-      alert('Error al añadir la provincia: ' + error.message)
-      return
-    }
-
+    if (error) { alert('Error al añadir la provincia: ' + error.message); return }
     if (data) {
-      setProvinces(prev => [...prev, data].sort((a,b) => a.name.localeCompare(b.name)))
+      setProvinces((prev) => [...prev, data].sort((a, b) => a.name.localeCompare(b.name)))
       setSelectedProvince(data.id)
-      setForm(prev => ({ ...prev, location_id: '' }))
+      setForm((prev) => ({ ...prev, location_id: '' }))
       setIsAddingProvince(false)
       setNewProvinceName('')
     }
   }
 
-  const handleAddLocation = async (e) => {
+  async function handleAddLocation(e) {
     e.preventDefault()
     if (!newLocationName.trim() || !selectedProvince) return
-    
     setIsSavingLocation(true)
     const { data, error } = await createLocation(newLocationName.trim(), selectedProvince)
     setIsSavingLocation(false)
-    
-    if (error) {
-      alert('Error al añadir la localidad: ' + error.message)
-      return
-    }
-    
+    if (error) { alert('Error al añadir la localidad: ' + error.message); return }
     if (data) {
-      // Añadir la nueva localidad a local state
-      setLocations(prev => [...prev, data].sort((a,b) => a.name.localeCompare(b.name)))
-      // Seleccionarla automáticamente
-      setForm(prev => ({ ...prev, location_id: data.id }))
+      setLocations((prev) => [...prev, data].sort((a, b) => a.name.localeCompare(b.name)))
+      setForm((prev) => ({ ...prev, location_id: data.id }))
       setIsAddingLocation(false)
       setNewLocationName('')
     }
   }
 
-  // ─── Render ──────────────────────────────────────────────────────────────────
+  // ─── ImageUploader props ──────────────────────────────────────────────────
+
+  // In edit mode: property is known immediately.
+  // In create mode: property is null until after first save (redirect to edit).
+  const imageProperty = isEdit && propertySlug
+    ? { id, slug: propertySlug }
+    : null
+
+  // ─── Render ───────────────────────────────────────────────────────────────
 
   if (loadingProp) {
     return (
@@ -240,7 +253,6 @@ export default function PropertyFormPage() {
             type="button"
             onClick={() => navigate(-1)}
             className="flex items-center justify-center w-10 h-10 shrink-0 rounded-full bg-secondary-100 text-secondary-500 hover:bg-secondary-200 hover:text-secondary-900 transition-colors"
-            title="Volver atrás"
             aria-label="Volver"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -260,7 +272,7 @@ export default function PropertyFormPage() {
         {/* Feedback */}
         {status === 'success' && (
           <div className="mb-4 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm rounded-xl px-4 py-3">
-            ✅ {isEdit ? 'Cambios guardados.' : 'Propiedad creada.'} Redirigiendo…
+            ✅ {isEdit ? 'Cambios guardados.' : 'Propiedad creada. Redirigiendo para añadir imágenes…'}
           </div>
         )}
         {status === 'error' && (
@@ -287,118 +299,61 @@ export default function PropertyFormPage() {
               <div className="space-y-4">
                 <Field label="Ubicación *" htmlFor="f-province">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    
-                    {/* Select y creación de Provincia */}
+
+                    {/* Province select + inline creation */}
                     <div className="space-y-2">
-                      <select
-                        id="f-province"
-                        className={INPUT_CLS}
-                        value={selectedProvince}
-                        onChange={handleProvinceChange}
-                      >
+                      <select id="f-province" className={INPUT_CLS} value={selectedProvince} onChange={handleProvinceChange}>
                         <option value="">— Provincia —</option>
                         {provinces.map((prov) => (
                           <option key={prov.id} value={prov.id}>{prov.name}</option>
                         ))}
                       </select>
-                      
                       <div className="flex justify-end">
                         {!isAddingProvince ? (
-                          <button
-                            type="button"
-                            onClick={() => setIsAddingProvince(true)}
-                            className="text-primary-600 text-xs font-medium hover:text-primary-800 transition-colors"
-                          >
+                          <button type="button" onClick={() => setIsAddingProvince(true)}
+                            className="text-primary-600 text-xs font-medium hover:text-primary-800 transition-colors">
                             + Añadir provincia
                           </button>
                         ) : (
                           <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 bg-secondary-50 p-2 rounded-lg border border-secondary-200 w-full">
-                            <input
-                              type="text"
-                              value={newProvinceName}
-                              onChange={(e) => setNewProvinceName(e.target.value)}
-                              placeholder="Nombre..."
-                              className="px-2 py-1 text-xs border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500 w-full"
-                              autoFocus
-                              disabled={isSavingProvince}
-                            />
-                            <button
-                              type="button"
-                              onClick={handleAddProvince}
-                              disabled={isSavingProvince || !newProvinceName.trim()}
-                              className="px-2 py-1 text-xs bg-primary-600 text-white rounded hover:bg-primary-700 disabled:opacity-50 whitespace-nowrap"
-                            >
-                              ✓
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => { setIsAddingProvince(false); setNewProvinceName(''); }}
-                              disabled={isSavingProvince}
-                              className="px-2 py-1 text-xs text-secondary-500 hover:text-secondary-700"
-                            >
-                              ✕
-                            </button>
+                            <input type="text" value={newProvinceName} onChange={(e) => setNewProvinceName(e.target.value)}
+                              placeholder="Nombre..." autoFocus disabled={isSavingProvince}
+                              className="px-2 py-1 text-xs border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500 w-full" />
+                            <button type="button" onClick={handleAddProvince} disabled={isSavingProvince || !newProvinceName.trim()}
+                              className="px-2 py-1 text-xs bg-primary-600 text-white rounded hover:bg-primary-700 disabled:opacity-50 whitespace-nowrap">✓</button>
+                            <button type="button" onClick={() => { setIsAddingProvince(false); setNewProvinceName('') }} disabled={isSavingProvince}
+                              className="px-2 py-1 text-xs text-secondary-500 hover:text-secondary-700">✕</button>
                           </div>
                         )}
                       </div>
                     </div>
 
-                    {/* Select y creación de Localidad */}
+                    {/* Location select + inline creation */}
                     <div className="space-y-2">
-                      <select
-                        id="f-location"
-                        name="location_id"
-                        required
-                        value={form.location_id}
-                        onChange={handleChange}
-                        className={`${INPUT_CLS} ${!selectedProvince ? 'opacity-50 cursor-not-allowed bg-secondary-50' : ''}`}
+                      <select id="f-location" name="location_id" required value={form.location_id} onChange={handleChange}
                         disabled={!selectedProvince}
-                      >
-                        <option value="">
-                          {selectedProvince ? '— Localidad —' : '← Primero elige provincia'}
-                        </option>
+                        className={`${INPUT_CLS} ${!selectedProvince ? 'opacity-50 cursor-not-allowed bg-secondary-50' : ''}`}>
+                        <option value="">{selectedProvince ? '— Localidad —' : '← Primero elige provincia'}</option>
                         {filteredLocations.map((loc) => (
                           <option key={loc.id} value={loc.id}>{loc.name}</option>
                         ))}
                       </select>
-                      
                       {selectedProvince && (
                         <div className="flex justify-end">
                           {!isAddingLocation ? (
-                            <button
-                              type="button"
-                              onClick={() => setIsAddingLocation(true)}
-                              className="text-primary-600 text-xs font-medium hover:text-primary-800 transition-colors"
-                            >
+                            <button type="button" onClick={() => setIsAddingLocation(true)}
+                              className="text-primary-600 text-xs font-medium hover:text-primary-800 transition-colors">
                               + Añadir localidad
                             </button>
                           ) : (
                             <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 bg-secondary-50 p-2 rounded-lg border border-secondary-200 w-full">
-                              <input
-                                type="text"
-                                value={newLocationName}
-                                onChange={(e) => setNewLocationName(e.target.value)}
-                                placeholder="Nombre..."
-                                className="px-2 py-1 text-xs border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500 w-full"
-                                autoFocus
-                                disabled={isSavingLocation}
-                              />
-                              <button
-                                type="button"
-                                onClick={handleAddLocation}
-                                disabled={isSavingLocation || !newLocationName.trim()}
-                                className="px-2 py-1 text-xs bg-primary-600 text-white rounded hover:bg-primary-700 disabled:opacity-50 whitespace-nowrap"
-                              >
-                                ✓
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => { setIsAddingLocation(false); setNewLocationName(''); }}
-                                disabled={isSavingLocation}
-                                className="px-2 py-1 text-xs text-secondary-500 hover:text-secondary-700"
-                              >
-                                ✕
-                              </button>
+                              <input type="text" value={newLocationName} onChange={(e) => setNewLocationName(e.target.value)}
+                                placeholder="Nombre..." autoFocus disabled={isSavingLocation}
+                                className="px-2 py-1 text-xs border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500 w-full" />
+                              <button type="button" onClick={handleAddLocation} disabled={isSavingLocation || !newLocationName.trim()}
+                                className="px-2 py-1 text-xs bg-primary-600 text-white rounded hover:bg-primary-700 disabled:opacity-50 whitespace-nowrap">✓</button>
+                              <button type="button" onClick={() => { setIsAddingLocation(false); setNewLocationName('') }} disabled={isSavingLocation}
+                                className="px-2 py-1 text-xs text-secondary-500 hover:text-secondary-700">✕</button>
                             </div>
                           )}
                         </div>
@@ -479,7 +434,12 @@ export default function PropertyFormPage() {
           {/* Imágenes */}
           <section className="bg-white rounded-2xl border border-secondary-200 p-6 shadow-sm space-y-3">
             <h2 className="font-semibold text-secondary-700 text-sm uppercase tracking-wide">Imágenes</h2>
-            <ImageUploader referenceCode={referenceCode} />
+            {!isEdit && (
+              <p className="text-xs text-secondary-400">
+                Las imágenes se pueden subir después de guardar la propiedad.
+              </p>
+            )}
+            <ImageUploader property={imageProperty} tenant={tenant} />
           </section>
 
           {/* Actions */}

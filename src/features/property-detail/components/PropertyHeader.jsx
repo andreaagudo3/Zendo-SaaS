@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
-import { Badge } from '../../../components/shared/Badge'
-import { SITE } from '../../../config/siteConfig'
+import { Badge }     from '../../../components/shared/Badge'
+import { useTenant } from '../../../context/TenantContext'
 
 function formatPrice(price) {
   return new Intl.NumberFormat('es-ES', {
@@ -11,7 +11,8 @@ function formatPrice(price) {
 }
 
 export function PropertyHeader({ title, listing_type, price, status, locationString }) {
-  const { t } = useTranslation('property')
+  const { t }  = useTranslation('property')
+  const tenant = useTenant()
 
   return (
     <header>
@@ -30,7 +31,7 @@ export function PropertyHeader({ title, listing_type, price, status, locationStr
       <h1 className="text-3xl md:text-4xl font-bold text-secondary-950 mb-2">{title}</h1>
 
       {locationString && (
-        SITE.features.googleMaps ? (
+        tenant?.features?.googleMaps ? (
           <a
             href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationString)}`}
             target="_blank"

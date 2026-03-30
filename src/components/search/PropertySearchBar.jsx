@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { HierarchicalLocationSelect } from './HierarchicalLocationSelect'
-import { SITE } from '../../config/siteConfig'
+import { useTenant } from '../../context/TenantContext'
 
 const PRICE_FORMAT = new Intl.NumberFormat('es-ES', {
   style: 'currency', currency: 'EUR', maximumFractionDigits: 0,
@@ -13,7 +13,8 @@ export function PropertySearchBar({
   onOpenModal,
   activeAdvancedCount = 0,
 }) {
-  const { t } = useTranslation(['properties', 'common'])
+  const { t }  = useTranslation(['properties', 'common'])
+  const tenant = useTenant()
 
   const priceOptions = [
     { value: Infinity, label: t('properties:filters.noLimit', 'Sin límite') },
@@ -82,7 +83,7 @@ export function PropertySearchBar({
         </div>
 
         {/* Botón Más filtros */}
-        {SITE.features.advancedFilters && (
+        {tenant?.features?.advancedFilters && (
           <button
             type="button"
             onClick={onOpenModal}
@@ -119,7 +120,7 @@ export function PropertySearchBar({
         </div>
 
         {/* Botón Filtros mobile */}
-        {SITE.features.advancedFilters && (
+        {tenant?.features?.advancedFilters && (
           <button
             type="button"
             onClick={onOpenModal}
