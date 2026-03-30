@@ -38,7 +38,7 @@ export function PropertyCard({ property }) {
   const href = `/properties/${slug}`
 
   return (
-    <article className="group relative bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-xl transition-shadow duration-300 flex flex-col">
+    <article className="group relative bg-white rounded-2xl overflow-hidden shadow-sm border border-secondary-100 hover:shadow-xl transition-shadow duration-300 flex flex-col">
       {/* Stretched link — hace clickable toda la card */}
       <Link
         to={href}
@@ -48,7 +48,7 @@ export function PropertyCard({ property }) {
 
       {/* Image */}
       <div className="block overflow-hidden">
-        <div className="aspect-video overflow-hidden bg-slate-100">
+        <div className="aspect-video overflow-hidden bg-secondary-100">
           <img
             src={coverImage}
             alt={`Fotografía de ${title}`}
@@ -76,7 +76,7 @@ export function PropertyCard({ property }) {
         )}
 
         {/* Title */}
-        <h3 className="text-lg font-semibold text-slate-900 leading-snug">{title}</h3>
+        <h3 className="text-lg font-semibold text-secondary-900 leading-snug">{title}</h3>
 
 
 
@@ -85,24 +85,24 @@ export function PropertyCard({ property }) {
           <div className="text-sm">
             <PropertyDescription
               text={description}
-              className="line-clamp-2 text-slate-500 text-sm leading-snug"
+              className="line-clamp-2 text-secondary-500 text-sm leading-snug"
             />
           </div>
         )}
 
         {/* Price */}
         {price != null && (
-          <p className="text-2xl font-bold text-slate-950">
+          <p className="text-2xl font-bold text-secondary-950">
             {formatPrice(price)}
             {listing_type === 'rent' && (
-              <span className="text-sm font-normal text-slate-500 ml-1">/mes</span>
+              <span className="text-sm font-normal text-secondary-500 ml-1">/mes</span>
             )}
           </p>
         )}
 
         {/* Specs — solo si hay al menos un valor */}
         {(bedrooms != null || bathrooms != null || size_m2 != null) && (
-          <div className="flex items-center gap-4 pt-3 border-t border-slate-100 text-sm text-slate-600 mt-auto">
+          <div className="flex items-center gap-4 pt-3 border-t border-secondary-100 text-sm text-secondary-600 mt-auto">
             {bedrooms != null && (
               <span className="flex items-center gap-1">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-primary-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

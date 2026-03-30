@@ -13,7 +13,7 @@ export const SITE = {
   name: 'InmoZen',
   tagline: 'Real Estate Minimalist',
   fullName: 'InmoZen Real Estate Group',
-  
+
   description: 'Encuentra la casa de tus sueños con la experiencia InmoZen. Lujo, minimalismo y eficiencia.',
   seo: {
     titleTemplate: '%s | InmoZen',
@@ -43,11 +43,39 @@ export const SITE = {
 
   /**
    * Identidad Visual
-   * Cambia el color primario (ej. #0f172a, #b91c1c, #0d9488) para 
-   * rediseñar toda la gama de colores base automáticamente.
+   * Cambia el color primario (ej. botones, acentos) y secundario (fondos, bordes)
+   * para rediseñar toda la web automáticamente.
    */
   branding: {
-    primaryColor: '#0ea5e9', // e.g. un tono azul moderno
+    primaryColor: '#0ea5e9',   // Azul moderno (el que estaba antes)
+    secondaryColor: '#64748b', // Tono neutro / Slate
+  },
+
+  /**
+   * Theme System
+   * Allowed values: 'MINIMAL', 'CORPORATE', 'PORTAL'
+   * Define tipografías y radios (los colores ahora dependen de branding)
+   */
+  theme: 'MINIMAL',
+  themeTokens: {
+    MINIMAL: {
+      radiusMd: '0.375rem',
+      radiusLg: '0.5rem',
+      fontHeading: '"Inter", sans-serif',
+      fontBody: '"Inter", sans-serif',
+    },
+    CORPORATE: {
+      radiusMd: '0px',
+      radiusLg: '0px',
+      fontHeading: '"Roboto", sans-serif',
+      fontBody: '"Roboto", sans-serif',
+    },
+    PORTAL: {
+      radiusMd: '1rem',
+      radiusLg: '1.5rem',
+      fontHeading: '"Outfit", sans-serif',
+      fontBody: '"Outfit", sans-serif',
+    }
   },
 
   /**

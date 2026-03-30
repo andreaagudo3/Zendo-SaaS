@@ -28,11 +28,11 @@ export function PropertySearchBar({
   return (
     <>
       {/* ── DESKTOP ── */}
-      <div className="hidden md:flex items-stretch bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden divide-x divide-slate-100">
+      <div className="hidden md:flex items-stretch bg-white border border-secondary-200 rounded-2xl shadow-sm overflow-hidden divide-x divide-secondary-100">
         
         {/* Ubicación */}
         <div className="flex flex-col justify-center px-4 py-3 flex-1 min-w-0">
-          <label className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-1">
+          <label className="text-[10px] font-semibold text-secondary-400 uppercase tracking-wider mb-1">
             {t('properties:filters.location', 'Ubicación')}
           </label>
           <HierarchicalLocationSelect
@@ -40,19 +40,19 @@ export function PropertySearchBar({
             value={filters.locationFilter}
             onChange={(v) => onFilterChange('locationFilter', v)}
             allLabel={t('common:location.any', 'Cualquier ubicación')}
-            className="text-sm text-slate-800 bg-transparent focus:outline-none cursor-pointer truncate"
+            className="text-sm text-secondary-800 bg-transparent focus:outline-none cursor-pointer truncate"
           />
         </div>
 
         {/* Tipo de operación */}
         <div className="flex flex-col justify-center px-4 py-3 min-w-[140px]">
-          <label className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-1">
+          <label className="text-[10px] font-semibold text-secondary-400 uppercase tracking-wider mb-1">
             {t('properties:filters.operation', 'Operación')}
           </label>
           <select
             value={filters.type}
             onChange={(e) => onFilterChange('type', e.target.value)}
-            className="text-sm text-slate-800 bg-transparent focus:outline-none cursor-pointer"
+            className="text-sm text-secondary-800 bg-transparent focus:outline-none cursor-pointer"
             aria-label="Filtrar por tipo de operación"
           >
             <option value="all">{t('common:listing.all', 'Compra o alquiler')}</option>
@@ -63,7 +63,7 @@ export function PropertySearchBar({
 
         {/* Precio */}
         <div className="flex flex-col justify-center px-4 py-3 min-w-[180px]">
-          <label className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-1">
+          <label className="text-[10px] font-semibold text-secondary-400 uppercase tracking-wider mb-1">
             {t('properties:filters.maxPrice', 'Precio máximo')}
           </label>
           <select
@@ -72,7 +72,7 @@ export function PropertySearchBar({
               const val = e.target.value === 'Infinity' ? Infinity : Number(e.target.value)
               onFilterChange('maxPrice', val)
             }}
-            className="text-sm text-slate-800 bg-transparent focus:outline-none cursor-pointer"
+            className="text-sm text-secondary-800 bg-transparent focus:outline-none cursor-pointer"
             aria-label="Filtrar por precio máximo"
           >
             {priceOptions.map(({ value, label }) => (
@@ -86,7 +86,7 @@ export function PropertySearchBar({
           <button
             type="button"
             onClick={onOpenModal}
-            className="relative flex items-center gap-2 px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors whitespace-nowrap"
+            className="relative flex items-center gap-2 px-4 py-3 text-sm font-medium text-secondary-600 hover:bg-secondary-50 transition-colors whitespace-nowrap"
             aria-label="Abrir más filtros"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -106,7 +106,7 @@ export function PropertySearchBar({
       <div className="flex md:hidden items-center gap-2">
         {/* Selector de ubicación simplificado */}
         <div className="flex-1 relative">
-          <svg xmlns="http://www.w3.org/2000/svg" className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-secondary-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
             <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
           </svg>
           <HierarchicalLocationSelect
@@ -114,7 +114,7 @@ export function PropertySearchBar({
             value={filters.locationFilter}
             onChange={(v) => onFilterChange('locationFilter', v)}
             allLabel={t('common:location.any', 'Cualquier ubicación')}
-            className="w-full pl-9 pr-3 py-3 rounded-xl border border-slate-200 bg-white text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary-600"
+            className="w-full pl-9 pr-3 py-3 rounded-xl border border-secondary-200 bg-white text-sm text-secondary-800 focus:outline-none focus:ring-2 focus:ring-primary-600"
           />
         </div>
 
@@ -123,7 +123,7 @@ export function PropertySearchBar({
           <button
             type="button"
             onClick={onOpenModal}
-            className="relative flex items-center gap-1.5 px-4 py-3 rounded-xl border border-slate-200 bg-white text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors whitespace-nowrap shadow-sm"
+            className="relative flex items-center gap-1.5 px-4 py-3 rounded-xl border border-secondary-200 bg-white text-sm font-medium text-secondary-700 hover:bg-secondary-50 transition-colors whitespace-nowrap shadow-sm"
             aria-label="Abrir filtros"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

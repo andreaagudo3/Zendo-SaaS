@@ -45,7 +45,7 @@ export default function ImageUploader({ referenceCode }) {
 
   if (!referenceCode) {
     return (
-      <p className="text-sm text-slate-400 italic">
+      <p className="text-sm text-secondary-400 italic">
         Guarda la propiedad primero para poder subir imágenes.
       </p>
     )
@@ -57,7 +57,7 @@ export default function ImageUploader({ referenceCode }) {
       <label className="flex items-center gap-3 cursor-pointer w-fit">
         <span className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
           uploading
-            ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
+            ? 'bg-secondary-200 text-secondary-400 cursor-not-allowed'
             : 'bg-primary-700 text-white hover:bg-primary-800'
         }`}>
           {uploading ? 'Subiendo…' : '+ Añadir imágenes'}
@@ -80,7 +80,7 @@ export default function ImageUploader({ referenceCode }) {
       {images.length > 0 ? (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
           {images.map((img) => (
-            <div key={img.name} className="relative group rounded-xl overflow-hidden bg-slate-100 aspect-video">
+            <div key={img.name} className="relative group rounded-xl overflow-hidden bg-secondary-100 aspect-video">
               <img src={img.publicUrl} alt={img.name} className="w-full h-full object-cover" />
               <button
                 type="button"
@@ -97,7 +97,7 @@ export default function ImageUploader({ referenceCode }) {
           ))}
         </div>
       ) : (
-        <p className="text-sm text-slate-400 italic">Sin imágenes aún.</p>
+        <p className="text-sm text-secondary-400 italic">Sin imágenes aún.</p>
       )}
     </div>
   )

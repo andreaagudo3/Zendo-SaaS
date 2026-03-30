@@ -108,9 +108,9 @@ export default function ContactPage() {
   }
 
   const inputClass = (field) =>
-    `w-full px-4 py-3 rounded-xl border text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 transition ${errors[field]
+    `w-full px-4 py-3 rounded-xl border text-sm text-secondary-900 placeholder-secondary-400 focus:outline-none focus:ring-2 transition ${errors[field]
       ? 'border-red-400 focus:ring-red-400'
-      : 'border-slate-200 focus:ring-primary-600'
+      : 'border-secondary-200 focus:ring-primary-600'
     }`
 
   return (
@@ -118,8 +118,8 @@ export default function ContactPage() {
       {/* Page header */}
       <header className="max-w-2xl mb-14">
         <p className="text-primary-700 font-semibold text-sm tracking-wide uppercase mb-2">{t('hero.eyebrow')}</p>
-        <h1 className="text-4xl font-bold text-slate-950 mb-3">{t('hero.title')}</h1>
-        <p className="text-slate-500 text-lg">
+        <h1 className="text-4xl font-bold text-secondary-950 mb-3">{t('hero.title')}</h1>
+        <p className="text-secondary-500 text-lg">
           {t('hero.subtitle')}
         </p>
       </header>
@@ -128,17 +128,17 @@ export default function ContactPage() {
         {/* Contact info */}
         <aside className="lg:col-span-2 space-y-6" aria-label="Información de contacto">
           {INFO_BLOCKS.map(({ icon, title, lines }) => (
-            <div key={title} className="flex gap-4 bg-white border border-slate-100 rounded-2xl p-5 shadow-sm">
+            <div key={title} className="flex gap-4 bg-white border border-secondary-100 rounded-2xl p-5 shadow-sm">
               <span className="text-2xl flex-shrink-0" aria-hidden="true">{icon}</span>
               <div>
-                <h2 className="font-semibold text-slate-900 text-sm mb-1">{title}</h2>
+                <h2 className="font-semibold text-secondary-900 text-sm mb-1">{title}</h2>
                 {lines.map((line, idx) => (
                   line.href ? (
                     <a key={idx} href={line.href} className="text-sm text-primary-700 hover:text-primary-800 transition block">
                       {line.text}
                     </a>
                   ) : (
-                    <p key={idx} className="text-sm text-slate-500">{line.text}</p>
+                    <p key={idx} className="text-sm text-secondary-500">{line.text}</p>
                   )
                 ))}
               </div>
@@ -178,7 +178,7 @@ export default function ContactPage() {
             <form
               onSubmit={handleSubmit}
               noValidate
-              className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm space-y-5"
+              className="bg-white border border-secondary-200 rounded-2xl p-8 shadow-sm space-y-5"
             >
               {submitState === 'error' && (
                 <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm mb-6 animate-fade-up">
@@ -189,7 +189,7 @@ export default function ContactPage() {
               {/* Name + Email row */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="name" className="block text-sm font-medium text-secondary-700 mb-1">
                     {t('form.nameLabel')} <span aria-hidden="true" className="text-red-500">*</span>
                   </label>
                   <input
@@ -210,7 +210,7 @@ export default function ContactPage() {
                   )}
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="email" className="block text-sm font-medium text-secondary-700 mb-1">
                     {t('form.emailLabel')} <span aria-hidden="true" className="text-red-500">*</span>
                   </label>
                   <input
@@ -234,7 +234,7 @@ export default function ContactPage() {
 
               {/* Phone */}
               <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-slate-700 mb-1">
+                <label htmlFor="phone" className="block text-sm font-medium text-secondary-700 mb-1">
                   {t('form.phoneLabel')}
                 </label>
                 <input
@@ -251,7 +251,7 @@ export default function ContactPage() {
 
               {/* Subject */}
               <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-slate-700 mb-1">
+                <label htmlFor="subject" className="block text-sm font-medium text-secondary-700 mb-1">
                   {t('form.subjectLabel', 'Asunto')} <span aria-hidden="true" className="text-red-500">*</span>
                 </label>
                 <select
@@ -276,7 +276,7 @@ export default function ContactPage() {
 
               {/* Message */}
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-1">
+                <label htmlFor="message" className="block text-sm font-medium text-secondary-700 mb-1">
                   {t('form.messageLabel')} <span aria-hidden="true" className="text-red-500">*</span>
                 </label>
                 <textarea
@@ -294,7 +294,7 @@ export default function ContactPage() {
                 {errors.message && (
                   <p id="message-error" className="mt-1 text-xs text-red-500" role="alert">{errors.message}</p>
                 )}
-                <p className="mt-1 text-xs text-slate-400 text-right">{form.message.length} / 500</p>
+                <p className="mt-1 text-xs text-secondary-400 text-right">{form.message.length} / 500</p>
               </div>
 
               <button

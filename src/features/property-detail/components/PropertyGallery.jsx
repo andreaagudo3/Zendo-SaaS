@@ -10,7 +10,7 @@ export function PropertyGallery({ gallery, activeImage, setActiveImage, isGaller
       {/* ── Galería Principal en pantalla ── */}
       <section aria-label="Galería de imágenes">
         <div 
-          className="relative aspect-video rounded-2xl overflow-hidden bg-slate-100 mb-3 group cursor-zoom-in"
+          className="relative aspect-video rounded-2xl overflow-hidden bg-secondary-100 mb-3 group cursor-zoom-in"
           onClick={() => setIsGalleryOpen(true)}
           {...touchHandlers}
         >
@@ -29,7 +29,7 @@ export function PropertyGallery({ gallery, activeImage, setActiveImage, isGaller
                 onClick={(e) => { e.stopPropagation(); setActiveImage((i) => Math.max(i - 1, 0)) }}
                 disabled={activeImage === 0}
                 aria-label={t('gallery.prevImage', 'Imagen anterior')}
-                className="absolute left-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm shadow-md text-slate-700 opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0"
+                className="absolute left-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm shadow-md text-secondary-700 opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -41,7 +41,7 @@ export function PropertyGallery({ gallery, activeImage, setActiveImage, isGaller
                 onClick={(e) => { e.stopPropagation(); setActiveImage((i) => Math.min(i + 1, gallery.length - 1)) }}
                 disabled={activeImage === gallery.length - 1}
                 aria-label={t('gallery.nextImage', 'Imagen siguiente')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm shadow-md text-slate-700 opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0"
+                className="absolute right-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm shadow-md text-secondary-700 opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
@@ -92,7 +92,7 @@ export function PropertyGallery({ gallery, activeImage, setActiveImage, isGaller
             </span>
             <button
               onClick={() => setIsGalleryOpen(false)}
-              className="text-white hover:text-slate-300 p-2"
+              className="text-white hover:text-secondary-300 p-2"
               aria-label={t('gallery.close', 'Cerrar galería')}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">

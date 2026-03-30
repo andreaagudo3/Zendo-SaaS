@@ -28,17 +28,17 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-secondary-950 flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="text-center mb-8">
           <img src="/logo.png" alt={SITE.name} className="h-14 mx-auto brightness-0 invert" />
-          <p className="text-slate-400 text-sm mt-3">Panel de Administración</p>
+          <p className="text-secondary-400 text-sm mt-3">Panel de Administración</p>
         </div>
 
         <form
           onSubmit={handleSubmit}
-          className="bg-slate-900 border border-slate-800 rounded-2xl p-8 space-y-5 shadow-xl"
+          className="bg-secondary-900 border border-secondary-800 rounded-2xl p-8 space-y-5 shadow-xl"
           noValidate
         >
           <h1 className="text-white text-xl font-bold text-center">Iniciar sesión</h1>
@@ -52,7 +52,7 @@ export default function LoginPage() {
 
           {/* Email */}
           <div>
-            <label htmlFor="login-email" className="block text-sm font-medium text-slate-300 mb-1">
+            <label htmlFor="login-email" className="block text-sm font-medium text-secondary-300 mb-1">
               Email
             </label>
             <input
@@ -63,13 +63,13 @@ export default function LoginPage() {
               value={form.email}
               onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))}
               placeholder="admin@parquesierra.com"
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white text-sm placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary-600 transition"
+              className="w-full px-4 py-2.5 rounded-xl bg-secondary-800 border border-secondary-700 text-white text-sm placeholder-secondary-500 focus:outline-none focus:ring-2 focus:ring-primary-600 transition"
             />
           </div>
 
           {/* Password */}
           <div>
-            <label htmlFor="login-password" className="block text-sm font-medium text-slate-300 mb-1">
+            <label htmlFor="login-password" className="block text-sm font-medium text-secondary-300 mb-1">
               Contraseña
             </label>
             <input
@@ -80,7 +80,7 @@ export default function LoginPage() {
               value={form.password}
               onChange={(e) => setForm((p) => ({ ...p, password: e.target.value }))}
               placeholder="••••••••"
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white text-sm placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary-600 transition"
+              className="w-full px-4 py-2.5 rounded-xl bg-secondary-800 border border-secondary-700 text-white text-sm placeholder-secondary-500 focus:outline-none focus:ring-2 focus:ring-primary-600 transition"
             />
           </div>
 

@@ -64,9 +64,9 @@ export function PropertyContactForm({ propertyTitle }) {
 
   return (
     <aside aria-label="Formulario de contacto" className="lg:col-span-1">
-      <div className="sticky top-20 bg-white border border-slate-200 rounded-2xl shadow-lg p-6 space-y-5">
-        <h2 className="text-xl font-bold text-slate-950">{t('contact.title')}</h2>
-        <p className="text-sm text-slate-500">{t('contact.subtitle')}</p>
+      <div className="sticky top-20 bg-white border border-secondary-200 rounded-2xl shadow-lg p-6 space-y-5">
+        <h2 className="text-xl font-bold text-secondary-950">{t('contact.title')}</h2>
+        <p className="text-sm text-secondary-500">{t('contact.subtitle')}</p>
 
         {submitState === 'success' ? (
           <div className="animate-pop-in bg-gradient-to-br from-emerald-50 to-emerald-100 border border-emerald-200 rounded-xl p-6 text-center">
@@ -94,7 +94,7 @@ export function PropertyContactForm({ propertyTitle }) {
 
             {FIELDS.map(({ name, label, type, placeholder, required }) => (
               <div key={name}>
-                <label htmlFor={`contact-${name}`} className="block text-sm font-medium text-slate-700 mb-1">
+                <label htmlFor={`contact-${name}`} className="block text-sm font-medium text-secondary-700 mb-1">
                   {label}{required && <span className="text-red-500 ml-0.5">*</span>}
                 </label>
                 <input
@@ -104,8 +104,8 @@ export function PropertyContactForm({ propertyTitle }) {
                   value={contactForm[name]}
                   onChange={handleFieldChange}
                   placeholder={placeholder}
-                  className={`w-full px-4 py-2.5 rounded-xl border text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 transition ${
-                    contactErrors[name] ? 'border-red-400 focus:ring-red-400' : 'border-slate-200 focus:ring-primary-600'
+                  className={`w-full px-4 py-2.5 rounded-xl border text-sm text-secondary-900 placeholder-secondary-400 focus:outline-none focus:ring-2 transition ${
+                    contactErrors[name] ? 'border-red-400 focus:ring-red-400' : 'border-secondary-200 focus:ring-primary-600'
                   }`}
                 />
                 {contactErrors[name] && <p className="mt-1 text-xs text-red-500">{contactErrors[name]}</p>}
@@ -113,7 +113,7 @@ export function PropertyContactForm({ propertyTitle }) {
             ))}
 
             <div>
-              <label htmlFor="contact-message" className="block text-sm font-medium text-slate-700 mb-1">
+              <label htmlFor="contact-message" className="block text-sm font-medium text-secondary-700 mb-1">
                 {t('contact.messageLabel')}<span className="text-red-500 ml-0.5">*</span>
               </label>
               <textarea
@@ -123,8 +123,8 @@ export function PropertyContactForm({ propertyTitle }) {
                 onChange={handleFieldChange}
                 rows={4}
                 placeholder={t('contact.messageDefault', { title: propertyTitle })}
-                className={`w-full px-4 py-2.5 rounded-xl border text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 transition resize-none ${
-                  contactErrors.message ? 'border-red-400 focus:ring-red-400' : 'border-slate-200 focus:ring-primary-600'
+                className={`w-full px-4 py-2.5 rounded-xl border text-sm text-secondary-900 placeholder-secondary-400 focus:outline-none focus:ring-2 transition resize-none ${
+                  contactErrors.message ? 'border-red-400 focus:ring-red-400' : 'border-secondary-200 focus:ring-primary-600'
                 }`}
               />
               {contactErrors.message && <p className="mt-1 text-xs text-red-500">{contactErrors.message}</p>}
@@ -149,8 +149,8 @@ export function PropertyContactForm({ propertyTitle }) {
           </form>
         )}
 
-        <div className="pt-4 border-t border-slate-100 text-center">
-          <p className="text-xs text-slate-400 mb-2">{t('contact.orCallDirectly', 'O llámanos directamente')}</p>
+        <div className="pt-4 border-t border-secondary-100 text-center">
+          <p className="text-xs text-secondary-400 mb-2">{t('contact.orCallDirectly', 'O llámanos directamente')}</p>
           {SITE.phones.map((p, i) => (
             <span key={p.href}>
               <a
@@ -160,7 +160,7 @@ export function PropertyContactForm({ propertyTitle }) {
               >
                 {p.number}
               </a>
-              {i < SITE.phones.length - 1 && <span className="text-slate-300 mx-2">·</span>}
+              {i < SITE.phones.length - 1 && <span className="text-secondary-300 mx-2">·</span>}
             </span>
           ))}
         </div>

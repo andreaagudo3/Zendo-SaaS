@@ -20,17 +20,13 @@ function mix(color1, color2, weight) {
 }
 
 /**
- * Genera y aplica variables CSS para el color primario basado en la configuración.
+ * Genera variables para shades
  */
-export function injectTheme() {
-  const hex = SITE.branding?.primaryColor;
-  if (!hex) return;
-  
-  const rgb = hexToRgb(hex);
+function generateShades(baseHex, name) {
+  const rgb = hexToRgb(baseHex);
   const white = [255, 255, 255];
   const black = [0, 0, 0];
 
-  // We map the main color mostly to the 600 or 500, let's map it to 500 and create variants.
   const shades = {
     50: mix(rgb, white, 10),
     100: mix(rgb, white, 20),
@@ -47,6 +43,29 @@ export function injectTheme() {
 
   const root = document.documentElement;
   Object.entries(shades).forEach(([shade, color]) => {
-    root.style.setProperty(`--color-primary-${shade}`, color);
+    root.style.setProperty(`--theme-color-${name}-${shade}`, color);
   });
+}
+
+/**
+ * Genera y aplica variables CSS dinámicas basadas en el sistema de temas.
+ */
+export function injectTheme() {
+  const themeName = SITE.theme || 'MINIMAL';
+  const tokens = SITE.themeTokens[themeName];
+  if (!tokens) return;
+  
+  // 1. Colores globales independientes del layout
+  const primaryHex = SITE.branding?.primaryColor || '#0ea5e9';
+  const secondaryHex = SITE.branding?.secondaryColor || '#64748b';
+
+  generateShades(primaryHex, 'primary');
+  generateShades(secondaryHex, 'secondary');
+
+  // 2. Geometría y tipografía ligada al layout
+  const root = document.documentElement;
+  root.style.setProperty('--theme-radius-md', tokens.radiusMd);
+  root.style.setProperty('--theme-radius-lg', tokens.radiusLg);
+  root.style.setProperty('--theme-font-heading', tokens.fontHeading);
+  root.style.setProperty('--theme-font-body', tokens.fontBody);
 }

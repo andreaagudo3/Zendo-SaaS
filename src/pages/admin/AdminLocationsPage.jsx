@@ -161,8 +161,8 @@ export default function AdminLocationsPage() {
     <AdminLayout>
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Gestor de Ubicaciones</h1>
-          <p className="text-slate-500 mt-1">Administra las provincias y sus localidades asociadas.</p>
+          <h1 className="text-2xl font-bold text-secondary-900 tracking-tight">Gestor de Ubicaciones</h1>
+          <p className="text-secondary-500 mt-1">Administra las provincias y sus localidades asociadas.</p>
         </div>
       </div>
 
@@ -173,12 +173,12 @@ export default function AdminLocationsPage() {
       )}
 
       {/* TABS */}
-      <div className="flex gap-2 mb-6 border-b border-slate-200">
+      <div className="flex gap-2 mb-6 border-b border-secondary-200">
         <button
           className={`px-4 py-2 text-sm font-semibold border-b-2 transition-colors ${
             activeTab === 'provinces'
               ? 'border-primary-600 text-primary-700'
-              : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
+              : 'border-transparent text-secondary-500 hover:text-secondary-700 hover:border-secondary-300'
           }`}
           onClick={() => { setActiveTab('provinces'); cancelEdit(); setNewName(''); setErrorMsg(''); setSearchQuery('') }}
         >
@@ -188,7 +188,7 @@ export default function AdminLocationsPage() {
           className={`px-4 py-2 text-sm font-semibold border-b-2 transition-colors ${
             activeTab === 'locations'
               ? 'border-primary-600 text-primary-700'
-              : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
+              : 'border-transparent text-secondary-500 hover:text-secondary-700 hover:border-secondary-300'
           }`}
           onClick={() => { setActiveTab('locations'); cancelEdit(); setNewName(''); setErrorMsg(''); setSearchQuery('') }}
         >
@@ -196,10 +196,10 @@ export default function AdminLocationsPage() {
         </button>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mb-8 p-6">
+      <div className="bg-white rounded-2xl shadow-sm border border-secondary-200 overflow-hidden mb-8 p-6">
         <form onSubmit={handleCreate} className="flex flex-col sm:flex-row items-end gap-4">
           <div className="flex-1 w-full space-y-1">
-            <label className="text-sm font-medium text-slate-700">
+            <label className="text-sm font-medium text-secondary-700">
               {activeTab === 'provinces' ? 'Nueva Provincia' : 'Nueva Localidad'}
             </label>
             <input
@@ -208,18 +208,18 @@ export default function AdminLocationsPage() {
               value={newName}
               onChange={(e) => setNewName(e.target.value)}
               placeholder="Escribe el nombre aquí..."
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+              className="w-full px-3 py-2 border border-secondary-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
               disabled={isSaving || loading}
             />
           </div>
           {activeTab === 'locations' && (
             <div className="flex-1 w-full space-y-1">
-              <label className="text-sm font-medium text-slate-700">Asignar a Provincia</label>
+              <label className="text-sm font-medium text-secondary-700">Asignar a Provincia</label>
               <select
                 required
                 value={newProvId}
                 onChange={(e) => setNewProvId(e.target.value)}
-                className="w-full px-3 py-2 border border-slate-300 bg-white rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="w-full px-3 py-2 border border-secondary-300 bg-white rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
                 disabled={isSaving || loading}
               >
                 <option value="">— Seleccionar —</option>
@@ -244,7 +244,7 @@ export default function AdminLocationsPage() {
         <label htmlFor="search-locs" className="sr-only">Buscar ubicación</label>
         <div className="relative w-full max-w-sm">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <svg className="h-4 w-4 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <svg className="h-4 w-4 text-secondary-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
               <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
             </svg>
           </div>
@@ -254,32 +254,32 @@ export default function AdminLocationsPage() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={`Buscar ${activeTab === 'provinces' ? 'provincia' : 'localidad o provincia'}...`}
-            className="w-full pl-9 pr-4 py-2 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white shadow-sm transition-shadow"
+            className="w-full pl-9 pr-4 py-2 border border-secondary-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white shadow-sm transition-shadow"
           />
         </div>
       </div>
 
       {/* TABLA DE RESULTADOS */}
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-x-auto">
+      <div className="bg-white rounded-2xl shadow-sm border border-secondary-200 overflow-x-auto">
         {loading ? (
-          <div className="flex items-center justify-center py-12 text-slate-400">
+          <div className="flex items-center justify-center py-12 text-secondary-400">
             Cargando...
           </div>
         ) : (
           <table className="w-full text-sm min-w-[500px]">
-            <thead className="bg-slate-50 border-b border-slate-200">
+            <thead className="bg-secondary-50 border-b border-secondary-200">
               <tr>
-                <th className="text-left px-4 py-3 font-semibold text-slate-600">Nombre</th>
+                <th className="text-left px-4 py-3 font-semibold text-secondary-600">Nombre</th>
                 {activeTab === 'locations' && (
-                  <th className="text-left px-4 py-3 font-semibold text-slate-600">Provincia</th>
+                  <th className="text-left px-4 py-3 font-semibold text-secondary-600">Provincia</th>
                 )}
-                <th className="text-right px-4 py-3 font-semibold text-slate-600">Acciones</th>
+                <th className="text-right px-4 py-3 font-semibold text-secondary-600">Acciones</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-secondary-100">
               {activeData.map((item) => (
-                <tr key={item.id} className="hover:bg-slate-50 transition-colors">
-                  <td className="px-4 py-3 font-medium text-slate-900">
+                <tr key={item.id} className="hover:bg-secondary-50 transition-colors">
+                  <td className="px-4 py-3 font-medium text-secondary-900">
                     {editingId === item.id ? (
                       <input
                         type="text"
@@ -293,7 +293,7 @@ export default function AdminLocationsPage() {
                     )}
                   </td>
                   {activeTab === 'locations' && (
-                    <td className="px-4 py-3 text-slate-600">
+                    <td className="px-4 py-3 text-secondary-600">
                       {editingId === item.id ? (
                         <select
                           value={editProvId}
@@ -324,7 +324,7 @@ export default function AdminLocationsPage() {
                           type="button"
                           onClick={cancelEdit}
                           disabled={isSaving}
-                          className="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors disabled:opacity-50"
+                          className="px-3 py-1.5 rounded-lg text-xs font-medium bg-secondary-100 text-secondary-600 hover:bg-secondary-200 transition-colors disabled:opacity-50"
                         >
                           Cancelar
                         </button>
@@ -334,7 +334,7 @@ export default function AdminLocationsPage() {
                         <button
                           type="button"
                           onClick={() => startEdit(item)}
-                          className="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors"
+                          className="px-3 py-1.5 rounded-lg text-xs font-medium bg-secondary-100 text-secondary-700 hover:bg-secondary-200 transition-colors"
                         >
                           Editar
                         </button>
@@ -352,7 +352,7 @@ export default function AdminLocationsPage() {
               ))}
               {(activeData.length === 0) && (
                 <tr>
-                  <td colSpan={activeTab === 'locations' ? 3 : 2} className="px-4 py-8 text-center text-slate-400">
+                  <td colSpan={activeTab === 'locations' ? 3 : 2} className="px-4 py-8 text-center text-secondary-400">
                     {searchQuery ? 'Tristemente, no hay resultados para tu búsqueda.' : 'No hay registros en esta sección.'}
                   </td>
                 </tr>

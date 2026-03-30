@@ -221,7 +221,7 @@ export default function PropertyFormPage() {
   if (loadingProp) {
     return (
       <AdminLayout>
-        <div className="flex items-center justify-center py-20 text-slate-400">
+        <div className="flex items-center justify-center py-20 text-secondary-400">
           <svg className="animate-spin h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z" />
@@ -239,7 +239,7 @@ export default function PropertyFormPage() {
           <button
             type="button"
             onClick={() => navigate(-1)}
-            className="flex items-center justify-center w-10 h-10 shrink-0 rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-900 transition-colors"
+            className="flex items-center justify-center w-10 h-10 shrink-0 rounded-full bg-secondary-100 text-secondary-500 hover:bg-secondary-200 hover:text-secondary-900 transition-colors"
             title="Volver atrás"
             aria-label="Volver"
           >
@@ -248,11 +248,11 @@ export default function PropertyFormPage() {
             </svg>
           </button>
           <div>
-            <h1 className="text-2xl font-bold text-slate-900">
+            <h1 className="text-2xl font-bold text-secondary-900">
               {isEdit ? 'Editar propiedad' : 'Nueva propiedad'}
             </h1>
             {referenceCode && (
-              <p className="text-xs text-slate-400 font-mono">Ref: {referenceCode}</p>
+              <p className="text-xs text-secondary-400 font-mono">Ref: {referenceCode}</p>
             )}
           </div>
         </div>
@@ -271,8 +271,8 @@ export default function PropertyFormPage() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Datos básicos */}
-          <section className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 shadow-sm">
-            <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Datos básicos</h2>
+          <section className="bg-white rounded-2xl border border-secondary-200 p-6 space-y-4 shadow-sm">
+            <h2 className="font-semibold text-secondary-700 text-sm uppercase tracking-wide">Datos básicos</h2>
 
             <Field label="Título *" htmlFor="f-title">
               <input id="f-title" name="title" required value={form.title} onChange={handleChange}
@@ -312,13 +312,13 @@ export default function PropertyFormPage() {
                             + Añadir provincia
                           </button>
                         ) : (
-                          <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 bg-slate-50 p-2 rounded-lg border border-slate-200 w-full">
+                          <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 bg-secondary-50 p-2 rounded-lg border border-secondary-200 w-full">
                             <input
                               type="text"
                               value={newProvinceName}
                               onChange={(e) => setNewProvinceName(e.target.value)}
                               placeholder="Nombre..."
-                              className="px-2 py-1 text-xs border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500 w-full"
+                              className="px-2 py-1 text-xs border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500 w-full"
                               autoFocus
                               disabled={isSavingProvince}
                             />
@@ -334,7 +334,7 @@ export default function PropertyFormPage() {
                               type="button"
                               onClick={() => { setIsAddingProvince(false); setNewProvinceName(''); }}
                               disabled={isSavingProvince}
-                              className="px-2 py-1 text-xs text-slate-500 hover:text-slate-700"
+                              className="px-2 py-1 text-xs text-secondary-500 hover:text-secondary-700"
                             >
                               ✕
                             </button>
@@ -351,7 +351,7 @@ export default function PropertyFormPage() {
                         required
                         value={form.location_id}
                         onChange={handleChange}
-                        className={`${INPUT_CLS} ${!selectedProvince ? 'opacity-50 cursor-not-allowed bg-slate-50' : ''}`}
+                        className={`${INPUT_CLS} ${!selectedProvince ? 'opacity-50 cursor-not-allowed bg-secondary-50' : ''}`}
                         disabled={!selectedProvince}
                       >
                         <option value="">
@@ -373,13 +373,13 @@ export default function PropertyFormPage() {
                               + Añadir localidad
                             </button>
                           ) : (
-                            <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 bg-slate-50 p-2 rounded-lg border border-slate-200 w-full">
+                            <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 bg-secondary-50 p-2 rounded-lg border border-secondary-200 w-full">
                               <input
                                 type="text"
                                 value={newLocationName}
                                 onChange={(e) => setNewLocationName(e.target.value)}
                                 placeholder="Nombre..."
-                                className="px-2 py-1 text-xs border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500 w-full"
+                                className="px-2 py-1 text-xs border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500 w-full"
                                 autoFocus
                                 disabled={isSavingLocation}
                               />
@@ -395,7 +395,7 @@ export default function PropertyFormPage() {
                                 type="button"
                                 onClick={() => { setIsAddingLocation(false); setNewLocationName(''); }}
                                 disabled={isSavingLocation}
-                                className="px-2 py-1 text-xs text-slate-500 hover:text-slate-700"
+                                className="px-2 py-1 text-xs text-secondary-500 hover:text-secondary-700"
                               >
                                 ✕
                               </button>
@@ -417,8 +417,8 @@ export default function PropertyFormPage() {
           </section>
 
           {/* Detalles */}
-          <section className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 shadow-sm">
-            <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Detalles</h2>
+          <section className="bg-white rounded-2xl border border-secondary-200 p-6 space-y-4 shadow-sm">
+            <h2 className="font-semibold text-secondary-700 text-sm uppercase tracking-wide">Detalles</h2>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               <Field label="Habitaciones" htmlFor="f-bed">
@@ -462,12 +462,12 @@ export default function PropertyFormPage() {
                 </select>
               </Field>
               <div className="flex flex-col gap-3 pt-6">
-                <label className="flex items-center gap-2 cursor-pointer text-sm text-slate-700">
+                <label className="flex items-center gap-2 cursor-pointer text-sm text-secondary-700">
                   <input type="checkbox" name="published" checked={form.published} onChange={handleChange}
                     className="w-4 h-4 rounded accent-primary-700" />
                   Publicada
                 </label>
-                <label className="flex items-center gap-2 cursor-pointer text-sm text-slate-700">
+                <label className="flex items-center gap-2 cursor-pointer text-sm text-secondary-700">
                   <input type="checkbox" name="featured" checked={form.featured} onChange={handleChange}
                     className="w-4 h-4 rounded accent-primary-700" />
                   Destacada
@@ -477,8 +477,8 @@ export default function PropertyFormPage() {
           </section>
 
           {/* Imágenes */}
-          <section className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-3">
-            <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Imágenes</h2>
+          <section className="bg-white rounded-2xl border border-secondary-200 p-6 shadow-sm space-y-3">
+            <h2 className="font-semibold text-secondary-700 text-sm uppercase tracking-wide">Imágenes</h2>
             <ImageUploader referenceCode={referenceCode} />
           </section>
 
@@ -487,7 +487,7 @@ export default function PropertyFormPage() {
             <button
               type="button"
               onClick={() => navigate(-1)}
-              className="px-5 py-2.5 rounded-xl text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors"
+              className="px-5 py-2.5 rounded-xl text-sm font-medium text-secondary-600 bg-secondary-100 hover:bg-secondary-200 transition-colors"
             >
               Cancelar
             </button>
@@ -507,12 +507,12 @@ export default function PropertyFormPage() {
 
 // ─── Helpers UI ───────────────────────────────────────────────────────────────
 
-const INPUT_CLS = 'w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-600 transition bg-white'
+const INPUT_CLS = 'w-full px-4 py-2.5 rounded-xl border border-secondary-200 text-sm text-secondary-900 placeholder-secondary-400 focus:outline-none focus:ring-2 focus:ring-primary-600 transition bg-white'
 
 function Field({ label, htmlFor, children }) {
   return (
     <div>
-      <label htmlFor={htmlFor} className="block text-sm font-medium text-slate-600 mb-1">
+      <label htmlFor={htmlFor} className="block text-sm font-medium text-secondary-600 mb-1">
         {label}
       </label>
       {children}

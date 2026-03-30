@@ -51,7 +51,7 @@ export function Navbar() {
                   `px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                     isActive
                       ? 'bg-primary-100 text-primary-700'
-                      : 'text-slate-600 hover:text-slate-950 hover:bg-slate-100'
+                      : 'text-secondary-600 hover:text-secondary-950 hover:bg-secondary-100'
                   }`
                 }
               >
@@ -76,7 +76,7 @@ export function Navbar() {
         {/* Mobile hamburger */}
         <button
           type="button"
-          className="md:hidden p-2 rounded-lg text-slate-600 hover:text-slate-950 hover:bg-slate-100 transition-colors"
+          className="md:hidden p-2 rounded-lg text-secondary-600 hover:text-secondary-950 hover:bg-secondary-100 transition-colors"
           aria-label={menuOpen ? t('navbar.closeMenu') : t('navbar.openMenu')}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((o) => !o)}
@@ -106,7 +106,7 @@ export function Navbar() {
                 `block px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                   isActive
                     ? 'bg-primary-100 text-primary-700'
-                    : 'text-slate-600 hover:bg-slate-100 hover:text-slate-950'
+                    : 'text-secondary-600 hover:bg-secondary-100 hover:text-secondary-950'
                 }`
               }
             >

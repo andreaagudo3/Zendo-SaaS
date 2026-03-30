@@ -83,7 +83,7 @@ export function FilterChips({ filters, provinces = [], onRemove, onClearAll }) {
       <button
         type="button"
         onClick={onClearAll}
-        className="text-xs text-slate-400 hover:text-slate-700 underline underline-offset-2 transition-colors ml-1"
+        className="text-xs text-secondary-400 hover:text-secondary-700 underline underline-offset-2 transition-colors ml-1"
       >
         {t('properties:chips.clearAll')}
       </button>

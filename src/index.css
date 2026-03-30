@@ -1,36 +1,49 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════════════════════
-   DESIGN SYSTEM — ParqueSierra
-   Edita solo esta sección para cambiar colores y fuentes globalmente.
-   Los tokens se convierten automáticamente en clases Tailwind:
-     --color-primary-700 → bg-primary-700, text-primary-700, …
-     --color-surface-950 → bg-surface-950, …
+   DESIGN SYSTEM — InmoZen
+   Los tokens leen de --theme-* variables inyectadas dinámicamente
+   por src/utils/themeInjector.js dependiendo de siteConfig.theme.
    ═══════════════════════════════════════════════════════════════ */
 @theme {
-  /* ── Color de marca principal ──────────────────────────────── */
-  /* Cambia estos valores para rediseñar toda la web de una vez  */
-  --color-primary-50:  #f0fdf4;
-  --color-primary-100: #dcfce7;
-  --color-primary-200: #bbf7d0;
-  --color-primary-300: #86efac;
-  --color-primary-400: #4ade80;
-  --color-primary-500: #22c55e;
-  --color-primary-600: #16a34a;   /* links, labels, iconos */
-  --color-primary-700: #15803d;   /* botones, accents principales */
-  --color-primary-800: #166534;   /* hover de botones */
-  --color-primary-900: #14532d;   /* hover de links */
+  --color-primary-50: var(--theme-color-primary-50);
+  --color-primary-100: var(--theme-color-primary-100);
+  --color-primary-200: var(--theme-color-primary-200);
+  --color-primary-300: var(--theme-color-primary-300);
+  --color-primary-400: var(--theme-color-primary-400);
+  --color-primary-500: var(--theme-color-primary-500);
+  --color-primary-600: var(--theme-color-primary-600);
+  --color-primary-700: var(--theme-color-primary-700);
+  --color-primary-800: var(--theme-color-primary-800);
+  --color-primary-900: var(--theme-color-primary-900);
+  --color-primary-950: var(--theme-color-primary-950);
 
-  /* ── Superficies neutras (fondo, bordes, fondos oscuros) ───── */
-  --color-surface-50:  #f8fafc;
-  --color-surface-100: #f1f5f9;
-  --color-surface-200: #e2e8f0;
-  --color-surface-950: #020617;   /* hero, footer oscuro */
+  --color-secondary-50: var(--theme-color-secondary-50);
+  --color-secondary-100: var(--theme-color-secondary-100);
+  --color-secondary-200: var(--theme-color-secondary-200);
+  --color-secondary-300: var(--theme-color-secondary-300);
+  --color-secondary-400: var(--theme-color-secondary-400);
+  --color-secondary-500: var(--theme-color-secondary-500);
+  --color-secondary-600: var(--theme-color-secondary-600);
+  --color-secondary-700: var(--theme-color-secondary-700);
+  --color-secondary-800: var(--theme-color-secondary-800);
+  --color-secondary-900: var(--theme-color-secondary-900);
+  --color-secondary-950: var(--theme-color-secondary-950);
 
-  /* ── Tipografía ─────────────────────────────────────────────── */
-  /* Cambia las fuentes aquí. Recuerda importarlas en index.html  */
-  --font-sans:    "Inter", system-ui, sans-serif;
-  --font-heading: "Inter", system-ui, sans-serif;
+  /* Superficies neutras / especiales mapeadas a secondary */
+  --color-surface-50: var(--theme-color-secondary-50);
+  --color-surface-100: var(--theme-color-secondary-100);
+  --color-surface-200: var(--theme-color-secondary-200);
+  --color-surface-950: var(--theme-color-secondary-950);
+
+  --radius-md: var(--theme-radius-md);
+  --radius-lg: var(--theme-radius-lg);
+  --radius-xl: calc(var(--theme-radius-lg) * 1.5);
+  --radius-2xl: calc(var(--theme-radius-lg) * 2);
+  --radius-3xl: calc(var(--theme-radius-lg) * 3);
+
+  --font-sans: var(--theme-font-body);
+  --font-heading: var(--theme-font-heading);
 }
 
 @layer base {
@@ -39,7 +52,7 @@
   }
 
   body {
-    @apply bg-slate-50 text-slate-900 antialiased;
+    @apply bg-secondary-50 text-secondary-900 antialiased;
     font-family: var(--font-sans);
   }
 
@@ -67,7 +80,7 @@
   }
 
   .skeleton {
-    @apply animate-pulse bg-slate-200 rounded-lg;
+    @apply animate-pulse bg-secondary-200 rounded-lg;
   }
 }
 

@@ -11,7 +11,7 @@ export function Badge({ label, variant = 'default' }) {
     featured: 'bg-amber-400 text-amber-900',
     reserved: 'bg-amber-500 text-white',
     sold: 'bg-red-600 text-white',
-    default: 'bg-slate-200 text-slate-700',
+    default: 'bg-secondary-200 text-secondary-700',
   }
   return (
     <span

@@ -30,7 +30,7 @@ export function Pagination({ currentPage, totalPages, onPageChange }) {
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
         aria-label={t('ui.previous')}
-        className="flex items-center gap-1 px-3 py-2 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+        className="flex items-center gap-1 px-3 py-2 rounded-xl text-sm font-medium text-secondary-600 hover:bg-secondary-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
           <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -41,7 +41,7 @@ export function Pagination({ currentPage, totalPages, onPageChange }) {
       {/* Páginas */}
       {pages.map((page, i) =>
         page === '...' ? (
-          <span key={`ellipsis-${i}`} className="px-2 py-2 text-slate-400 text-sm select-none">
+          <span key={`ellipsis-${i}`} className="px-2 py-2 text-secondary-400 text-sm select-none">
             …
           </span>
         ) : (
@@ -54,7 +54,7 @@ export function Pagination({ currentPage, totalPages, onPageChange }) {
             className={`w-10 h-10 rounded-xl text-sm font-medium transition-colors ${
               currentPage === page
                 ? 'bg-primary-700 text-white shadow-md'
-                : 'text-slate-600 hover:bg-slate-100'
+                : 'text-secondary-600 hover:bg-secondary-100'
             }`}
           >
             {page}
@@ -68,7 +68,7 @@ export function Pagination({ currentPage, totalPages, onPageChange }) {
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
         aria-label={t('ui.next')}
-        className="flex items-center gap-1 px-3 py-2 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+        className="flex items-center gap-1 px-3 py-2 rounded-xl text-sm font-medium text-secondary-600 hover:bg-secondary-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
       >
         {t('ui.next')}
         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
@@ -77,7 +77,7 @@ export function Pagination({ currentPage, totalPages, onPageChange }) {
       </button>
 
       {/* Indicador de página actual */}
-      <span className="w-full text-center mt-2 text-xs text-slate-400">
+      <span className="w-full text-center mt-2 text-xs text-secondary-400">
         {t('ui.page', { n: currentPage, total: totalPages })}
       </span>
     </nav>

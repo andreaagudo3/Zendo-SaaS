@@ -5,7 +5,7 @@ export function PropertyDescription({ text, className = '' }) {
   if (!text) return null
   
   return (
-    <p className={`whitespace-pre-line text-slate-700 leading-relaxed ${className}`}>
+    <p className={`whitespace-pre-line text-secondary-700 leading-relaxed ${className}`}>
       {text}
     </p>
   )

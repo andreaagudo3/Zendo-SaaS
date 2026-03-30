@@ -46,7 +46,7 @@ export default function HomePage() {
     <>
       {/* ── Hero Section ────────────────────────────────────────────── */}
       <section
-        className="relative bg-slate-950 overflow-hidden"
+        className="relative bg-secondary-950 overflow-hidden"
         aria-labelledby="hero-heading"
       >
         {/* Background image */}
@@ -59,7 +59,7 @@ export default function HomePage() {
           aria-hidden="true"
         />
         {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/60 to-slate-950" aria-hidden="true" />
+        <div className="absolute inset-0 bg-gradient-to-b from-secondary-950/80 via-secondary-950/60 to-secondary-950" aria-hidden="true" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28 md:py-40 text-center space-y-8">
           {/* Logo hero & Eyebrow Group */}
@@ -82,7 +82,7 @@ export default function HomePage() {
             <span className="block text-primary-400 mt-1">{t('home:hero.titleSpan', { zone: SITE.heroZone })}</span>
           </h1>
 
-          <p className="max-w-2xl mx-auto text-lg text-slate-300">
+          <p className="max-w-2xl mx-auto text-lg text-secondary-300">
             {t('home:hero.subtitle')}
           </p>
 
@@ -103,7 +103,7 @@ export default function HomePage() {
                   aria-pressed={activeType === value}
                   className={`px-5 py-2 rounded-full text-sm font-semibold transition-colors ${activeType === value
                     ? 'bg-primary-700 text-white'
-                    : 'bg-white/10 text-slate-300 hover:bg-white/20'
+                    : 'bg-white/10 text-secondary-300 hover:bg-white/20'
                     }`}
                 >
                   {label}
@@ -114,7 +114,7 @@ export default function HomePage() {
             {/* Selector jerárquico + botón buscar */}
             <div className="flex gap-2 bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-2">
               <div className="relative flex-1 flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" className="absolute left-3 h-4 w-4 text-slate-400 pointer-events-none" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" className="absolute left-3 h-4 w-4 text-secondary-400 pointer-events-none" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                   <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                 </svg>
                 <HierarchicalLocationSelect
@@ -122,7 +122,7 @@ export default function HomePage() {
                   value={locationFilter}
                   onChange={setLocationFilter}
                   allLabel={t('common:location.any')}
-                  className="w-full pl-9 pr-3 py-3 bg-transparent text-white placeholder-slate-400 text-sm focus:outline-none [&>option]:text-slate-900 [&>optgroup]:text-slate-500"
+                  className="w-full pl-9 pr-3 py-3 bg-transparent text-white placeholder-secondary-400 text-sm focus:outline-none [&>option]:text-secondary-900 [&>optgroup]:text-secondary-500"
                 />
               </div>
               <button
@@ -145,16 +145,16 @@ export default function HomePage() {
             <p className="text-primary-700 font-semibold text-sm tracking-wide uppercase mb-1">
               {t('home:featured.eyebrow')}
             </p>
-            <h2 id="featured-heading" className="text-3xl md:text-4xl font-bold text-slate-950">
+            <h2 id="featured-heading" className="text-3xl md:text-4xl font-bold text-secondary-950">
               {t('home:featured.title')}
             </h2>
           </div>
           <a
             href="/properties"
-            className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-slate-100 text-slate-800 font-bold hover:bg-slate-200 transition-colors"
+            className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-secondary-100 text-secondary-800 font-bold hover:bg-secondary-200 transition-colors"
           >
             {t('common:btn.viewAll')}
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-slate-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-secondary-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
             </svg>
           </a>
@@ -178,12 +178,12 @@ export default function HomePage() {
       </section>
 
       {/* ── CTA Banner ──────────────────────────────────────────────── */}
-      <section className="bg-slate-950 py-20" aria-labelledby="cta-heading">
+      <section className="bg-secondary-950 py-20" aria-labelledby="cta-heading">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
           <h2 id="cta-heading" className="text-3xl md:text-4xl font-bold text-white">
             {t('home:cta.title')}
           </h2>
-          <p className="text-slate-400 text-lg">
+          <p className="text-secondary-400 text-lg">
             {t('home:cta.subtitle')}
           </p>
           <a

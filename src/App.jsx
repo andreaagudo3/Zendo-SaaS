@@ -47,8 +47,8 @@ export default function App() {
                 path="*"
                 element={
                   <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4 space-y-4">
-                    <p className="text-8xl font-extrabold text-slate-200">404</p>
-                    <h1 className="text-2xl font-bold text-slate-700">Página no encontrada</h1>
+                    <p className="text-8xl font-extrabold text-secondary-200">404</p>
+                    <h1 className="text-2xl font-bold text-secondary-700">Página no encontrada</h1>
                     <a href="/" className="px-6 py-3 bg-primary-700 text-white rounded-xl font-semibold hover:bg-primary-800 transition-colors">
                       Volver al inicio
                     </a>

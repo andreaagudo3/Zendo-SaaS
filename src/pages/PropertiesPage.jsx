@@ -129,10 +129,10 @@ export default function PropertiesPage() {
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" aria-labelledby="listing-heading">
       {/* Page header */}
       <header className="mb-6">
-        <h1 id="listing-heading" className="text-3xl font-bold text-slate-950 mb-1">
+        <h1 id="listing-heading" className="text-3xl font-bold text-secondary-950 mb-1">
           {t('properties:page.title')}
         </h1>
-        <p className="text-slate-500 text-sm">
+        <p className="text-secondary-500 text-sm">
           {loading
             ? t('common:ui.searching')
             : `${totalCount} ${totalCount === 1 ? t('common:ui.resultsCount_one', { count: 1 }) : t('common:ui.resultsCount_other', { count: totalCount })}`}
@@ -166,8 +166,8 @@ export default function PropertiesPage() {
       ) : results.length === 0 ? (
         <div className="text-center py-24 space-y-4">
           <p className="text-5xl">{t('properties:empty.icon')}</p>
-          <p className="text-xl font-semibold text-slate-700">{t('properties:empty.title')}</p>
-          <p className="text-slate-500">{t('properties:empty.message')}</p>
+          <p className="text-xl font-semibold text-secondary-700">{t('properties:empty.title')}</p>
+          <p className="text-secondary-500">{t('properties:empty.message')}</p>
           <button
             onClick={resetFilters}
             className="mt-4 px-6 py-2 bg-primary-700 text-white rounded-xl text-sm font-semibold hover:bg-primary-800 transition-colors"

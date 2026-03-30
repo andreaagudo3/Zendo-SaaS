@@ -125,10 +125,10 @@ export default function AdminPropertiesPage() {
   const statusCls = (status) =>
     status === 'available' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
     status === 'reserved'  ? 'bg-amber-50 text-amber-700 border-amber-200' :
-    'bg-slate-100 text-slate-500 border-slate-200'
+    'bg-secondary-100 text-secondary-500 border-secondary-200'
 
   const Spinner = () => (
-    <div className="flex items-center justify-center py-20 text-slate-400">
+    <div className="flex items-center justify-center py-20 text-secondary-400">
       <svg className="animate-spin h-6 w-6 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z" />
@@ -142,8 +142,8 @@ export default function AdminPropertiesPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-4 gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Propiedades</h1>
-          <p className="text-sm text-slate-500">
+          <h1 className="text-2xl font-bold text-secondary-900">Propiedades</h1>
+          <p className="text-sm text-secondary-500">
             {totalCount} propiedades en total
           </p>
         </div>
@@ -157,7 +157,7 @@ export default function AdminPropertiesPage() {
 
       {/* Buscador */}
       <div className="relative mb-4">
-        <svg xmlns="http://www.w3.org/2000/svg" className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-secondary-400 pointer-events-none" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
           <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
         </svg>
         <input
@@ -165,14 +165,14 @@ export default function AdminPropertiesPage() {
           value={searchInput}
           onChange={(e) => handleSearchInput(e.target.value)}
           placeholder="Buscar por título, referencia o localidad…"
-          className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 bg-white text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-600"
+          className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-secondary-200 bg-white text-sm text-secondary-800 placeholder-secondary-400 focus:outline-none focus:ring-2 focus:ring-primary-600"
           aria-label="Buscar propiedades"
         />
         {searchInput && (
           <button
             type="button"
             onClick={() => { setSearchInput(''); handleSearchInput('') }}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary-400 hover:text-secondary-600 transition-colors"
             aria-label="Limpiar búsqueda"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
@@ -192,7 +192,7 @@ export default function AdminPropertiesPage() {
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
               featuredFilter === value
                 ? 'bg-primary-700 text-white'
-                : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
+                : 'bg-white border border-secondary-200 text-secondary-600 hover:bg-secondary-50'
             }`}
           >
             {label}
@@ -209,17 +209,17 @@ export default function AdminPropertiesPage() {
       {/* ═══ MÓVIL: Cards (<md) ═══ */}
       <div className="md:hidden space-y-3">
         {loading ? <Spinner /> : properties.length === 0 ? (
-          <div className="text-center py-20 text-slate-400 bg-white rounded-2xl border border-slate-200">
+          <div className="text-center py-20 text-secondary-400 bg-white rounded-2xl border border-secondary-200">
             <p className="text-4xl mb-3">🏠</p>
             <p className="font-medium">{search ? 'Sin resultados para tu búsqueda.' : 'Sin propiedades aún.'}</p>
           </div>
         ) : (
           properties.map((p) => (
-            <div key={p.id} className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 space-y-3">
+            <div key={p.id} className="bg-white rounded-2xl shadow-sm border border-secondary-200 p-4 space-y-3">
 
               {/* Top: ref + published dot + star */}
               <div className="flex items-center justify-between">
-                <span className="font-mono text-xs text-slate-400">{p.reference_code ?? '—'}</span>
+                <span className="font-mono text-xs text-secondary-400">{p.reference_code ?? '—'}</span>
                 <div className="flex items-center gap-3">
                   <span
                     className={`w-2.5 h-2.5 rounded-full ${p.published ? 'bg-emerald-500' : 'bg-red-400'}`}
@@ -231,7 +231,7 @@ export default function AdminPropertiesPage() {
                     disabled={updatingId === p.id}
                     aria-label={p.featured ? 'Quitar destacada' : 'Marcar como destacada'}
                     className={`text-xl leading-none transition-transform hover:scale-110 disabled:opacity-40 ${
-                      p.featured ? 'text-amber-400' : 'text-slate-300'
+                      p.featured ? 'text-amber-400' : 'text-secondary-300'
                     }`}
                   >
                     {p.featured ? '★' : '☆'}
@@ -239,9 +239,9 @@ export default function AdminPropertiesPage() {
                 </div>
               </div>
 
-              <p className="font-semibold text-slate-900 leading-snug">{p.title}</p>
+              <p className="font-semibold text-secondary-900 leading-snug">{p.title}</p>
 
-              <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-slate-500">
+              <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-secondary-500">
                 {p.locations?.name && (
                   <span className="flex items-center gap-1">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -250,7 +250,7 @@ export default function AdminPropertiesPage() {
                     {p.locations.name}
                   </span>
                 )}
-                <span className="font-semibold text-slate-700">{formatPrice(p.price)}</span>
+                <span className="font-semibold text-secondary-700">{formatPrice(p.price)}</span>
               </div>
 
               <select
@@ -268,7 +268,7 @@ export default function AdminPropertiesPage() {
               <div className="flex gap-2">
                 <Link
                   to={`/admin/edit/${p.id}`}
-                  className="flex-1 text-center py-2.5 rounded-xl text-sm font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors"
+                  className="flex-1 text-center py-2.5 rounded-xl text-sm font-semibold bg-secondary-100 text-secondary-700 hover:bg-secondary-200 transition-colors"
                 >
                   Editar
                 </Link>
@@ -287,9 +287,9 @@ export default function AdminPropertiesPage() {
       </div>
 
       {/* ═══ DESKTOP: Tabla (md+) ═══ */}
-      <div className="hidden md:block bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+      <div className="hidden md:block bg-white rounded-2xl shadow-sm border border-secondary-200 overflow-hidden">
         {loading ? <Spinner /> : properties.length === 0 ? (
-          <div className="text-center py-20 text-slate-400">
+          <div className="text-center py-20 text-secondary-400">
             <p className="text-4xl mb-3">🏠</p>
             <p className="font-medium">{search ? 'Sin resultados para tu búsqueda.' : 'Sin propiedades aún.'}</p>
             {!search && (
@@ -300,21 +300,21 @@ export default function AdminPropertiesPage() {
           </div>
         ) : (
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 border-b border-slate-200">
+            <thead className="bg-secondary-50 border-b border-secondary-200">
               <tr>
                 <th className="w-8 px-4 py-3" title="Destacada" />
-                <th className="text-left px-4 py-3 font-semibold text-slate-600">Ref.</th>
-                <th className="text-left px-4 py-3 font-semibold text-slate-600">Título</th>
-                <th className="text-left px-4 py-3 font-semibold text-slate-600">Ubicación</th>
-                <th className="text-left px-4 py-3 font-semibold text-slate-600">Precio</th>
-                <th className="text-left px-4 py-3 font-semibold text-slate-600">Estado</th>
-                <th className="text-left px-4 py-3 font-semibold text-slate-600">Publicada</th>
+                <th className="text-left px-4 py-3 font-semibold text-secondary-600">Ref.</th>
+                <th className="text-left px-4 py-3 font-semibold text-secondary-600">Título</th>
+                <th className="text-left px-4 py-3 font-semibold text-secondary-600">Ubicación</th>
+                <th className="text-left px-4 py-3 font-semibold text-secondary-600">Precio</th>
+                <th className="text-left px-4 py-3 font-semibold text-secondary-600">Estado</th>
+                <th className="text-left px-4 py-3 font-semibold text-secondary-600">Publicada</th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-secondary-100">
               {properties.map((p) => (
-                <tr key={p.id} className="hover:bg-slate-50 transition-colors">
+                <tr key={p.id} className="hover:bg-secondary-50 transition-colors">
                   <td className="px-3 py-3">
                     <button
                       type="button"
@@ -322,16 +322,16 @@ export default function AdminPropertiesPage() {
                       disabled={updatingId === p.id}
                       aria-label={p.featured ? 'Quitar destacada' : 'Marcar como destacada'}
                       className={`text-xl leading-none transition-transform hover:scale-125 disabled:opacity-40 ${
-                        p.featured ? 'text-amber-400' : 'text-slate-300 hover:text-amber-300'
+                        p.featured ? 'text-amber-400' : 'text-secondary-300 hover:text-amber-300'
                       }`}
                     >
                       {p.featured ? '★' : '☆'}
                     </button>
                   </td>
-                  <td className="px-4 py-3 font-mono text-slate-500 text-xs">{p.reference_code}</td>
-                  <td className="px-4 py-3 font-medium text-slate-900 max-w-[200px] truncate">{p.title}</td>
-                  <td className="px-4 py-3 text-slate-600">{p.locations?.name ?? '—'}</td>
-                  <td className="px-4 py-3 text-slate-600">{formatPrice(p.price)}</td>
+                  <td className="px-4 py-3 font-mono text-secondary-500 text-xs">{p.reference_code}</td>
+                  <td className="px-4 py-3 font-medium text-secondary-900 max-w-[200px] truncate">{p.title}</td>
+                  <td className="px-4 py-3 text-secondary-600">{p.locations?.name ?? '—'}</td>
+                  <td className="px-4 py-3 text-secondary-600">{formatPrice(p.price)}</td>
                   <td className="px-4 py-3">
                     <select
                       value={p.status ?? 'available'}
@@ -344,7 +344,7 @@ export default function AdminPropertiesPage() {
                       <option value="reserved">Reservado</option>
                       <option value="sold">Vendido</option>
                     </select>
-                    {updatingId === p.id && <span className="ml-1 text-xs text-slate-400">...</span>}
+                    {updatingId === p.id && <span className="ml-1 text-xs text-secondary-400">...</span>}
                   </td>
                   <td className="px-4 py-3">
                     <span className={`inline-block w-2.5 h-2.5 rounded-full ${p.published ? 'bg-emerald-500' : 'bg-red-500'}`} />
@@ -353,7 +353,7 @@ export default function AdminPropertiesPage() {
                     <div className="flex items-center gap-2 justify-end">
                       <Link
                         to={`/admin/edit/${p.id}`}
-                        className="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors"
+                        className="px-3 py-1.5 rounded-lg text-xs font-medium bg-secondary-100 text-secondary-700 hover:bg-secondary-200 transition-colors"
                       >
                         Editar
                       </Link>
@@ -381,7 +381,7 @@ export default function AdminPropertiesPage() {
             type="button"
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page === 1}
-            className="px-3 py-1.5 rounded-lg text-sm font-medium bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="px-3 py-1.5 rounded-lg text-sm font-medium bg-white border border-secondary-200 text-secondary-600 hover:bg-secondary-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
           >
             ← Anterior
           </button>
@@ -395,7 +395,7 @@ export default function AdminPropertiesPage() {
             }, [])
             .map((item, idx) =>
               item === '…' ? (
-                <span key={`sep-${idx}`} className="px-2 text-slate-400 text-sm">…</span>
+                <span key={`sep-${idx}`} className="px-2 text-secondary-400 text-sm">…</span>
               ) : (
                 <button
                   key={item}
@@ -404,7 +404,7 @@ export default function AdminPropertiesPage() {
                   className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${
                     page === item
                       ? 'bg-primary-700 text-white'
-                      : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
+                      : 'bg-white border border-secondary-200 text-secondary-600 hover:bg-secondary-50'
                   }`}
                 >
                   {item}
@@ -417,7 +417,7 @@ export default function AdminPropertiesPage() {
             type="button"
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={page === totalPages}
-            className="px-3 py-1.5 rounded-lg text-sm font-medium bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="px-3 py-1.5 rounded-lg text-sm font-medium bg-white border border-secondary-200 text-secondary-600 hover:bg-secondary-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
           >
             Siguiente →
           </button>
