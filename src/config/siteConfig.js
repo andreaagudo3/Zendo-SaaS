@@ -56,7 +56,7 @@ export const SITE = {
    * Allowed values: 'MINIMAL', 'CORPORATE', 'PORTAL'
    * Define tipografías y radios (los colores ahora dependen de branding)
    */
-  theme: 'PORTAL',
+  theme: 'MINIMAL',
   themeTokens: {
     MINIMAL: {
       radiusMd: '0.375rem', // Afecta a botones pequeños, badges, inputs
