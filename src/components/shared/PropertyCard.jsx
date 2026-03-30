@@ -39,10 +39,10 @@ export function PropertyCard({ property }) {
   const isPortal = SITE.theme === 'PORTAL'
 
   const containerClass = [
-    'group relative overflow-hidden flex flex-col transition-all duration-500 rounded-2xl bg-white border',
-    isMinimal ? 'ease-minimal shadow-xl border-secondary-100 hover:shadow-2xl hover:-translate-y-1' : '',
+    'group relative overflow-hidden flex flex-col transition-all duration-500 rounded-2xl bg-white border shadow-card hover:shadow-hover',
+    isMinimal ? 'ease-minimal border-secondary-100 hover:-translate-y-1' : '',
     isCorporate ? 'ease-corporate border-secondary-200 hover:border-primary-600' : '',
-    isPortal ? 'ease-portal shadow border-secondary-100 hover:shadow-md hover:scale-[1.02]' : '',
+    isPortal ? 'ease-portal border-secondary-100 hover:scale-[1.02]' : '',
   ].filter(Boolean).join(' ')
 
   const imageWrapperClass = `block overflow-hidden ${isPortal ? 'aspect-[4/3]' : 'aspect-video'} bg-secondary-100`

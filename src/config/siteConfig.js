@@ -64,6 +64,8 @@ export const SITE = {
       radiusXl: '0.75rem',  // Afecta a dropdowns, menús, fotos secundarias
       radius2xl: '1rem',    // Afecta a Tarjetas de Propiedades (PropertyCard) y Hero
       radius3xl: '1.5rem',  // Afecta a fondos grandes, ventanas modales
+      shadowCard: '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05)', // Sombra base suave
+      shadowHover: '0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05)', // Sombra hover flotante
       fontHeading: '"Inter", sans-serif', // Títulos grandes (H1, H2, H3...)
       fontBody: '"Inter", sans-serif',    // Párrafos, menús, textos normales
     },
@@ -73,6 +75,8 @@ export const SITE = {
       radiusXl: '0px',
       radius2xl: '0px',
       radius3xl: '0px',
+      shadowCard: 'none',
+      shadowHover: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
       fontHeading: '"Roboto", sans-serif',
       fontBody: '"Roboto", sans-serif',
     },
@@ -82,6 +86,8 @@ export const SITE = {
       radiusXl: '0.75rem',
       radius2xl: '1rem',
       radius3xl: '1.5rem',
+      shadowCard: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)',
+      shadowHover: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)',
       fontHeading: '"Outfit", sans-serif',
       fontBody: '"Outfit", sans-serif',
     }
