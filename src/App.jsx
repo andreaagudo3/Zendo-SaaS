@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { Layout } from './components/Layout/Layout'
 import { SITE } from './config/siteConfig'
@@ -32,6 +33,17 @@ import ProtectedRoute         from './components/admin/ProtectedRoute'
  *   /admin/edit/:id      → PropertyFormPage     [ProtectedRoute]
  */
 export default function App() {
+  useEffect(() => {
+    // Sincronizar título y metadata desde siteConfig
+    if (SITE.seo?.defaultTitle) {
+      document.title = SITE.seo.defaultTitle
+    }
+    if (SITE.description) {
+      const metaDesc = document.querySelector('meta[name="description"]')
+      if (metaDesc) metaDesc.setAttribute('content', SITE.description)
+    }
+  }, [])
+
   return (
     <>
       {SITE.features?.isDemo && <DemoPanel />}
