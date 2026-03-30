@@ -113,8 +113,10 @@ export default function ContactPage() {
       : 'border-secondary-200 focus:ring-primary-600'
     }`
 
+  const isMinimal = SITE.theme === 'MINIMAL'
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 ${isMinimal ? 'pt-32 md:pt-40' : 'pt-16'}`}>
       {/* Page header */}
       <header className="max-w-2xl mb-14">
         <p className="text-primary-700 font-semibold text-sm tracking-wide uppercase mb-2">{t('hero.eyebrow')}</p>

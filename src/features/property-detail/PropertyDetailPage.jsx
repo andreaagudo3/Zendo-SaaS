@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { usePropertiesStore } from '../../store/propertiesStore'
 import { useProperties } from '../../services/useProperties'
 import { usePropertyImages } from './hooks/usePropertyImages'
+import { SITE } from '../../config/siteConfig'
 
 // Components
 import { PropertyHeader } from './components/PropertyHeader'
@@ -65,8 +66,10 @@ export default function PropertyDetailPage() {
     ? `${property.locations.name}${property.locations.provinces?.name ? `, ${property.locations.provinces.name}` : ''}`
     : locationName
 
+  const isMinimal = SITE.theme === 'MINIMAL'
+
   return (
-    <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <article className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 ${isMinimal ? 'pt-32 md:pt-40' : 'pt-10'}`}>
       
       {/* ── Back Navigation ── */}
       <button

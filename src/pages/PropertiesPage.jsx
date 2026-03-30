@@ -8,6 +8,7 @@ import { Pagination } from '../components/shared/Pagination'
 import { PropertySearchBar } from '../components/search/PropertySearchBar'
 import { PropertyFiltersModal } from '../components/search/PropertyFiltersModal'
 import { FilterChips } from '../components/search/FilterChips'
+import { SITE } from '../config/siteConfig'
 
 const INITIAL_FILTERS = {
   type: 'all',
@@ -51,6 +52,7 @@ export default function PropertiesPage() {
   const [provinces, setProvinces] = useState([])  // jerarquía provincia → localidades
   const [isModalOpen, setIsModalOpen] = useState(false)
 
+  const isMinimal = SITE.theme === 'MINIMAL'
   const totalPages = Math.ceil(totalCount / PAGE_SIZE)
 
   // Filtros avanzados activos para el badge del botón "Más filtros"
@@ -126,7 +128,7 @@ export default function PropertiesPage() {
   }
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" aria-labelledby="listing-heading">
+    <section className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 ${isMinimal ? 'pt-32 md:pt-40' : 'pt-12'}`} aria-labelledby="listing-heading">
       {/* Page header */}
       <header className="mb-6">
         <h1 id="listing-heading" className="text-3xl font-bold text-secondary-950 mb-1">
