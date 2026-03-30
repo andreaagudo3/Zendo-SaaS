@@ -11,19 +11,45 @@ export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const { t } = useTranslation('nav')
 
+  const isMinimal = SITE.theme === 'MINIMAL'
+  const isCorporate = SITE.theme === 'CORPORATE'
+  const isPortal = SITE.theme === 'PORTAL'
+
   const NAV_LINKS = [
     { to: '/',           label: t('navbar.home') },
     { to: '/properties', label: t('navbar.properties') },
     { to: '/contact',    label: t('navbar.contact') },
   ]
 
+  const headerClass = isMinimal
+    ? 'fixed w-full top-0 z-50 glass border-b border-white/20'
+    : 'sticky top-0 z-50 bg-white shadow-sm border-b border-secondary-200'
+
+  const navClass = `max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between transition-all duration-300 ${
+    isPortal ? 'h-14' : 'h-16 md:h-20'
+  }`
+
+  const logoClass = `w-auto object-contain ${
+    isPortal ? 'h-6 md:h-7 max-h-[28px]' : 'h-8 md:h-9 max-h-[36px]'
+  }`
+
   return (
-    <header
-      className="sticky top-0 z-50 glass border-b border-white/30 shadow-sm"
-      role="banner"
-    >
+    <header className={headerClass} role="banner">
+      {/* ── Corporate TopBar ── */}
+      {isCorporate && (
+        <div className="bg-secondary-900 text-secondary-100 text-xs py-2 px-4 sm:px-6 lg:px-8 flex justify-between items-center transition-colors">
+          <div className="flex gap-4">
+            <a href={SITE.email.href} className="hover:text-white transition-colors">{SITE.email.address}</a>
+            <a href={SITE.phones[0]?.href} className="hover:text-white transition-colors">{SITE.phones[0]?.number}</a>
+          </div>
+          <div className="hidden sm:block">
+            {SITE.address}
+          </div>
+        </div>
+      )}
+
       <nav
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
+        className={navClass}
         role="navigation"
         aria-label={t('navbar.ariaLabel')}
       >
@@ -36,7 +62,7 @@ export function Navbar() {
           <img
             src="/logo.png"
             alt={SITE.fullName}
-            className="h-8 md:h-9 max-h-[36px] w-auto object-contain"
+            className={logoClass}
           />
         </Link>
 
