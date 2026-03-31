@@ -4,36 +4,38 @@ import { useTenant } from '../../context/TenantContext'
 
 /**
  * Footer — 4-column grid with brand, quick links, services, and contact.
- * All business data comes from the tenant resolved by TenantProvider.
  */
 export function Footer() {
-  const { t }   = useTranslation('nav')
-  const tenant  = useTenant()
+  const { t } = useTranslation('nav')
+  const tenant = useTenant()
 
-  const fullName  = tenant?.full_name ?? tenant?.name ?? ''
-  const phones    = tenant?.phones  ?? []
-  const socials   = tenant?.socials ?? []
+  const fullName = tenant?.full_name ?? tenant?.name ?? ''
+  const phones = tenant?.phones ?? []
+  const socials = tenant?.socials ?? []
   const emailHref = tenant?.email ? `mailto:${tenant.email}` : '#'
 
+  // Usamos el logo de la base de datos, o el por defecto si no hay
+  const logoSrc = tenant?.logo_url ?? '/logo.png'
+
   const QUICK_LINKS = [
-    { to: '/',                    label: t('footer.links.home') },
-    { to: '/properties',          label: t('footer.links.properties') },
+    { to: '/', label: t('footer.links.home') },
+    { to: '/properties', label: t('footer.links.properties') },
     { to: '/properties?type=sale', label: t('footer.links.sale') },
     { to: '/properties?type=rent', label: t('footer.links.rent') },
-    { to: '/contact',             label: t('footer.links.contact') },
+    { to: '/contact', label: t('footer.links.contact') },
   ]
   const SERVICES = t('footer.services', { returnObjects: true }) || []
 
   return (
     <footer className="bg-secondary-950 text-secondary-300 pt-16 pb-8" role="contentinfo">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* 4-column grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 mb-12">
-          {/* Column 1 — Brand */}
+
+          {/* Columna 1 — Marca */}
           <div className="space-y-4">
             <Link to="/" className="inline-flex items-center hover:opacity-90 transition-opacity" aria-label={`${fullName} – Inicio`}>
               <img
-                src="/logo.png"
+                src={logoSrc}
                 alt={fullName}
                 className="h-12 w-auto object-contain brightness-0 invert"
               />
@@ -41,12 +43,13 @@ export function Footer() {
             <p className="text-sm text-secondary-400 leading-relaxed">
               {t('footer.description', { zone: tenant?.zone, province: tenant?.province })}
             </p>
-            {/* Social icons */}
             <div className="flex gap-3 pt-2">
               {socials.map((social) => (
                 <a
                   key={social.name}
                   href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={`Síguenos en ${social.name}`}
                   className="h-9 w-9 rounded-lg bg-secondary-800 text-secondary-300 hover:text-white hover:bg-primary-700 flex items-center justify-center transition-colors"
                 >
@@ -56,7 +59,7 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Column 2 — Quick Links */}
+          {/* Columna 2 — Enlaces rápidos */}
           <div>
             <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-4">
               {t('footer.nav')}
@@ -72,7 +75,7 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Column 3 — Services */}
+          {/* Columna 3 — Servicios */}
           <div>
             <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-4">
               {t('footer.servicesTitle', 'Servicios')}
@@ -84,24 +87,33 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Column 4 — Contact */}
+          {/* Columna 4 — Contacto */}
           <div>
             <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-4">
               {t('footer.contact')}
             </h3>
             <address className="not-italic space-y-3 text-sm text-secondary-400">
-              <p>
-                {tenant?.zone}<br />
-                {tenant?.province}, {tenant?.country}
-              </p>
-              <p>
-                {phones.map((p, i) => (
-                  <span key={p.href}>
-                    <a href={p.href} className="hover:text-primary-400 transition-colors">{p.number}</a>
-                    {i < phones.length - 1 && <br />}
-                  </span>
-                ))}
-              </p>
+              {tenant?.address && (
+                <p>{tenant.address}</p>
+              )}
+
+              {/* FIX: Mapeo de teléfonos corregido para array de strings */}
+              {phones.length > 0 && (
+                <p>
+                  {phones.map((p, i) => (
+                    <span key={i}>
+                      <a
+                        href={`tel:${p.replace(/\s+/g, '')}`}
+                        className="hover:text-primary-400 transition-colors"
+                      >
+                        {p}
+                      </a>
+                      {i < phones.length - 1 && <br />}
+                    </span>
+                  ))}
+                </p>
+              )}
+
               {tenant?.email && (
                 <p>
                   <a href={emailHref} className="hover:text-primary-400 transition-colors">
@@ -113,7 +125,7 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom bar */}
+        {/* Barra inferior */}
         <div className="border-t border-secondary-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-secondary-500">
           <p>{t('footer.copyright', { year: new Date().getFullYear(), name: fullName })}</p>
           <div className="flex gap-6">

@@ -19,12 +19,22 @@
     "phoneLabel": "Teléfono",
     "emailPlaceholder": "tu@email.com",
     "emailLabel": "Email",
+    "subjectLabel": "Asunto",
+    "subjectPlaceholder": "Selecciona una opción",
     "messagePlaceholder": "¿En qué podemos ayudarte?",
     "messageLabel": "Mensaje",
     "sendBtn": "Enviar mensaje",
     "sending": "Enviando…",
     "privacy": "Al enviar aceptas nuestra",
     "privacyLink": "política de privacidad"
+  },
+  "subjects": {
+    "buy": "Quiero comprar una propiedad",
+    "rent": "Quiero alquilar una propiedad",
+    "sell": "Quiero vender mi propiedad",
+    "let": "Quiero poner mi piso en alquiler",
+    "mortgage": "Asesoría hipotecaria",
+    "other": "Otro"
   },
   "success": {
     "title": "¡Mensaje recibido!",

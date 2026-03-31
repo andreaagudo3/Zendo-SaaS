@@ -12,19 +12,24 @@ const INITIAL_FORM = {
   message: '',
 }
 
-
-
 /**
- * ContactPage — full contact form with validation and visual feedback.
+ * ContactPage — Formulario de contacto dinámico configurado por Tenant.
  */
 export default function ContactPage() {
   const { t } = useTranslation('contact')
   const tenant = useTenant()
   const [form, setForm] = useState(INITIAL_FORM)
   const [errors, setErrors] = useState({})
-  const [submitState, setSubmitState] = useState('idle') // idle | submitting | success | error
+  const [submitState, setSubmitState] = useState('idle')
 
+  // ── Valores Dinámicos del Tenant ──
   const phones = tenant?.phones ?? []
+  const heroContent = tenant?.hero ?? {}
+
+  // Usamos los mismos campos del Hero o los fallbacks de traducción
+  const contactEyebrow = heroContent.eyebrow || t('hero.eyebrow')
+  const contactTitle = t('hero.title') // Normalmente "Contacto" o "Habla con nosotros"
+  const contactSubtitle = heroContent.subtitle || t('hero.subtitle')
 
   const SUBJECTS = [
     t('subjects.buy', 'Quiero comprar una propiedad'),
@@ -40,15 +45,14 @@ export default function ContactPage() {
       icon: '📍',
       title: t('info.address'),
       lines: [
-        { text: tenant?.zone },
-        { text: `${tenant?.province ?? ''}, ${tenant?.country ?? ''}` },
+        { text: tenant?.address || t('info.addressVal') }
       ],
     },
     {
       icon: '📞',
       title: t('info.phone'),
-      // Usamos el string directamente (p) y generamos el href dinámicamente
-      lines: (phones || []).map((p) => ({
+      // Mapeo correcto para array de strings (phones)
+      lines: phones.map((p) => ({
         text: p,
         href: `tel:${p.replace(/\s+/g, '')}`
       })),
@@ -81,7 +85,6 @@ export default function ContactPage() {
   function handleChange(e) {
     const { name, value } = e.target
     setForm((prev) => ({ ...prev, [name]: value }))
-    // Clear error on change
     if (errors[name]) setErrors((prev) => ({ ...prev, [name]: undefined }))
   }
 
@@ -103,7 +106,8 @@ export default function ContactPage() {
         name: form.name,
         email: form.email,
         message: messageWithPhone,
-        property: `Consulta general: ${form.subject}`
+        property: `Consulta general: ${form.subject}`,
+        tenant_id: tenant?.id // Enviamos el ID para que el servicio sepa a quién notificar
       })
 
       setSubmitState('success')
@@ -126,17 +130,22 @@ export default function ContactPage() {
 
   return (
     <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 ${isMinimal ? 'pt-32 md:pt-40' : 'pt-16'}`}>
-      {/* Page header */}
       <header className="max-w-2xl mb-14">
-        <p className="text-primary-700 font-semibold text-sm tracking-wide uppercase mb-2">{t('hero.eyebrow')}</p>
-        <h1 className="text-4xl font-bold text-secondary-950 mb-3">{t('hero.title')}</h1>
+        {/* Usamos el Eyebrow dinámico de la DB */}
+        <p className="text-primary-700 font-semibold text-sm tracking-wide uppercase mb-2">
+          {contactEyebrow}
+        </p>
+        {/* Título dinámico */}
+        <h1 className="text-4xl font-bold text-secondary-950 mb-3">
+          {contactTitle}
+        </h1>
+        {/* Subtítulo dinámico */}
         <p className="text-secondary-500 text-lg">
-          {t('hero.subtitle')}
+          {contactSubtitle}
         </p>
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
-        {/* Contact info */}
         <aside className="lg:col-span-2 space-y-6" aria-label="Información de contacto">
           {INFO_BLOCKS.map(({ icon, title, lines }) => (
             <div key={title} className="flex gap-4 bg-white border border-secondary-100 rounded-2xl p-5 shadow-sm">
@@ -157,172 +166,102 @@ export default function ContactPage() {
           ))}
         </aside>
 
-        {/* Form */}
         <section className="lg:col-span-3" aria-label="Formulario de contacto">
           {submitState === 'success' ? (
             <div className="h-full flex items-center justify-center py-16">
               <div className="animate-pop-in bg-gradient-to-br from-emerald-50 to-emerald-100 border border-emerald-200 rounded-2xl p-12 text-center w-full max-w-md">
-                {/* Checkmark animado */}
                 <div className="flex items-center justify-center mb-6">
-                  <div className="w-20 h-20 rounded-full bg-emerald-500 flex items-center justify-center shadow-xl animate-pop-in">
-                    <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="20 6 9 17 4 12" className="animate-draw-check" />
+                  <div className="w-20 h-20 rounded-full bg-emerald-500 flex items-center justify-center shadow-xl">
+                    <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
+                      <polyline points="20 6 9 17 4 12" />
                     </svg>
                   </div>
                 </div>
-                <h2 className="text-2xl font-bold text-emerald-900 mb-2 animate-fade-up" style={{ animationDelay: '0.2s' }}>
-                  {t('success.title')}
-                </h2>
-                <p className="text-emerald-700 animate-fade-up" style={{ animationDelay: '0.35s' }}>
-                  {t('success.message')}
-                </p>
+                <h2 className="text-2xl font-bold text-emerald-900 mb-2">{t('success.title')}</h2>
+                <p className="text-emerald-700">{t('success.message')}</p>
                 <button
                   onClick={() => setSubmitState('idle')}
-                  className="mt-6 px-6 py-2.5 rounded-xl bg-emerald-600 text-white text-sm font-semibold hover:bg-emerald-700 transition-colors animate-fade-up"
-                  style={{ animationDelay: '0.5s' }}
+                  className="mt-6 px-6 py-2.5 rounded-xl bg-emerald-600 text-white text-sm font-semibold hover:bg-emerald-700 transition-colors"
                 >
                   {t('success.again')}
                 </button>
               </div>
             </div>
           ) : (
-            <form
-              onSubmit={handleSubmit}
-              noValidate
-              className="bg-white border border-secondary-200 rounded-2xl p-8 shadow-sm space-y-5"
-            >
+            <form onSubmit={handleSubmit} noValidate className="bg-white border border-secondary-200 rounded-2xl p-8 shadow-sm space-y-5">
               {submitState === 'error' && (
-                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm mb-6 animate-fade-up">
+                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm mb-6">
                   {t('error.message')}
                 </div>
               )}
 
-              {/* Name + Email row */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-secondary-700 mb-1">
-                    {t('form.nameLabel')} <span aria-hidden="true" className="text-red-500">*</span>
+                    {t('form.nameLabel')} <span className="text-red-500">*</span>
                   </label>
                   <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    required
-                    autoComplete="name"
-                    value={form.name}
-                    onChange={handleChange}
-                    placeholder={t('form.namePlaceholder')}
+                    id="name" name="name" type="text" required value={form.name}
+                    onChange={handleChange} placeholder={t('form.namePlaceholder')}
                     className={inputClass('name')}
-                    aria-invalid={!!errors.name}
-                    aria-describedby={errors.name ? 'name-error' : undefined}
                   />
-                  {errors.name && (
-                    <p id="name-error" className="mt-1 text-xs text-red-500" role="alert">{errors.name}</p>
-                  )}
+                  {errors.name && <p className="mt-1 text-xs text-red-500">{errors.name}</p>}
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-secondary-700 mb-1">
-                    {t('form.emailLabel')} <span aria-hidden="true" className="text-red-500">*</span>
+                    {t('form.emailLabel')} <span className="text-red-500">*</span>
                   </label>
                   <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    required
-                    autoComplete="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    placeholder={t('form.emailPlaceholder')}
+                    id="email" name="email" type="email" required value={form.email}
+                    onChange={handleChange} placeholder={t('form.emailPlaceholder')}
                     className={inputClass('email')}
-                    aria-invalid={!!errors.email}
-                    aria-describedby={errors.email ? 'email-error' : undefined}
                   />
-                  {errors.email && (
-                    <p id="email-error" className="mt-1 text-xs text-red-500" role="alert">{errors.email}</p>
-                  )}
+                  {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email}</p>}
                 </div>
               </div>
 
-              {/* Phone */}
               <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-secondary-700 mb-1">
-                  {t('form.phoneLabel')}
-                </label>
+                <label htmlFor="phone" className="block text-sm font-medium text-secondary-700 mb-1">{t('form.phoneLabel')}</label>
                 <input
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  autoComplete="tel"
-                  value={form.phone}
-                  onChange={handleChange}
-                  placeholder={t('form.phonePlaceholder')}
+                  id="phone" name="phone" type="tel" value={form.phone}
+                  onChange={handleChange} placeholder={t('form.phonePlaceholder')}
                   className={inputClass('phone')}
                 />
               </div>
 
-              {/* Subject */}
               <div>
                 <label htmlFor="subject" className="block text-sm font-medium text-secondary-700 mb-1">
-                  {t('form.subjectLabel', 'Asunto')} <span aria-hidden="true" className="text-red-500">*</span>
+                  {t('form.subjectLabel')} <span className="text-red-500">*</span>
                 </label>
                 <select
-                  id="subject"
-                  name="subject"
-                  required
-                  value={form.subject}
-                  onChange={handleChange}
-                  className={inputClass('subject')}
-                  aria-invalid={!!errors.subject}
-                  aria-describedby={errors.subject ? 'subject-error' : undefined}
+                  id="subject" name="subject" required value={form.subject}
+                  onChange={handleChange} className={inputClass('subject')}
                 >
-                  <option value="" disabled>{t('form.subjectPlaceholder', 'Selecciona una opción')}</option>
-                  {SUBJECTS.map((s) => (
-                    <option key={s} value={s}>{s}</option>
-                  ))}
+                  <option value="" disabled>{t('form.subjectPlaceholder')}</option>
+                  {SUBJECTS.map((s) => <option key={s} value={s}>{s}</option>)}
                 </select>
-                {errors.subject && (
-                  <p id="subject-error" className="mt-1 text-xs text-red-500" role="alert">{errors.subject}</p>
-                )}
+                {errors.subject && <p className="mt-1 text-xs text-red-500">{errors.subject}</p>}
               </div>
 
-              {/* Message */}
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-secondary-700 mb-1">
-                  {t('form.messageLabel')} <span aria-hidden="true" className="text-red-500">*</span>
+                  {t('form.messageLabel')} <span className="text-red-500">*</span>
                 </label>
                 <textarea
-                  id="message"
-                  name="message"
-                  required
-                  rows={5}
-                  value={form.message}
-                  onChange={handleChange}
-                  placeholder={t('form.messagePlaceholder')}
+                  id="message" name="message" required rows={5} value={form.message}
+                  onChange={handleChange} placeholder={t('form.messagePlaceholder')}
                   className={`${inputClass('message')} resize-none`}
-                  aria-invalid={!!errors.message}
-                  aria-describedby={errors.message ? 'message-error' : undefined}
                 />
-                {errors.message && (
-                  <p id="message-error" className="mt-1 text-xs text-red-500" role="alert">{errors.message}</p>
-                )}
+                {errors.message && <p className="mt-1 text-xs text-red-500">{errors.message}</p>}
                 <p className="mt-1 text-xs text-secondary-400 text-right">{form.message.length} / 500</p>
               </div>
 
               <button
                 type="submit"
                 disabled={submitState === 'submitting'}
-                className="w-full py-3.5 rounded-xl bg-primary-700 text-white font-semibold hover:bg-primary-800 disabled:opacity-60 disabled:cursor-not-allowed transition-colors text-sm"
-                aria-label={t('form.sendBtn')}
+                className="w-full py-3.5 rounded-xl bg-primary-700 text-white font-semibold hover:bg-primary-800 disabled:opacity-60 transition-colors text-sm"
               >
-                {submitState === 'submitting' ? (
-                  <span className="flex items-center justify-center gap-2">
-                    <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z" />
-                    </svg>
-                    {t('form.sending')}
-                  </span>
-                ) : t('form.sendBtn')}
+                {submitState === 'submitting' ? t('form.sending') : t('form.sendBtn')}
               </button>
             </form>
           )}

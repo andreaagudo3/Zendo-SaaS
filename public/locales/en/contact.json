@@ -19,12 +19,22 @@
     "phoneLabel": "Phone",
     "emailPlaceholder": "you@email.com",
     "emailLabel": "Email",
+    "subjectLabel": "Subject",
+    "subjectPlaceholder": "Select an option",
     "messagePlaceholder": "How can we help you?",
     "messageLabel": "Message",
     "sendBtn": "Send message",
     "sending": "Sending...",
     "privacy": "By sending you accept our",
     "privacyLink": "privacy policy"
+  },
+  "subjects": {
+    "buy": "I want to buy a property",
+    "rent": "I want to rent a property",
+    "sell": "I want to sell my property",
+    "let": "I want to let my property",
+    "mortgage": "Mortgage advice",
+    "other": "Other"
   },
   "success": {
     "title": "Message received!",
