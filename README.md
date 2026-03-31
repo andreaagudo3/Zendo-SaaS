@@ -1,6 +1,6 @@
-# 🏡 Parque Sierra — Plataforma Inmobiliaria
+# 🏡 InmoZen — Plataforma Inmobiliaria SaaS Multi-tenant
 
-> Plataforma web inmobiliaria moderna y mobile-first para la gestión y venta/alquiler de propiedades en la Sierra de Aracena (Huelva, España).
+> **InmoZen** es una solución "Software as a Service" (SaaS) diseñada para gestionar múltiples inmobiliarias de forma aislada y segura bajo una única infraestructura tecnológica y una sola base de datos.
 
 ---
 
