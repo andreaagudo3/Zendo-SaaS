@@ -212,15 +212,20 @@ export default function SaaSLandingPage() {
             </div>
           </div>
 
-          <div className="text-center bg-blue-50 py-6 px-8 rounded-3xl border border-blue-100 max-w-4xl mx-auto mb-12 shadow-sm">
-            <p className="text-blue-900 text-base font-semibold italic">
-              <span className="font-extrabold uppercase mr-2 tracking-wider">Escalabilidad garantizada:</span>
-              Empieza hoy con el plan que necesites y sube de nivel cuando tu agencia crezca pagando solo la diferencia de setup. <span className="text-blue-600">Protegemos tu inversión inicial.</span>
-            </p>
-          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto mb-24">
+            <div className="bg-blue-50 py-6 px-8 rounded-3xl border border-blue-100 shadow-sm relative overflow-hidden group">
+              <p className="text-blue-900 text-sm md:text-base font-semibold italic leading-relaxed relative z-10 transition-transform group-hover:-translate-y-0.5 duration-300">
+                <span className="font-extrabold uppercase mr-2 tracking-wider block mb-1">📈 Escalabilidad garantizada:</span>
+                Empieza hoy con el plan que necesites y sube de nivel cuando tu agencia crezca pagando solo la diferencia de setup. <span className="text-blue-600 font-bold underline decoration-blue-200">Protegemos tu inversión inicial.</span>
+              </p>
+            </div>
 
-          <div className="text-center bg-slate-900 text-slate-400 py-3 px-6 rounded-2xl max-w-2xl mx-auto mb-24 text-sm font-medium">
-            "Todos los planes incluyen actualizaciones de seguridad y mejoras de la plataforma de por vida."
+            <div className="bg-blue-50 py-6 px-8 rounded-3xl border border-blue-100 shadow-sm relative overflow-hidden group">
+              <p className="text-blue-900 text-sm md:text-base font-semibold italic leading-relaxed relative z-10 transition-transform group-hover:-translate-y-0.5 duration-300">
+                <span className="font-extrabold uppercase mr-2 tracking-wider block mb-1">🛡️ Actualizaciones de por vida:</span>
+                Todos los planes incluyen actualizaciones de seguridad y mejoras de la plataforma para siempre. <span className="text-blue-600 font-bold underline decoration-blue-200">Tu activo digital nunca envejece.</span>
+              </p>
+            </div>
           </div>
 
           {/* ── Comparativa InmoZen vs WordPress ── */}
