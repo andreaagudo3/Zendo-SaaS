@@ -16,7 +16,6 @@ function MarketingNavbar() {
       <div className="hidden md:flex items-center gap-8">
         <a href="#features" className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">Características</a>
         <a href="#pricing" className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">Precios</a>
-        <Link to="/login" className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">Log In</Link>
         <button className="px-5 py-2 bg-slate-900 text-white rounded-lg text-sm font-bold hover:bg-slate-800 transition-all shadow-sm active:scale-95">
           Prueba Gratuita
         </button>

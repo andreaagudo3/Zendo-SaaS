@@ -72,7 +72,7 @@ export default function SaaSLandingPage() {
               },
               {
                 title: 'Panel "Para Humanos"',
-                desc: 'Olvídate de WordPress. Nuestro panel es tan fácil como Instagram.',
+                desc: 'Olvídate de WordPress. Nuestro panel es tan fácil que no requiere formación.',
                 icon: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z',
                 color: 'indigo'
               },
@@ -107,122 +107,166 @@ export default function SaaSLandingPage() {
       <section id="pricing" className="py-32 bg-white relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-950 mb-6">Planes adaptados a tu escala</h2>
-            <p className="text-xl text-slate-600 max-w-2xl mx-auto">Elige el paquete que mejor se adapte a tus necesidades actuales.</p>
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-950 mb-6 italic">Tarifas InmoZen 2026</h2>
+            <p className="text-xl text-slate-600 max-w-2xl mx-auto italic">"No es solo una web, es tu propia casa digital sin intermediarios."</p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-            {/* PLAN ARRANQUE */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start mb-16">
+            {/* PLAN ESTÁNDAR */}
             <div className="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm hover:shadow-xl transition-all duration-300">
-              <h3 className="text-2xl font-bold text-slate-900 mb-2">ARRANQUE</h3>
-              <p className="text-slate-500 mb-6">Para agentes independientes.</p>
+              <div className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-4">Agente Local Top</div>
+              <h3 className="text-2xl font-bold text-slate-900 mb-2">ESTÁNDAR (Pro)</h3>
+              <p className="text-slate-500 mb-6 text-sm italic line-clamp-2">Ideal para consolidar tu marca en tu zona de influencia.</p>
               <div className="mb-2">
-                <span className="text-4xl font-extrabold text-slate-950">590€</span>
+                <span className="text-4xl font-extrabold text-slate-950">850€</span>
                 <span className="text-slate-500 text-sm font-medium ml-2">Setup único</span>
               </div>
-              <div className="mb-8">
-                <span className="text-2xl font-bold text-slate-950">29€</span>
-                <span className="text-slate-500 text-sm">/mes mantenimiento</span>
+              <div className="mb-8 border-b border-slate-100 pb-6 font-semibold">
+                <span className="text-2xl font-bold text-slate-950 font-sans tracking-tight">49€</span>
+                <span className="text-slate-500 text-sm">/mes</span>
               </div>
-              <ul className="space-y-4 mb-10 text-sm">
+              <ul className="space-y-4 mb-10 text-sm leading-relaxed">
                 {[
-                  'Hasta 20 propiedades',
-                  'Web SPA Ultrarrápida',
-                  'Filtros Básicos (Precio/Tipo)',
-                  'Formulario de leads',
-                  'Panel Admin Básico',
-                  'Entrega en 7 días'
+                  '1 Estilo de diseño (Fijo)',
+                  'Idioma: Solo Español (ES)',
+                  'Catálogo hasta 100 propiedades',
+                  'Google Maps (Link Externo)',
+                  'SEO Estándar (Metas Dinámicas)',
+                  'Panel Admin InmoZen Core',
+                  'WhatsApp Direct Trazable'
                 ].map((f, i) => (
-                  <li key={i} className="flex items-center gap-3 text-slate-700">
-                    <svg className="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                    {f}
+                  <li key={i} className="flex items-start gap-3 text-slate-700">
+                    <svg className="w-5 h-5 text-green-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
+                    <span>{f}</span>
                   </li>
                 ))}
               </ul>
-              <button className="w-full py-4 px-6 border-2 border-slate-900 text-slate-900 rounded-2xl font-bold hover:bg-slate-900 hover:text-white transition-all">Seleccionar Plan</button>
+              <button className="w-full py-4 px-6 border-2 border-slate-900 text-slate-900 rounded-2xl font-bold hover:bg-slate-900 hover:text-white transition-all">Empezar Ahora</button>
             </div>
 
-            {/* PLAN PROFESIONAL */}
-            <div className="bg-slate-950 rounded-3xl p-8 shadow-2xl relative lg:-translate-y-4 border-4 border-blue-500">
-              <div className="absolute top-0 right-8 -translate-y-1/2 bg-blue-500 text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest leading-relaxed">Más vendido ⭐</div>
-              <h3 className="text-2xl font-bold text-white mb-2">PROFESIONAL</h3>
-              <p className="text-slate-400 mb-6">Crecimiento sin límites.</p>
+            {/* PLAN CRECIMIENTO */}
+            <div className="bg-slate-950 rounded-3xl p-8 shadow-2xl relative lg:-translate-y-8 border-4 border-blue-500 ring-8 ring-blue-500/10">
+              <div className="absolute top-0 right-8 -translate-y-1/2 bg-blue-500 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest leading-relaxed">Más vendido ⭐ Agencia Internacional</div>
+              <h3 className="text-2xl font-bold text-white mb-2">CRECIMIENTO (Business)</h3>
+              <p className="text-slate-400 mb-6 text-sm italic">El estándar para quienes buscan captar cliente extranjero.</p>
               <div className="mb-2">
-                <span className="text-4xl font-extrabold text-white">950€</span>
+                <span className="text-4xl font-extrabold text-white">1.590€</span>
                 <span className="text-slate-400 text-sm font-medium ml-2">Setup único</span>
               </div>
-              <div className="mb-8">
-                <span className="text-2xl font-bold text-white">45€</span>
-                <span className="text-slate-400 text-sm">/mes mantenimiento</span>
+              <div className="mb-8 border-b border-white/10 pb-6 font-semibold">
+                <span className="text-2xl font-bold text-white font-sans tracking-tight">79€</span>
+                <span className="text-slate-400 text-sm">/mes</span>
               </div>
-              <ul className="space-y-4 mb-10 text-sm">
+              <ul className="space-y-4 mb-10 text-sm leading-relaxed">
                 {[
-                  'Propiedades Ilimitadas',
-                  'Filtros Avanzados (m2, habs)',
-                  'Gestión de Localidades',
-                  'SEO Automático (Slugs)',
-                  'Idiomas (ES/EN)',
-                  'Propiedades Destacadas',
-                  'Entrega 7-10 días'
+                  'Los 3 Estilos (Intercambiables)',
+                  'Multi-idioma (ES+EN Auto-detection)',
+                  'Avanzado por Localidades (SEO)',
+                  'Filtros dinámicos m² / Habitaciones',
+                  'Google Maps (Link Externo)',
+                  'Soporte técnico preferencial',
+                  'Actualizaciones automáticas'
                 ].map((f, i) => (
-                  <li key={i} className="flex items-center gap-3 text-slate-200">
-                    <svg className="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                    {f}
+                  <li key={i} className="flex items-start gap-3 text-slate-200">
+                    <svg className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
+                    <span>{f}</span>
                   </li>
                 ))}
               </ul>
-              <button className="w-full py-4 px-6 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-500 transition-all shadow-lg shadow-blue-900/20">Impulsar mi Inmobiliaria</button>
+              <button className="w-full py-4 px-6 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-500 transition-all shadow-lg shadow-blue-900/20">Mejorar mi Agencia</button>
             </div>
 
-            {/* PLAN ELITE */}
+            {/* PLAN LÍDER */}
             <div className="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm hover:shadow-xl transition-all duration-300">
-              <h3 className="text-2xl font-bold text-slate-900 mb-2">ELITE</h3>
-              <p className="text-slate-500 mb-6">Dominio total del mercado.</p>
+              <div className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-4">Dominio Total del Mercado</div>
+              <h3 className="text-2xl font-bold text-slate-900 mb-2">LÍDER (Enterprise)</h3>
+              <p className="text-slate-500 mb-6 text-sm italic line-clamp-2">Para inmobiliarias líderes que necesitan potencia bruta y datos.</p>
               <div className="mb-2">
-                <span className="text-4xl font-extrabold text-slate-950">1.450€</span>
-                <span className="text-slate-500 text-sm font-medium ml-2">Setup único</span>
+                <span className="text-inline font-medium text-slate-500 mr-1">Desde</span>
+                <span className="text-4xl font-extrabold text-slate-950">2.900€</span>
+                <span className="text-slate-500 text-xs font-medium ml-1">Setup</span>
               </div>
-              <div className="mb-8">
-                <span className="text-2xl font-bold text-slate-950">79€</span>
-                <span className="text-slate-500 text-sm">/mes mantenimiento</span>
+              <div className="mb-8 border-b border-slate-100 pb-6 font-semibold">
+                <span className="text-2xl font-bold text-slate-950 font-sans tracking-tight">149€</span>
+                <span className="text-slate-500 text-sm">/mes</span>
               </div>
-              <ul className="space-y-4 mb-10 text-sm">
+              <ul className="space-y-4 mb-10 text-sm leading-relaxed">
                 {[
-                  'Mapa de Google Maps Int.',
-                  'Traducción IA (4 idiomas)',
-                  'Blog / Sección de Noticias',
-                  'Exportación CSV/Excel',
-                  'Gestión Total + Leads',
-                  'Estrategia SEO Local',
-                  'Entrega 15 días'
+                  'Personalización UI (Look & Feel)',
+                  'Multi-idioma (IA Ilimitada)',
+                  'Mapa Interactivo Integrado (vía API)',
+                  'Estrategia de Contenidos (Blog)',
+                  'Módulo Senior de Leads / CRM',
+                  'Soporte Priority (< 4h)',
+                  'Garantía de Evolución de por vida'
                 ].map((f, i) => (
-                  <li key={i} className="flex items-center gap-3 text-slate-700">
-                    <svg className="w-5 h-5 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                    {f}
+                  <li key={i} className="flex items-start gap-3 text-slate-700">
+                    <svg className="w-5 h-5 text-purple-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
+                    <span>{f}</span>
                   </li>
                 ))}
               </ul>
-              <button className="w-full py-4 px-6 border-2 border-slate-900 text-slate-900 rounded-2xl font-bold hover:bg-slate-900 hover:text-white transition-all">Contactar con Ventas</button>
+              <button className="w-full py-4 px-6 border-2 border-slate-900 text-slate-900 rounded-2xl font-bold hover:bg-slate-900 hover:text-white transition-all">Consolidar Mi Imperio</button>
+            </div>
+          </div>
+
+          <div className="text-center bg-blue-50 py-4 px-6 rounded-2xl border border-blue-100 max-w-2xl mx-auto mb-24">
+            <p className="text-blue-900 text-sm font-medium italic">
+              "Todos los planes incluyen actualizaciones de seguridad y mejoras de la plataforma de por vida."
+            </p>
+          </div>
+
+          {/* ── Comparativa InmoZen vs WordPress ── */}
+          <div className="max-w-4xl mx-auto overflow-hidden rounded-3xl border border-slate-200 shadow-sm bg-slate-50/50">
+            <div className="bg-slate-900 text-white px-8 py-6 text-center">
+              <h3 className="text-2xl font-bold">InmoZen vs WordPress</h3>
+              <p className="text-slate-400 text-sm">Compara la calidad de tu activo digital</p>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left">
+                <thead>
+                  <tr className="border-b border-slate-200">
+                    <th className="px-8 py-4 text-sm font-bold text-slate-500 uppercase tracking-wider">Concepto</th>
+                    <th className="px-8 py-4 text-sm font-bold text-blue-600 uppercase tracking-wider bg-blue-50/50">InmoZen</th>
+                    <th className="px-8 py-4 text-sm font-bold text-slate-500 uppercase tracking-wider">WordPress / Otros</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 text-sm">
+                  {[
+                    ['Velocidad de carga', '< 1s (Instantánea)', '3s - 8s (Lenta)'],
+                    ['Seguridad', 'Arquitectura RLS (Blindada)', 'Vulnerable a plugins/scripts'],
+                    ['Mantenimiento', 'Cero (Nos encargamos)', 'Requiere actualizaciones constantes'],
+                    ['Panel de gestión', 'Intuitivo y Moderno', 'Complejo y fácil de romper'],
+                    ['Escalabilidad', 'SaaS Nativo', 'Limitada por la plantilla']
+                  ].map(([label, iz, wp], i) => (
+                    <tr key={i} className="hover:bg-white transition-colors">
+                      <td className="px-8 py-4 font-semibold text-slate-900">{label}</td>
+                      <td className="px-8 py-4 text-blue-700 font-bold bg-blue-50/30">{iz}</td>
+                      <td className="px-8 py-4 text-slate-500 italic">{wp}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── Servicios Extra ── */}
+      {/* ── Upselling ── */}
       <section className="py-24 bg-slate-50 border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl font-bold text-slate-900 mb-12">Servicios Extra (Upselling)</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <h2 className="text-3xl font-bold text-slate-900 mb-4">Aumenta tu impacto con servicios de valor</h2>
+          <p className="text-slate-600 mb-12 max-w-2xl mx-auto">Soluciones personalizadas para que tú solo te preocupes de vender.</p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             {[
-              { name: 'Migración de Datos', price: '200€', desc: 'Carga masiva XLM/Excel' },
-              { name: 'Botón WhatsApp Pro', price: '90€', desc: 'Chat con mensaje pers.' },
-              { name: 'Pack SEO Local', price: '150€', desc: 'GMB + Reseñas' },
-              { name: 'Gestión Dominio', price: '30€/año', desc: 'Configuración y renovación' }
+              { name: 'Migración de Catálogo', price: '350€', desc: 'Pasamos tus inmuebles de tu vieja web a InmoZen sin que muevas un dedo.' },
+              { name: 'Formación Admin Pro', price: '150€', desc: '1h por Zoom enseñándote a optimizar fotos y textos para convertir visitas en leads.' },
+              { name: 'Pack Dominio Blindado', price: '60€/año', desc: 'Gestión total de dominios y correos prof. bajo nuestra infraestructura segura.' }
             ].map((s, i) => (
-              <div key={i} className="bg-white p-6 rounded-2xl border border-slate-200">
-                <h4 className="font-bold text-slate-900 mb-1">{s.name}</h4>
-                <p className="text-blue-600 font-bold mb-2">Desde {s.price}</p>
-                <p className="text-xs text-slate-500">{s.desc}</p>
+              <div key={i} className="bg-white p-8 rounded-3xl border border-slate-200 hover:shadow-lg transition-all group">
+                <h4 className="font-bold text-xl text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">{s.name}</h4>
+                <p className="text-blue-600 font-extrabold text-2xl mb-4">Desde {s.price}</p>
+                <p className="text-sm text-slate-500 leading-relaxed">{s.desc}</p>
               </div>
             ))}
           </div>
