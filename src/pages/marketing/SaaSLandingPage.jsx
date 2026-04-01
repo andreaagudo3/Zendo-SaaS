@@ -3,13 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { supabase } from '../../services/supabaseClient';
 
 /**
- * SaaSLandingPage — The B2B marketing landing for InmoZen.
+ * SaaSLandingPage — The B2B marketing landing for Zendo.
  * Features: Hero section, Features grid, and simple Pricing.
  */
 export default function SaaSLandingPage() {
   const { t } = useTranslation();
 
-  const [demoUrl, setDemoUrl] = React.useState('https://parquesierra.inmozen.com'); // Fallback
+  const [demoUrl, setDemoUrl] = React.useState('https://parquesierra.zendo.com'); // Fallback
 
   React.useEffect(() => {
     async function fetchDemoTenant() {
@@ -121,7 +121,7 @@ export default function SaaSLandingPage() {
         </div>
       </section>
 
-      {/* ── Por qué InmoZen (Features) ── */}
+      {/* ── Por qué Zendo (Features) ── */}
       <section id="features" className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
@@ -169,7 +169,7 @@ export default function SaaSLandingPage() {
       <section id="pricing" className="py-32 bg-white relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-24">
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-950 mb-6 italic">Tarifas InmoZen 2026</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-950 mb-6 italic">Tarifas Zendo 2026</h2>
             <p className="text-xl text-slate-600 max-w-2xl mx-auto italic mb-8">"No es solo una web, es tu propia casa digital sin intermediarios."</p>
             
             {/* Escalabilidad Sticker (Visible near title) */}
@@ -284,10 +284,10 @@ export default function SaaSLandingPage() {
             </div>
           </div>
 
-          {/* ── Comparativa InmoZen vs WordPress ── */}
+          {/* ── Comparativa Zendo vs WordPress ── */}
           <div className="max-w-4xl mx-auto overflow-hidden rounded-3xl border border-slate-200 shadow-sm bg-slate-50/50">
             <div className="bg-slate-900 text-white px-8 py-6 text-center">
-              <h3 className="text-2xl font-bold">InmoZen vs WordPress</h3>
+              <h3 className="text-2xl font-bold">Zendo vs WordPress</h3>
               <p className="text-slate-400 text-sm">Compara la calidad de tu activo digital</p>
             </div>
             <div className="overflow-x-auto">
@@ -295,7 +295,7 @@ export default function SaaSLandingPage() {
                 <thead>
                   <tr className="border-b border-slate-200">
                     <th className="px-8 py-4 text-sm font-bold text-slate-500 uppercase tracking-wider">Concepto</th>
-                    <th className="px-8 py-4 text-sm font-bold text-blue-600 uppercase tracking-wider bg-blue-50/50">InmoZen</th>
+                    <th className="px-8 py-4 text-sm font-bold text-blue-600 uppercase tracking-wider bg-blue-50/50">Zendo</th>
                     <th className="px-8 py-4 text-sm font-bold text-slate-500 uppercase tracking-wider">WordPress / Otros</th>
                   </tr>
                 </thead>
@@ -361,7 +361,7 @@ export default function SaaSLandingPage() {
               Quiero informarme gratis
             </button>
             <p className="text-slate-400 font-medium italic text-lg">
-              Te enseñamos cómo pasar tus casas de tu viejo WordPress a InmoZen en una llamada de 15 minutos.
+              Te enseñamos cómo pasar tus casas de tu viejo WordPress a Zendo en una llamada de 15 minutos.
             </p>
           </div>
         </div>

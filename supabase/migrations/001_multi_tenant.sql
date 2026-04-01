@@ -1,6 +1,6 @@
 -- ============================================================
 -- 001_multi_tenant.sql
--- Multi-tenant SaaS architecture for InmoZen
+-- Multi-tenant SaaS architecture for Zendo
 --
 -- Creates:
 --   1. tenants          — one row per agency / white-label customer
@@ -63,25 +63,22 @@ INSERT INTO tenants (
   zone, province, country, address, email,
   phones, socials, features
 ) VALUES (
-  'inmozen',
-  'InmoZen',
-  'InmoZen Real Estate Group',
+  'zendo',
+  'Zendo',
+  'Zendo Real Estate Group',
   'Real Estate Minimalist',
-  'Encuentra la casa de tus sueños con la experiencia InmoZen. Lujo, minimalismo y eficiencia.',
+  'Encuentra la casa de tus sueños con la experiencia Zendo. Lujo, minimalismo y eficiencia.',
   true,
   NULL,
-  '#23c698',
+  '#70d577', 
   '#64748b',
   'MINIMAL',
-  'Costa del Sol',
-  'Málaga',
-  'España',
   'Av. Ricardo Soriano, 12, 29601 Marbella, Málaga',
-  'hello@inmozen.com',
+  'hello@zendo.com',
   '[{"number": "+34 600 00 00 00", "href": "tel:+34600000000"}]',
   '[
-    {"name": "Instagram", "href": "https://instagram.com/inmozen"},
-    {"name": "LinkedIn",  "href": "https://linkedin.com/company/inmozen"},
+    {"name": "Instagram", "href": "https://instagram.com/zendogroup"},
+    {"name": "LinkedIn",  "href": "https://linkedin.com/company/zendogroup"},
     {"name": "Twitter",   "href": "#"}
   ]',
   '{"isDemo": true, "i18n": true, "googleMaps": true, "advancedFilters": true, "whatsappButton": true}'

@@ -39,7 +39,7 @@ export const useThemeStore = create(
       }),
     }),
     {
-      name: 'inmozen-demo-theme',
+      name: 'zendo-demo-theme',
       storage: createJSONStorage(() => sessionStorage),
       onRehydrateStorage: () => (state) => {
         // Re-apply CSS variables from sessionStorage on hard reload.

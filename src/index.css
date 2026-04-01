@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════════════════════
-   DESIGN SYSTEM — InmoZen
+   DESIGN SYSTEM — Zendo
    Los tokens leen de --theme-* variables inyectadas dinámicamente
    por src/utils/themeInjector.js dependiendo de siteConfig.theme.
    ═══════════════════════════════════════════════════════════════ */

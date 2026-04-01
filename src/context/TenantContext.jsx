@@ -40,9 +40,9 @@ export function TenantProvider({ children }) {
           // Si entras a localhost:5173?tenant=parque-sierra -> busca ese slug
           query = query.eq('slug', tenantSlug);
         } else {
-          // POR DEFECTO EN LOCAL: Cargamos la Landing (InmoZen)
-          // Así, entrar a localhost:5173 es entrar a inmozen.com
-          query = query.eq('slug', 'inmozen'); 
+          // POR DEFECTO EN LOCAL: Cargamos la Landing (Zendo)
+          // Así, entrar a localhost:5173 es entrar a zendo.com
+          query = query.eq('slug', 'zendo'); 
         }
       } else {
         // --- LÓGICA PARA PRODUCCIÓN ---

@@ -10,14 +10,14 @@ export const SITE = {
    * Configuración Principal del Negocio
    * Cambia estos datos para generar una web diferente.
    */
-  name: 'InmoZen',
+  name: 'Zendo',
   tagline: 'Real Estate Minimalist',
-  fullName: 'InmoZen Real Estate Group',
+  fullName: 'Zendo Real Estate Group',
 
-  description: 'Encuentra la casa de tus sueños con la experiencia InmoZen. Lujo, minimalismo y eficiencia.',
+  description: 'Encuentra la casa de tus sueños con la experiencia Zendo. Lujo, minimalismo y eficiencia.',
   seo: {
-    titleTemplate: '%s | InmoZen',
-    defaultTitle: 'InmoZen - Real Estate',
+    titleTemplate: '%s | Zendo',
+    defaultTitle: 'Zendo - Real Estate',
   },
 
   zone: 'Costa del Sol',
@@ -31,13 +31,13 @@ export const SITE = {
   ],
 
   email: {
-    address: 'hello@inmozen.com',
-    href: 'mailto:hello@inmozen.com',
+    address: 'hello@zendo.com',
+    href: 'mailto:hello@zendo.com',
   },
 
   socials: [
-    { name: 'Instagram', href: 'https://instagram.com/inmozen' },
-    { name: 'LinkedIn', href: 'https://linkedin.com/company/inmozen' },
+    { name: 'Instagram', href: 'https://instagram.com/zendogroup' },
+    { name: 'LinkedIn', href: 'https://linkedin.com/company/zendogroup' },
     { name: 'Twitter', href: '#' },
   ],
 
