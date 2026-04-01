@@ -31,20 +31,21 @@ export default function SaaSLandingPage() {
             <span className="text-blue-600">alto rendimiento</span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto mb-12 leading-relaxed">
-            {t('marketing.hero.subtitle', 'Sin la lentitud de WordPress. Tecnología React + Supabase para inmobiliarias que quieren vender más y rápido.')}
+          <p className="text-xl md:text-2xl text-slate-600 max-w-4xl mx-auto mb-12 leading-relaxed italic">
+            Sin WordPress ni esperas. Tu web inmobiliaria con un panel de gestión tan fácil como usar Instagram: sube casas y cierra ventas en segundos.
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
             <button className="w-full sm:w-auto px-10 py-5 bg-slate-950 text-white rounded-2xl font-bold text-xl hover:bg-slate-800 transition-all shadow-xl hover:shadow-blue-200/50 transform hover:-translate-y-1">
-              {t('marketing.hero.cta_primary', 'Empezar ahora')}
+              Empezar ahora
             </button>
             <button className="w-full sm:w-auto px-10 py-5 bg-white text-slate-900 border border-slate-200 rounded-2xl font-bold text-xl hover:bg-slate-50 transition-all shadow-sm">
-              {t('marketing.hero.cta_secondary', 'Ver planes')}
+              Ver planes
             </button>
           </div>
           
-          <div className="mt-20 relative max-w-6xl mx-auto group">
+          <div className="mt-24 relative max-w-6xl mx-auto group">
+            <div className="mb-6 text-slate-500 font-bold text-lg italic tracking-tight">Así de fácil es gestionar tu agencia 👇</div>
             <div className="relative rounded-3xl border border-slate-200 bg-white p-3 shadow-[0_20px_50px_rgba(8,112,184,0.12)] overflow-hidden">
                <div className="bg-slate-900 rounded-2xl aspect-video flex items-center justify-center border border-slate-100 overflow-hidden relative">
                  {/* Loom Embed */}
