@@ -26,19 +26,31 @@ export function TenantProvider({ children }) {
 
   useEffect(() => {
     async function resolveTenant() {
-      const hostname = window.location.hostname
-      const isLocal = hostname === 'localhost' || hostname === '127.0.0.1'
+      const hostname = window.location.hostname;
+      const isLocal = hostname === 'localhost' || hostname === '127.0.0.1';
 
-      let query = supabase.from('tenants').select('*')
-      
+      let query = supabase.from('tenants').select('*');
+
       if (isLocal) {
-        // Default to 'inmozen' on localhost as requested
-        query = query.eq('slug', 'inmozen')
+        // --- LÓGICA PARA LOCALHOST ---
+        const params = new URLSearchParams(window.location.search);
+        const tenantSlug = params.get('tenant');
+
+        if (tenantSlug) {
+          // Si entras a localhost:5173?tenant=parque-sierra -> busca ese slug
+          query = query.eq('slug', tenantSlug);
+        } else {
+          // POR DEFECTO EN LOCAL: Cargamos la Landing (InmoZen)
+          // Así, entrar a localhost:5173 es entrar a inmozen.com
+          query = query.eq('slug', 'inmozen'); 
+        }
       } else {
-        query = query.eq('custom_domain', hostname)
+        // --- LÓGICA PARA PRODUCCIÓN ---
+        // Aquí manda el dominio que haya en la barra de direcciones
+        query = query.eq('custom_domain', hostname);
       }
 
-      const { data, error } = await query.single()
+      const { data, error } = await query.single();
 
       if (error || !data) {
         console.error('[TenantProvider] Could not resolve tenant:', error?.message)
