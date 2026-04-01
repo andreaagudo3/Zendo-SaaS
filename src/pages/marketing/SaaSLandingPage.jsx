@@ -44,15 +44,19 @@ export default function SaaSLandingPage() {
             </button>
           </div>
           
-          <div className="mt-20 relative max-w-6xl mx-auto">
+          <div className="mt-20 relative max-w-6xl mx-auto group">
             <div className="relative rounded-3xl border border-slate-200 bg-white p-3 shadow-[0_20px_50px_rgba(8,112,184,0.12)] overflow-hidden">
-               <div className="bg-slate-50 rounded-2xl aspect-[16/10] md:aspect-[21/9] flex items-center justify-center border border-slate-100 overflow-hidden">
-                 <img 
-                    src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=1200" 
-                    alt="Modern Real Estate Interface" 
-                    className="w-full h-full object-cover opacity-90 transition-transform hover:scale-105 duration-1000"
-                 />
-                 <div className="absolute inset-0 bg-gradient-to-t from-white/20 to-transparent" />
+               <div className="bg-slate-900 rounded-2xl aspect-video flex items-center justify-center border border-slate-100 overflow-hidden relative">
+                 {/* Loom Embed */}
+                 <iframe 
+                    src="https://www.loom.com/embed/4d02c71a99dd46aab04c920ef3c8426c?autoplay=1&hide_owner=true&hide_share=true&hide_title=true&hide_embed_overlay=true" 
+                    frameBorder="0" 
+                    webkitallowfullscreen="true" 
+                    mozallowfullscreen="true" 
+                    allowFullScreen 
+                    allow="autoplay; fullscreen"
+                    className="absolute top-0 left-0 w-full h-full"
+                 ></iframe>
                </div>
             </div>
           </div>
@@ -112,28 +116,27 @@ export default function SaaSLandingPage() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start mb-16">
-            {/* PLAN ESTÁNDAR */}
+            {/* PLAN PRO */}
             <div className="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm hover:shadow-xl transition-all duration-300">
-              <div className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-4">Agente Local Top</div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-2">ESTÁNDAR (Pro)</h3>
-              <p className="text-slate-500 mb-6 text-sm italic line-clamp-2">Ideal para consolidar tu marca en tu zona de influencia.</p>
+              <div className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-4">Agente Independiente</div>
+              <h3 className="text-2xl font-bold text-slate-900 mb-2">PLAN PRO</h3>
               <div className="mb-2">
                 <span className="text-4xl font-extrabold text-slate-950">850€</span>
                 <span className="text-slate-500 text-sm font-medium ml-2">Setup único</span>
               </div>
               <div className="mb-8 border-b border-slate-100 pb-6 font-semibold">
-                <span className="text-2xl font-bold text-slate-950 font-sans tracking-tight">49€</span>
+                <span className="text-2xl font-bold text-slate-950">49€</span>
                 <span className="text-slate-500 text-sm">/mes</span>
               </div>
               <ul className="space-y-4 mb-10 text-sm leading-relaxed">
                 {[
-                  '1 Estilo de diseño (Fijo)',
-                  'Idioma: Solo Español (ES)',
-                  'Catálogo hasta 100 propiedades',
-                  'Google Maps (Link Externo)',
-                  'SEO Estándar (Metas Dinámicas)',
-                  'Panel Admin InmoZen Core',
-                  'WhatsApp Direct Trazable'
+                  'Límite: Hasta 30 propiedades',
+                  'CRM / Panel Admin Completo',
+                  'Contacto via Email Directo',
+                  '1 Idioma (Español)',
+                  'Ubicación Maps: No incluido',
+                  '1 Tema UI a elegir (Fijo)',
+                  'Filtros: Precio / Tipo / Zona'
                 ].map((f, i) => (
                   <li key={i} className="flex items-start gap-3 text-slate-700">
                     <svg className="w-5 h-5 text-green-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
@@ -141,64 +144,62 @@ export default function SaaSLandingPage() {
                   </li>
                 ))}
               </ul>
-              <button className="w-full py-4 px-6 border-2 border-slate-900 text-slate-900 rounded-2xl font-bold hover:bg-slate-900 hover:text-white transition-all">Empezar Ahora</button>
+              <button className="w-full py-4 px-6 border-2 border-slate-900 text-slate-900 rounded-2xl font-bold hover:bg-slate-900 hover:text-white transition-all">Seleccionar PRO</button>
             </div>
 
-            {/* PLAN CRECIMIENTO */}
+            {/* PLAN BUSINESS */}
             <div className="bg-slate-950 rounded-3xl p-8 shadow-2xl relative lg:-translate-y-8 border-4 border-blue-500 ring-8 ring-blue-500/10">
-              <div className="absolute top-0 right-8 -translate-y-1/2 bg-blue-500 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest leading-relaxed">Más vendido ⭐ Agencia Internacional</div>
-              <h3 className="text-2xl font-bold text-white mb-2">CRECIMIENTO (Business)</h3>
-              <p className="text-slate-400 mb-6 text-sm italic">El estándar para quienes buscan captar cliente extranjero.</p>
+              <div className="absolute top-0 right-8 -translate-y-1/2 bg-blue-500 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest leading-relaxed">Más vendido ⭐ Agencia Pro</div>
+              <h3 className="text-2xl font-bold text-white mb-2">PLAN BUSINESS</h3>
               <div className="mb-2">
                 <span className="text-4xl font-extrabold text-white">1.590€</span>
                 <span className="text-slate-400 text-sm font-medium ml-2">Setup único</span>
               </div>
               <div className="mb-8 border-b border-white/10 pb-6 font-semibold">
-                <span className="text-2xl font-bold text-white font-sans tracking-tight">79€</span>
+                <span className="text-2xl font-bold text-white">79€</span>
                 <span className="text-slate-400 text-sm">/mes</span>
               </div>
               <ul className="space-y-4 mb-10 text-sm leading-relaxed">
                 {[
-                  'Los 3 Estilos (Intercambiables)',
-                  'Multi-idioma (ES+EN Auto-detection)',
-                  'Avanzado por Localidades (SEO)',
-                  'Filtros dinámicos m² / Habitaciones',
-                  'Google Maps (Link Externo)',
-                  'Soporte técnico preferencial',
-                  'Actualizaciones automáticas'
+                  'Límite: Hasta 120 propiedades',
+                  'CRM / Panel Admin Completo',
+                  'Contacto via Email + WhatsApp',
+                  '2 Idiomas (Español / Inglés)',
+                  'Link a Google Maps incluido',
+                  'Acceso a los 3 Temas UI',
+                  'Filtros: + Hab / m² / Estado'
                 ].map((f, i) => (
                   <li key={i} className="flex items-start gap-3 text-slate-200">
                     <svg className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
-                    <span>{f}</span>
+                    <span className="font-semibold">{f}</span>
                   </li>
                 ))}
               </ul>
-              <button className="w-full py-4 px-6 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-500 transition-all shadow-lg shadow-blue-900/20">Mejorar mi Agencia</button>
+              <button className="w-full py-4 px-6 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-500 transition-all shadow-lg shadow-blue-900/20">Impulsar mi Negocio</button>
             </div>
 
-            {/* PLAN LÍDER */}
+            {/* PLAN ENTERPRISE */}
             <div className="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm hover:shadow-xl transition-all duration-300">
-              <div className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-4">Dominio Total del Mercado</div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-2">LÍDER (Enterprise)</h3>
-              <p className="text-slate-500 mb-6 text-sm italic line-clamp-2">Para inmobiliarias líderes que necesitan potencia bruta y datos.</p>
+              <div className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-4">Líderes del Mercado</div>
+              <h3 className="text-2xl font-bold text-slate-900 mb-2">PLAN ENTERPRISE</h3>
               <div className="mb-2">
                 <span className="text-inline font-medium text-slate-500 mr-1">Desde</span>
                 <span className="text-4xl font-extrabold text-slate-950">2.900€</span>
                 <span className="text-slate-500 text-xs font-medium ml-1">Setup</span>
               </div>
               <div className="mb-8 border-b border-slate-100 pb-6 font-semibold">
-                <span className="text-2xl font-bold text-slate-950 font-sans tracking-tight">149€</span>
+                <span className="text-2xl font-bold text-slate-950">149€</span>
                 <span className="text-slate-500 text-sm">/mes</span>
               </div>
               <ul className="space-y-4 mb-10 text-sm leading-relaxed">
                 {[
-                  'Personalización UI (Look & Feel)',
-                  'Multi-idioma (IA Ilimitada)',
-                  'Mapa Interactivo Integrado (vía API)',
-                  'Estrategia de Contenidos (Blog)',
-                  'Módulo Senior de Leads / CRM',
-                  'Soporte Priority (< 4h)',
-                  'Garantía de Evolución de por vida'
+                  'Límite: Hasta 500 propiedades',
+                  'CRM / Panel Admin Completo',
+                  'Full Integración de Contacto',
+                  'Multi-idioma (Hasta 4)',
+                  'Link a Google Maps incluido',
+                  'Acceso a los 3 Temas UI',
+                  'Filtros: Gestión Total'
                 ].map((f, i) => (
                   <li key={i} className="flex items-start gap-3 text-slate-700">
                     <svg className="w-5 h-5 text-purple-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
@@ -206,7 +207,7 @@ export default function SaaSLandingPage() {
                   </li>
                 ))}
               </ul>
-              <button className="w-full py-4 px-6 border-2 border-slate-900 text-slate-900 rounded-2xl font-bold hover:bg-slate-900 hover:text-white transition-all">Consolidar Mi Imperio</button>
+              <button className="w-full py-4 px-6 border-2 border-slate-900 text-slate-900 rounded-2xl font-bold hover:bg-slate-900 hover:text-white transition-all">Hablar con Ventas</button>
             </div>
           </div>
 
