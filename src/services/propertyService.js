@@ -134,7 +134,7 @@ async function withImages(properties) {
         const cover = dbImages.find((i) => i.is_cover) ?? dbImages[0]
         return {
           ...property,
-          images:     dbImages.map((i) => i.url),
+          images: dbImages.map((i) => i.url),
           coverImage: cover.url,
         }
       }
@@ -149,14 +149,12 @@ async function withImages(properties) {
 
 // ─── Queries públicas ─────────────────────────────────────────────────────────
 
-/**
- * Obtiene todas las propiedades publicadas con sus imágenes.
- * @returns {Promise<Property[]>}
- */
-export async function getProperties() {
+export async function getProperties(tenantId) {
+  if (!tenantId) return []
   const { data, error } = await supabase
     .from('properties')
     .select(PROPERTY_FIELDS)
+    .eq('tenant_id', tenantId)
     .eq('published', true)
     .order('created_at', { ascending: false })
 
@@ -168,14 +166,12 @@ export async function getProperties() {
   return withImages(data ?? [])
 }
 
-/**
- * Obtiene solo las propiedades destacadas con sus imágenes.
- * @returns {Promise<Property[]>}
- */
-export async function getFeaturedProperties() {
+export async function getFeaturedProperties(tenantId) {
+  if (!tenantId) return []
   const { data, error } = await supabase
     .from('properties')
     .select(PROPERTY_FIELDS)
+    .eq('tenant_id', tenantId)
     .eq('published', true)
     .eq('featured', true)
     .order('created_at', { ascending: false })
@@ -188,15 +184,12 @@ export async function getFeaturedProperties() {
   return withImages(data ?? [])
 }
 
-/**
- * Obtiene una propiedad por su slug con sus imágenes.
- * @param {string} slug
- * @returns {Promise<Property|null>}
- */
-export async function getPropertyBySlug(slug) {
+export async function getPropertyBySlug(slug, tenantId) {
+  if (!tenantId) return null
   const { data, error } = await supabase
     .from('properties')
     .select(PROPERTY_FIELDS)
+    .eq('tenant_id', tenantId)
     .eq('slug', slug)
     .eq('published', true)
     .single()
@@ -214,7 +207,7 @@ export async function getPropertyBySlug(slug) {
     const cover = dbImages.find((i) => i.is_cover) ?? dbImages[0]
     return {
       ...data,
-      images:     dbImages.map((i) => i.url),
+      images: dbImages.map((i) => i.url),
       coverImage: cover.url,
     }
   }
@@ -234,7 +227,8 @@ export async function getPropertyBySlug(slug) {
  */
 export const PAGE_SIZE = 12
 
-export async function getPropertiesPaginated(filters = {}, page = 1) {
+export async function getPropertiesPaginated(filters = {}, page = 1, tenantId) {
+  if (!tenantId) return { data: [], count: 0 }
   const { locationFilter, listing_type, bedrooms, minPrice, maxPrice } = filters
 
   const from = (page - 1) * PAGE_SIZE
@@ -243,6 +237,7 @@ export async function getPropertiesPaginated(filters = {}, page = 1) {
   let query = supabase
     .from('properties')
     .select(PROPERTY_FIELDS, { count: 'exact' })
+    .eq('tenant_id', tenantId)
     .eq('published', true)
 
   // Filtro de ubicación jerárquico: 'loc:uuid' | 'prov:uuid' | 'all'
@@ -322,16 +317,14 @@ export async function getProvincesWithLocations() {
   }))
 }
 
-/**
- * @deprecated Usar getPropertiesPaginated en su lugar para el listado.
- * Se mantiene para compatibilidad con HomePagey otras pantallas.
- */
-export async function searchProperties(filters = {}) {
+export async function searchProperties(filters = {}, tenantId) {
+  if (!tenantId) return []
   const { location_id, listing_type, bedrooms, minPrice, maxPrice } = filters
 
   let query = supabase
     .from('properties')
     .select(PROPERTY_FIELDS)
+    .eq('tenant_id', tenantId)
     .eq('published', true)
 
   if (location_id && location_id !== 'all') {

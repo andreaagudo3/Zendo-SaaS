@@ -11,14 +11,13 @@ import { useTenant } from '../context/TenantContext'
 import { useThemeStore } from '../store/themeStore'
 
 export default function HomePage() {
-  const store = usePropertiesStore()
-  useProperties(store)
-  const { t } = useTranslation(['home', 'common'])
-  const navigate = useNavigate()
-
-  // ── Valores del Tenant (Base de Datos) ──
   const tenant = useTenant()
   const theme = useThemeStore((s) => s.theme)
+  const store = usePropertiesStore()
+  useProperties(store, tenant?.id)
+
+  const { t } = useTranslation(['home', 'common'])
+  const navigate = useNavigate()
 
   const isMinimal = theme === 'MINIMAL'
   const isCorporate = theme === 'CORPORATE'

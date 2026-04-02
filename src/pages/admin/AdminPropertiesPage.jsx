@@ -14,17 +14,17 @@ import AdminLayout from './AdminLayout'
  * Desktop: tabla. Móvil: cards.
  */
 export default function AdminPropertiesPage() {
-  const [properties, setProperties]         = useState([])
-  const [totalCount, setTotalCount]         = useState(0)
-  const [loading, setLoading]               = useState(true)
-  const [deletingId, setDeletingId]         = useState(null)
-  const [updatingId, setUpdatingId]         = useState(null)
-  const [error, setError]                   = useState(null)
+  const [properties, setProperties] = useState([])
+  const [totalCount, setTotalCount] = useState(0)
+  const [loading, setLoading] = useState(true)
+  const [deletingId, setDeletingId] = useState(null)
+  const [updatingId, setUpdatingId] = useState(null)
+  const [error, setError] = useState(null)
   const [featuredFilter, setFeaturedFilter] = useState('all')
-  const [searchInput, setSearchInput]       = useState('')
-  const [search, setSearch]                 = useState('')         // debounced
-  const [page, setPage]                     = useState(1)
-  const debounceRef                         = useRef(null)
+  const [searchInput, setSearchInput] = useState('')
+  const [search, setSearch] = useState('')         // debounced
+  const [page, setPage] = useState(1)
+  const debounceRef = useRef(null)
 
   const totalPages = Math.max(1, Math.ceil(totalCount / ADMIN_PAGE_SIZE))
 
@@ -112,8 +112,8 @@ export default function AdminPropertiesPage() {
   }, [page])
 
   const FILTER_OPTS = [
-    { value: 'all',          label: 'Todas' },
-    { value: 'featured',     label: '★ Destacadas' },
+    { value: 'all', label: 'Todas' },
+    { value: 'featured', label: '★ Destacadas' },
     { value: 'not_featured', label: '☆ No destacadas' },
   ]
 
@@ -124,8 +124,8 @@ export default function AdminPropertiesPage() {
 
   const statusCls = (status) =>
     status === 'available' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
-    status === 'reserved'  ? 'bg-amber-50 text-amber-700 border-amber-200' :
-    'bg-secondary-100 text-secondary-500 border-secondary-200'
+      status === 'reserved' ? 'bg-amber-50 text-amber-700 border-amber-200' :
+        'bg-secondary-100 text-secondary-500 border-secondary-200'
 
   const Spinner = () => (
     <div className="flex items-center justify-center py-20 text-secondary-400">
@@ -189,11 +189,10 @@ export default function AdminPropertiesPage() {
             key={value}
             type="button"
             onClick={() => handleFeaturedFilter(value)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-              featuredFilter === value
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${featuredFilter === value
                 ? 'bg-primary-700 text-white'
                 : 'bg-white border border-secondary-200 text-secondary-600 hover:bg-secondary-50'
-            }`}
+              }`}
           >
             {label}
           </button>
@@ -230,9 +229,8 @@ export default function AdminPropertiesPage() {
                     onClick={() => handleToggleFeatured(p)}
                     disabled={updatingId === p.id}
                     aria-label={p.featured ? 'Quitar destacada' : 'Marcar como destacada'}
-                    className={`text-xl leading-none transition-transform hover:scale-110 disabled:opacity-40 ${
-                      p.featured ? 'text-amber-400' : 'text-secondary-300'
-                    }`}
+                    className={`text-xl leading-none transition-transform hover:scale-110 disabled:opacity-40 ${p.featured ? 'text-amber-400' : 'text-secondary-300'
+                      }`}
                   >
                     {p.featured ? '★' : '☆'}
                   </button>
@@ -321,9 +319,8 @@ export default function AdminPropertiesPage() {
                       onClick={() => handleToggleFeatured(p)}
                       disabled={updatingId === p.id}
                       aria-label={p.featured ? 'Quitar destacada' : 'Marcar como destacada'}
-                      className={`text-xl leading-none transition-transform hover:scale-125 disabled:opacity-40 ${
-                        p.featured ? 'text-amber-400' : 'text-secondary-300 hover:text-amber-300'
-                      }`}
+                      className={`text-xl leading-none transition-transform hover:scale-125 disabled:opacity-40 ${p.featured ? 'text-amber-400' : 'text-secondary-300 hover:text-amber-300'
+                        }`}
                     >
                       {p.featured ? '★' : '☆'}
                     </button>
@@ -401,11 +398,10 @@ export default function AdminPropertiesPage() {
                   key={item}
                   type="button"
                   onClick={() => setPage(item)}
-                  className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${
-                    page === item
+                  className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${page === item
                       ? 'bg-primary-700 text-white'
                       : 'bg-white border border-secondary-200 text-secondary-600 hover:bg-secondary-50'
-                  }`}
+                    }`}
                 >
                   {item}
                 </button>

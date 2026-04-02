@@ -67,14 +67,14 @@ export default function AdminLocationsPage() {
       if (activeTab === 'provinces') {
         const { data, error } = await createProvince(newName.trim())
         if (error) throw error
-        setProvinces((prev) => [...prev, data].sort((a,b) => a.name.localeCompare(b.name)))
+        setProvinces((prev) => [...prev, data].sort((a, b) => a.name.localeCompare(b.name)))
       } else {
         const { data, error } = await createLocation(newName.trim(), newProvId)
         if (error) throw error
         // Para location, devolvemos el join a mano en la UI para no hacer refetch
         const provName = provinces.find(p => p.id === newProvId)?.name || ''
         const newLoc = { ...data, provinces: { name: provName } }
-        setLocations((prev) => [...prev, newLoc].sort((a,b) => a.name.localeCompare(b.name)))
+        setLocations((prev) => [...prev, newLoc].sort((a, b) => a.name.localeCompare(b.name)))
       }
       setNewName('')
       setNewProvId('')
@@ -128,7 +128,7 @@ export default function AdminLocationsPage() {
   // --- HANDLERS BORRADO ---
   async function handleDelete(id) {
     if (!window.confirm(`¿Estás seguro de que deseas eliminar permanentemente esto?`)) return
-    
+
     setErrorMsg('')
     try {
       if (activeTab === 'provinces') {
@@ -147,11 +147,11 @@ export default function AdminLocationsPage() {
   }
 
   // --- DERIVADOS DATOS (BÚSQUEDA) ---
-  const filteredProvinces = provinces.filter(p => 
+  const filteredProvinces = provinces.filter(p =>
     p.name.toLowerCase().includes(searchQuery.toLowerCase())
   )
-  const filteredLocations = locations.filter(l => 
-    l.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+  const filteredLocations = locations.filter(l =>
+    l.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     (l.provinces?.name || '').toLowerCase().includes(searchQuery.toLowerCase())
   )
 
@@ -175,21 +175,19 @@ export default function AdminLocationsPage() {
       {/* TABS */}
       <div className="flex gap-2 mb-6 border-b border-secondary-200">
         <button
-          className={`px-4 py-2 text-sm font-semibold border-b-2 transition-colors ${
-            activeTab === 'provinces'
+          className={`px-4 py-2 text-sm font-semibold border-b-2 transition-colors ${activeTab === 'provinces'
               ? 'border-primary-600 text-primary-700'
               : 'border-transparent text-secondary-500 hover:text-secondary-700 hover:border-secondary-300'
-          }`}
+            }`}
           onClick={() => { setActiveTab('provinces'); cancelEdit(); setNewName(''); setErrorMsg(''); setSearchQuery('') }}
         >
           Provincias ({provinces.length})
         </button>
         <button
-          className={`px-4 py-2 text-sm font-semibold border-b-2 transition-colors ${
-            activeTab === 'locations'
+          className={`px-4 py-2 text-sm font-semibold border-b-2 transition-colors ${activeTab === 'locations'
               ? 'border-primary-600 text-primary-700'
               : 'border-transparent text-secondary-500 hover:text-secondary-700 hover:border-secondary-300'
-          }`}
+            }`}
           onClick={() => { setActiveTab('locations'); cancelEdit(); setNewName(''); setErrorMsg(''); setSearchQuery('') }}
         >
           Localidades ({locations.length})

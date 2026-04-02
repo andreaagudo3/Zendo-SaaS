@@ -4,15 +4,14 @@ import { getProperties } from './propertyService'
 /**
  * useProperties — hook de servicio que carga propiedades desde Supabase.
  *
- * Mantiene la misma interfaz que la versión mock:
- *   el store recibe setProperties / setLoading / setError sin cambios.
- *
  * @param {object} store  Objeto retornado por usePropertiesStore()
+ * @param {string} tenantId ID del inquilino actual
  */
-export function useProperties(store) {
+export function useProperties(store, tenantId) {
   const { setProperties, setLoading, setError } = store
 
   useEffect(() => {
+    if (!tenantId) return;
     let cancelled = false
 
     async function loadProperties() {
@@ -20,7 +19,7 @@ export function useProperties(store) {
       setError(null)
 
       try {
-        const data = await getProperties()
+        const data = await getProperties(tenantId)
 
         if (!cancelled) {
           setProperties(data)
@@ -41,5 +40,5 @@ export function useProperties(store) {
     return () => {
       cancelled = true
     }
-  }, [setProperties, setLoading, setError])
+  }, [setProperties, setLoading, setError, tenantId])
 }

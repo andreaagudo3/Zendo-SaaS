@@ -9,6 +9,7 @@ import { PropertySearchBar } from '../components/search/PropertySearchBar'
 import { PropertyFiltersModal } from '../components/search/PropertyFiltersModal'
 import { FilterChips } from '../components/search/FilterChips'
 import { useThemeStore } from '../store/themeStore'
+import { useTenant } from '../context/TenantContext'
 
 const INITIAL_FILTERS = {
   type: 'all',
@@ -39,6 +40,7 @@ function paramsToFilters(searchParams) {
 }
 
 export default function PropertiesPage() {
+  const tenant = useTenant()
   const [searchParams, setSearchParams] = useSearchParams()
   const { t } = useTranslation(['properties', 'common'])
 
@@ -81,7 +83,7 @@ export default function PropertiesPage() {
       maxPrice: filters.maxPrice,
     }
 
-    getPropertiesPaginated(serviceFilters, page)
+    getPropertiesPaginated(serviceFilters, page, tenant?.id)
       .then(({ data, count }) => {
         if (!cancelled) {
           setResults(data)
@@ -97,7 +99,7 @@ export default function PropertiesPage() {
       })
 
     return () => { cancelled = true }
-  }, [filters, page])
+  }, [filters, page, tenant?.id])
 
   useEffect(() => {
     setSearchParams(filtersToParams(filters, page), { replace: true })

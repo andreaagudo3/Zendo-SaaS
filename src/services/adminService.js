@@ -82,7 +82,7 @@ export const ADMIN_PAGE_SIZE = 20
  */
 export async function getAdminPropertiesPaginated(page = 1, search = '', featuredFilter = 'all') {
   const from = (page - 1) * ADMIN_PAGE_SIZE
-  const to   = from + ADMIN_PAGE_SIZE - 1
+  const to = from + ADMIN_PAGE_SIZE - 1
 
   let query = supabase
     .from('properties')
@@ -90,7 +90,7 @@ export async function getAdminPropertiesPaginated(page = 1, search = '', feature
     .order('updated_at', { ascending: false })
 
   // Filtro destacadas
-  if (featuredFilter === 'featured')     query = query.eq('featured', true)
+  if (featuredFilter === 'featured') query = query.eq('featured', true)
   if (featuredFilter === 'not_featured') query = query.eq('featured', false)
 
   // Búsqueda por título, referencia o localidad

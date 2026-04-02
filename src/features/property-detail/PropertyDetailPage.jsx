@@ -26,7 +26,7 @@ export default function PropertyDetailPage() {
   
   // Data Fetching & State
   const store = usePropertiesStore()
-  useProperties(store)
+  useProperties(store, tenant?.id)
 
   const property = store.properties.find((p) => p.slug === slug)
 

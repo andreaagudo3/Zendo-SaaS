@@ -4,11 +4,11 @@ import {
   createProperty, updateProperty,
   getAllProperties, getProvinces, createLocation, createProvince
 } from '../../services/adminService'
-import { supabase }     from '../../services/supabaseClient'
-import { useTenant }    from '../../context/TenantContext'
+import { supabase } from '../../services/supabaseClient'
+import { useTenant } from '../../context/TenantContext'
 import { slugify, generateReferenceCode } from '../../utils/slugify'
-import ImageUploader    from '../../components/admin/ImageUploader'
-import AdminLayout      from './AdminLayout'
+import ImageUploader from '../../components/admin/ImageUploader'
+import AdminLayout from './AdminLayout'
 
 const EMPTY_FORM = {
   title: '', description: '', price: '',
@@ -37,27 +37,27 @@ export default function PropertyFormPage() {
   const navigate = useNavigate()
   const tenant = useTenant()
 
-  const [form, setForm]                 = useState(EMPTY_FORM)
+  const [form, setForm] = useState(EMPTY_FORM)
   const [referenceCode, setReferenceCode] = useState('')
   const [propertySlug, setPropertySlug] = useState('') // slug for the saved property
-  const [status, setStatus]             = useState('idle') // idle | saving | success | error
-  const [errorMsg, setErrorMsg]         = useState('')
-  const [loadingProp, setLoadingProp]   = useState(isEdit)
+  const [status, setStatus] = useState('idle') // idle | saving | success | error
+  const [errorMsg, setErrorMsg] = useState('')
+  const [loadingProp, setLoadingProp] = useState(isEdit)
 
   // Locations data
-  const [provinces, setProvinces]           = useState([])
-  const [locations, setLocations]           = useState([])
+  const [provinces, setProvinces] = useState([])
+  const [locations, setLocations] = useState([])
   const [selectedProvince, setSelectedProvince] = useState('')
 
   // Inline province creation
-  const [isAddingProvince, setIsAddingProvince]   = useState(false)
-  const [newProvinceName, setNewProvinceName]       = useState('')
-  const [isSavingProvince, setIsSavingProvince]     = useState(false)
+  const [isAddingProvince, setIsAddingProvince] = useState(false)
+  const [newProvinceName, setNewProvinceName] = useState('')
+  const [isSavingProvince, setIsSavingProvince] = useState(false)
 
   // Inline location creation
-  const [isAddingLocation, setIsAddingLocation]   = useState(false)
-  const [newLocationName, setNewLocationName]       = useState('')
-  const [isSavingLocation, setIsSavingLocation]     = useState(false)
+  const [isAddingLocation, setIsAddingLocation] = useState(false)
+  const [newLocationName, setNewLocationName] = useState('')
+  const [isSavingLocation, setIsSavingLocation] = useState(false)
 
   // Load provinces and locations on mount
   useEffect(() => {
@@ -87,20 +87,20 @@ export default function PropertyFormPage() {
       setReferenceCode(prop.reference_code ?? '')
       setPropertySlug(prop.slug ?? '')
       setForm({
-        title:         prop.title         ?? '',
-        description:   prop.description   ?? '',
-        price:         prop.price         ?? '',
-        location_id:   prop.location_id   ?? '',
-        bedrooms:      prop.bedrooms      ?? '',
-        bathrooms:     prop.bathrooms     ?? '',
-        size_m2:       prop.size_m2       ?? '',
-        listing_type:  prop.listing_type  ?? 'sale',
+        title: prop.title ?? '',
+        description: prop.description ?? '',
+        price: prop.price ?? '',
+        location_id: prop.location_id ?? '',
+        bedrooms: prop.bedrooms ?? '',
+        bathrooms: prop.bathrooms ?? '',
+        size_m2: prop.size_m2 ?? '',
+        listing_type: prop.listing_type ?? 'sale',
         property_type: prop.property_type ?? '',
-        status:        prop.status        ?? 'available',
-        published:     prop.published     ?? false,
-        featured:      prop.featured      ?? false,
+        status: prop.status ?? 'available',
+        published: prop.published ?? false,
+        featured: prop.featured ?? false,
         meta_description: prop.meta_description ?? '',
-        meta_title:       prop.meta_title       ?? '',
+        meta_title: prop.meta_title ?? '',
       })
 
       // Resolve selected province from the current location
@@ -136,20 +136,20 @@ export default function PropertyFormPage() {
     const generatedSlug = slugify(form.title)
 
     const payload = {
-      title:         form.title.trim(),
-      description:   form.description.trim() || null,
-      price:         form.price !== '' ? Number(form.price) : null,
-      location_id:   form.location_id || null,
-      bedrooms:      form.bedrooms  !== '' ? Number(form.bedrooms)  : null,
-      bathrooms:     form.bathrooms !== '' ? Number(form.bathrooms) : null,
-      size_m2:       form.size_m2   !== '' ? Number(form.size_m2)   : null,
-      listing_type:  form.listing_type  || null,
+      title: form.title.trim(),
+      description: form.description.trim() || null,
+      price: form.price !== '' ? Number(form.price) : null,
+      location_id: form.location_id || null,
+      bedrooms: form.bedrooms !== '' ? Number(form.bedrooms) : null,
+      bathrooms: form.bathrooms !== '' ? Number(form.bathrooms) : null,
+      size_m2: form.size_m2 !== '' ? Number(form.size_m2) : null,
+      listing_type: form.listing_type || null,
       property_type: form.property_type.trim() || null,
-      status:        form.status,
-      published:     form.published,
-      featured:      form.featured,
+      status: form.status,
+      published: form.published,
+      featured: form.featured,
       meta_description: form.meta_description.trim() || null,
-      meta_title:       form.meta_title.trim()       || null,
+      meta_title: form.meta_title.trim() || null,
     }
 
     let result
@@ -159,7 +159,7 @@ export default function PropertyFormPage() {
       result = await createProperty({
         ...payload,
         reference_code: referenceCode,
-        slug:           generatedSlug,
+        slug: generatedSlug,
       })
     }
 
