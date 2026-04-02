@@ -9,10 +9,9 @@ import { Link } from 'react-router-dom'
 function MarketingNavbar() {
   return (
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 h-16 flex items-center justify-between px-6 md:px-12">
-      <div className="flex items-center gap-2">
-        <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">Z</div>
-        <span className="font-bold text-xl tracking-tight text-slate-900">Zendo</span>
-      </div>
+      <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
+        <img src="/zendo-logo.png" alt="Zendo Logo" className="h-8 w-auto object-contain" />
+      </Link>
       <div className="hidden md:flex items-center gap-8">
         <a href="#features" className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">Características</a>
         <a href="#pricing" className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">Precios</a>
@@ -31,9 +30,8 @@ function MarketingFooter() {
   return (
     <footer className="bg-white border-t border-slate-200 py-12 px-6 md:px-12">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 bg-blue-600 rounded flex items-center justify-center text-white font-bold text-sm">Z</div>
-          <span className="font-bold text-lg tracking-tight text-slate-900">Zendo</span>
+        <div className="flex items-center gap-3">
+          <img src="/zendo-logo.png" alt="Zendo Logo" className="h-6 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer" />
         </div>
         <p className="text-slate-500 text-sm">
           &copy; {new Date().getFullYear()} Zendo SaaS. Todos los derechos reservados.

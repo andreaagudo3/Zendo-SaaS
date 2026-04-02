@@ -72,7 +72,11 @@ export function Navbar() {
           className="flex items-center hover:opacity-80 transition-opacity"
           aria-label={t('navbar.logoAriaLabel', { name: fullName })}
         >
-          <img src="/logo.png" alt={fullName} className={logoClass} />
+          <img 
+            src={tenant?.isMaster ? '/zendo-logo.png' : '/logo.png'} 
+            alt={fullName} 
+            className={logoClass} 
+          />
         </Link>
 
         {/* Desktop links */}

@@ -38,6 +38,24 @@ export async function getSession() {
   return data?.session ?? null
 }
 
+/**
+ * Actualiza los datos del inquilino (tenant) actual.
+ * @param {string} id
+ * @param {object} updates
+ * @returns {Promise<{data, error}>}
+ */
+export async function updateTenant(id, updates) {
+  const { data, error } = await supabase
+    .from('tenants')
+    .update(updates)
+    .eq('id', id)
+    .select()
+    .single()
+
+  if (error) console.error('[adminService] updateTenant:', error.message)
+  return { data, error }
+}
+
 // ─── Properties CRUD ─────────────────────────────────────────────────────────
 
 const ADMIN_FIELDS = [

@@ -19,6 +19,7 @@ const MASTER_IDENTITY = {
   primary_color: '#2563eb', // Tu azul corporativo
   secondary_color: '#64748b',
   description: 'La plataforma definitiva para la gestión inmobiliaria moderna.',
+  browser_title: 'Zendo - SaaS Inmobiliario y CRM para inmobiliarias',
   features: { isDemo: false }
 };
 
@@ -26,6 +27,32 @@ export function TenantProvider({ children }) {
   const [tenant, setTenant] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+
+  // Actualizador de metadatos reactivo
+  useEffect(() => {
+    if (!tenant) return;
+
+    // Prioridad: 1. browser_title | 2. Default Master | 3. Default Agency
+    const pageTitle = tenant.browser_title 
+      ? tenant.browser_title 
+      : (tenant.isMaster ? 'Zendo - SaaS Inmobiliario' : `${tenant.name} - Real Estate`);
+    
+    document.title = pageTitle;
+
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc && tenant.description) {
+      metaDesc.setAttribute('content', tenant.description);
+    }
+
+    // Actualizador de Favicon
+    let favicon = document.querySelector('link[rel="icon"]');
+    if (!favicon) {
+      favicon = document.createElement('link');
+      favicon.rel = 'icon';
+      document.head.appendChild(favicon);
+    }
+    favicon.href = tenant.isMaster ? '/zendo-logo.png' : '/favicon.ico'; // O /logo.png si prefieres
+  }, [tenant]);
 
   useEffect(() => {
     async function resolveTenant() {
@@ -94,13 +121,6 @@ export function TenantProvider({ children }) {
           data.primary_color ?? (shouldShowMaster ? '#2563eb' : '#23c698'),
           data.secondary_color ?? '#64748b',
         );
-
-        // Actualizamos metadatos de la página
-        document.title = shouldShowMaster ? 'Zendo - SaaS Inmobiliario' : `${data.name} - Real Estate`;
-        const metaDesc = document.querySelector('meta[name="description"]');
-        if (metaDesc && data.description) {
-          metaDesc.setAttribute('content', data.description);
-        }
 
         setLoading(false);
       } catch (e) {
