@@ -62,6 +62,8 @@ const ADMIN_FIELDS = [
   'id', 'reference_code', 'title', 'description', 'price',
   'bedrooms', 'bathrooms', 'size_m2', 'location_id', 'slug',
   'property_type', 'listing_type', 'status', 'featured', 'published',
+  'meta_description',
+  'meta_title',
   'locations!properties_location_id_fkey(id, name, slug, provinces(name))'
 ].join(', ')
 

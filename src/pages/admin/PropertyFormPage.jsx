@@ -16,6 +16,8 @@ const EMPTY_FORM = {
   size_m2: '', listing_type: 'sale',
   property_type: '', status: 'available',
   published: true, featured: false,
+  meta_description: '',
+  meta_title: '',
 }
 
 /**
@@ -97,6 +99,8 @@ export default function PropertyFormPage() {
         status:        prop.status        ?? 'available',
         published:     prop.published     ?? false,
         featured:      prop.featured      ?? false,
+        meta_description: prop.meta_description ?? '',
+        meta_title:       prop.meta_title       ?? '',
       })
 
       // Resolve selected province from the current location
@@ -144,6 +148,8 @@ export default function PropertyFormPage() {
       status:        form.status,
       published:     form.published,
       featured:      form.featured,
+      meta_description: form.meta_description.trim() || null,
+      meta_title:       form.meta_title.trim()       || null,
     }
 
     let result
@@ -440,6 +446,48 @@ export default function PropertyFormPage() {
               </p>
             )}
             <ImageUploader property={imageProperty} tenant={tenant} />
+          </section>
+
+          {/* Configuración SEO */}
+          <section className="bg-white rounded-2xl border border-secondary-200 p-6 space-y-4 shadow-sm">
+            <div className="flex justify-between items-center">
+              <h2 className="font-semibold text-secondary-700 text-sm uppercase tracking-wide">Configuración SEO</h2>
+              <span className={`text-xs font-medium ${form.meta_description.length > 155 ? 'text-red-500' : 'text-secondary-400'}`}>
+                {form.meta_description.length} / 155
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4">
+              <Field label="Título para Google (meta_title)" htmlFor="f-mtitle">
+                <input
+                  id="f-mtitle"
+                  name="meta_title"
+                  type="text"
+                  value={form.meta_title}
+                  onChange={handleChange}
+                  placeholder={form.meta_title ? '' : 'Ej: Chalet de lujo con vistas en Aracena | Zendo'}
+                  className={INPUT_CLS}
+                />
+                <p className="text-xs text-secondary-400 mt-1 italic">
+                  Si este campo está vacío, Google mostrará el título principal de la propiedad.
+                </p>
+              </Field>
+
+              <Field label="Descripción para Google (meta_description)" htmlFor="f-meta">
+                <textarea
+                  id="f-meta"
+                  name="meta_description"
+                  rows={3}
+                  value={form.meta_description}
+                  onChange={handleChange}
+                  placeholder={form.meta_description ? '' : 'El sistema usará un resumen automático si dejas esto vacío.'}
+                  className={INPUT_CLS + ' resize-none'}
+                />
+                <p className="text-xs text-secondary-400 mt-1 italic leading-relaxed">
+                  Este es el resumen que aparece bajo el título en los resultados de Google. Intenta no superar los 155 caracteres.
+                </p>
+              </Field>
+            </div>
           </section>
 
           {/* Actions */}

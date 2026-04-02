@@ -17,7 +17,8 @@ export default function AdminSettingsPage() {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    meta_title: ''
+    browser_title: '',
+    meta_description: ''
   })
 
   // Cargar datos iniciales del tenant
@@ -26,7 +27,8 @@ export default function AdminSettingsPage() {
       setFormData({
         name: currentTenant.name || '',
         description: currentTenant.description || '',
-        meta_title: currentTenant.meta_title || ''
+        browser_title: currentTenant.browser_title || '',
+        meta_description: currentTenant.meta_description || ''
       })
     }
   }, [currentTenant])
@@ -85,15 +87,15 @@ export default function AdminSettingsPage() {
 
           {/* Browser Title (SEO) */}
           <div className="space-y-2">
-            <label htmlFor="meta_title" className="block text-sm font-semibold text-secondary-700">
+            <label htmlFor="browser_title" className="block text-sm font-semibold text-secondary-700">
               Título del Navegador (SEO)
             </label>
             <input
-              id="meta_title"
+              id="browser_title"
               type="text"
               placeholder="Ej: Inmobiliaria Sol - Casas de lujo en la costa"
-              value={formData.meta_title}
-              onChange={(e) => setFormData(prev => ({ ...prev, meta_title: e.target.value }))}
+              value={formData.browser_title}
+              onChange={(e) => setFormData(prev => ({ ...prev, browser_title: e.target.value }))}
               className="w-full px-4 py-3 rounded-xl border border-secondary-200 focus:ring-2 focus:ring-primary-600 focus:border-transparent outline-none transition-all text-secondary-800"
             />
             <p className="text-xs text-secondary-400 italic">
@@ -101,17 +103,40 @@ export default function AdminSettingsPage() {
             </p>
           </div>
 
-          {/* Descripción */}
+          {/* Descripción Global SEO */}
+          <div className="space-y-2">
+            <div className="flex justify-between items-center">
+              <label htmlFor="meta_description" className="block text-sm font-semibold text-secondary-700">
+                Descripción Global de la Web (SEO)
+              </label>
+              <span className={`text-xs font-medium ${formData.meta_description.length > 155 ? 'text-red-500' : 'text-secondary-400'}`}>
+                {formData.meta_description.length} / 155
+              </span>
+            </div>
+            <textarea
+              id="meta_description"
+              rows={3}
+              placeholder={formData.meta_description ? '' : 'El sistema usará un resumen automático si dejas esto vacío.'}
+              value={formData.meta_description}
+              onChange={(e) => setFormData(prev => ({ ...prev, meta_description: e.target.value }))}
+              className="w-full px-4 py-3 rounded-xl border border-secondary-200 focus:ring-2 focus:ring-primary-600 focus:border-transparent outline-none transition-all text-secondary-800 resize-none font-sans"
+            />
+            <p className="text-xs text-secondary-400 italic leading-relaxed">
+              Define cómo aparece tu inmobiliaria en Google cuando alguien busca tu marca. Resume quiénes sois y vuestro valor principal (ej: Expertos en ventas en la Sierra de Huelva desde 1995).
+            </p>
+          </div>
+
+          {/* Descripción Interna / Meta Description fallback */}
           <div className="space-y-2">
             <label htmlFor="description" className="block text-sm font-semibold text-secondary-700">
-              Descripción Corta (Meta Description)
+              Descripción Corta (Meta Description Fallback)
             </label>
             <textarea
               id="description"
               rows={3}
               value={formData.description}
               onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-              className="w-full px-4 py-3 rounded-xl border border-secondary-200 focus:ring-2 focus:ring-primary-600 focus:border-transparent outline-none transition-all text-secondary-800 resize-none"
+              className="w-full px-4 py-3 rounded-xl border border-secondary-200 opacity-70"
             />
           </div>
 

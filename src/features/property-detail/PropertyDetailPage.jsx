@@ -1,9 +1,11 @@
+import { useEffect } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { usePropertiesStore } from '../../store/propertiesStore'
 import { useProperties } from '../../services/useProperties'
 import { usePropertyImages } from './hooks/usePropertyImages'
 import { useThemeStore } from '../../store/themeStore'
+import { useTenant } from '../../context/TenantContext'
 
 // Components
 import { PropertyHeader } from './components/PropertyHeader'
@@ -16,6 +18,7 @@ export default function PropertyDetailPage() {
   const { slug } = useParams()
   const navigate = useNavigate()
   const { t } = useTranslation('property')
+  const tenant = useTenant()
   
   // Theme State
   const theme = useThemeStore((s) => s.theme)
@@ -26,6 +29,40 @@ export default function PropertyDetailPage() {
   useProperties(store)
 
   const property = store.properties.find((p) => p.slug === slug)
+
+  // ─── SEO Dinámico ───
+  useEffect(() => {
+    if (!property) return;
+
+    // 1. Título
+    const originalTitle = document.title;
+    const seoTitle = property.meta_title || `${property.title} | ${tenant.name}`;
+    document.title = seoTitle;
+
+    // 2. Meta Description
+    const originalDesc = document.querySelector('meta[name="description"]')?.getAttribute('content') || '';
+    const seoDesc = property.meta_description || (property.description ? property.description.substring(0, 155) : '');
+    
+    const updateMeta = (selector, attr, value) => {
+      let el = document.querySelector(selector);
+      if (el) el.setAttribute(attr, value);
+    };
+
+    updateMeta('meta[name="description"]', 'content', seoDesc);
+    updateMeta('meta[property="og:title"]', 'content', seoTitle);
+    updateMeta('meta[property="og:description"]', 'content', seoDesc);
+    if (property.coverImage) {
+      updateMeta('meta[property="og:image"]', 'content', property.coverImage);
+    }
+
+    // Limpieza al desmontar
+    return () => {
+      document.title = originalTitle;
+      updateMeta('meta[name="description"]', 'content', originalDesc);
+      updateMeta('meta[property="og:title"]', 'content', tenant.browser_title || `${tenant.name} - Real Estate`);
+      updateMeta('meta[property="og:description"]', 'content', tenant.meta_description || tenant.description || '');
+    };
+  }, [property, tenant]);
   
   // Custom Hook for complex gallery logic
   const {
@@ -64,7 +101,7 @@ export default function PropertyDetailPage() {
     )
   }
 
-  // Derived Data
+  // Derived Data (Corrected)
   const locationName = property.locations?.name || 'Ubicación no disponible'
   const locationString = property.locations?.name
     ? `${property.locations.name}${property.locations.provinces?.name ? `, ${property.locations.provinces.name}` : ''}`

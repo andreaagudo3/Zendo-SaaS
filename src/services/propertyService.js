@@ -35,6 +35,8 @@ const PROPERTY_FIELDS = [
   'listing_type',
   'status',
   'featured',
+  'meta_title',
+  'meta_description',
   'locations!properties_location_id_fkey(id, name, slug, provinces(name))'
 ].join(', ')
 
