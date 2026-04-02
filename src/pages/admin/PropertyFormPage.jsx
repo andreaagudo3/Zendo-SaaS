@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import {
   createProperty, updateProperty,
-  getAllProperties, getProvinces, createLocation, createProvince
+  getAdminPropertiesPaginated, getProvinces, createLocation, createProvince,
+  getPropertyById
 } from '../../services/adminService'
 import { supabase } from '../../services/supabaseClient'
 import { useTenant } from '../../context/TenantContext'
@@ -62,17 +63,17 @@ export default function PropertyFormPage() {
   // Load provinces and locations on mount
   useEffect(() => {
     async function fetchData() {
-      const provs = await getProvinces()
+      const provs = await getProvinces(tenant?.id)
       setProvinces(provs)
-
       const { data } = await supabase
         .from('locations')
         .select('id, name, province_id')
+        .eq('tenant_id', tenant?.id)
         .order('name')
       if (data) setLocations(data)
     }
     fetchData()
-  }, [])
+  }, [tenant?.id])
 
   // Load property in edit mode
   useEffect(() => {
@@ -80,9 +81,12 @@ export default function PropertyFormPage() {
       setReferenceCode(generateReferenceCode())
       return
     }
-    getAllProperties().then((all) => {
-      const prop = all.find((p) => p.id === id)
-      if (!prop) { navigate('/admin'); return }
+    getPropertyById(id).then((prop) => {
+      if (!prop) {
+        console.warn(`[PropertyFormPage] Property not found: ${id}`)
+        navigate('/admin')
+        return
+      }
 
       setReferenceCode(prop.reference_code ?? '')
       setPropertySlug(prop.slug ?? '')
@@ -110,7 +114,7 @@ export default function PropertyFormPage() {
       }
       setLoadingProp(false)
     })
-  }, [id, isEdit, navigate, locations])
+  }, [id, isEdit, navigate, locations, tenant?.id])
 
   function handleChange(e) {
     const { name, value, type, checked } = e.target
@@ -150,6 +154,7 @@ export default function PropertyFormPage() {
       featured: form.featured,
       meta_description: form.meta_description.trim() || null,
       meta_title: form.meta_title.trim() || null,
+      tenant_id: tenant?.id || null,
     }
 
     let result

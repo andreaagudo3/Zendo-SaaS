@@ -67,8 +67,8 @@ export default function PropertiesPage() {
 
   // Cargar árbol de provincias con localidades (una sola vez)
   useEffect(() => {
-    getProvincesWithLocations().then(setProvinces)
-  }, [])
+    getProvincesWithLocations(tenant?.id).then(setProvinces)
+  }, [tenant?.id])
 
   useEffect(() => {
     let cancelled = false

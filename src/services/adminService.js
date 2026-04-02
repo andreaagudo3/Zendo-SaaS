@@ -141,6 +141,25 @@ export async function getAllProperties() {
 }
 
 /**
+ * Obtiene una única propiedad por ID para edición.
+ * @param {string} id 
+ * @returns {Promise<object|null>}
+ */
+export async function getPropertyById(id) {
+  const { data, error } = await supabase
+    .from('properties')
+    .select(ADMIN_FIELDS)
+    .eq('id', id)
+    .single()
+
+  if (error) {
+    console.error(`[adminService] getPropertyById("${id}"):`, error.message)
+    return null
+  }
+  return data
+}
+
+/**
  * Obtiene la lista de provincias para los selectores en cascada.
  * @returns {Promise<object[]>}
  */

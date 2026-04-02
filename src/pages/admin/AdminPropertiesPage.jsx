@@ -7,6 +7,7 @@ import {
   updateProperty,
 } from '../../services/adminService'
 import AdminLayout from './AdminLayout'
+import { useTenant } from '../../context/TenantContext'
 
 /**
  * AdminPropertiesPage — Lista paginada de propiedades (server-side).
@@ -14,6 +15,7 @@ import AdminLayout from './AdminLayout'
  * Desktop: tabla. Móvil: cards.
  */
 export default function AdminPropertiesPage() {
+  const tenant = useTenant()
   const [properties, setProperties] = useState([])
   const [totalCount, setTotalCount] = useState(0)
   const [loading, setLoading] = useState(true)
@@ -49,7 +51,7 @@ export default function AdminPropertiesPage() {
     setLoading(true)
     setError(null)
 
-    getAdminPropertiesPaginated(page, search, featuredFilter).then(({ data, count }) => {
+    getAdminPropertiesPaginated(page, search, featuredFilter, tenant?.id).then(({ data, count }) => {
       if (cancelled) return
       setProperties(data)
       setTotalCount(count)
@@ -57,12 +59,12 @@ export default function AdminPropertiesPage() {
     })
 
     return () => { cancelled = true }
-  }, [page, search, featuredFilter])
+  }, [page, search, featuredFilter, tenant?.id])
 
   async function handleDelete(property) {
     if (!confirm(`¿Eliminar "${property.title}"? Esta acción no se puede deshacer.`)) return
     setDeletingId(property.id)
-    const { error } = await deleteProperty(property.id)
+    const { error } = await deleteProperty(property.id, tenant?.id)
     if (error) {
       setError(`Error al eliminar: ${error.message}`)
       setDeletingId(null)
@@ -78,7 +80,7 @@ export default function AdminPropertiesPage() {
 
   async function handleStatusChange(propertyId, newStatus) {
     setUpdatingId(propertyId)
-    const { error } = await updateProperty(propertyId, { status: newStatus })
+    const { error } = await updateProperty(propertyId, { status: newStatus }, tenant?.id)
     if (error) {
       setError(`Error al actualizar estado: ${error.message}`)
     } else {
@@ -92,7 +94,7 @@ export default function AdminPropertiesPage() {
   async function handleToggleFeatured(property) {
     const newVal = !property.featured
     setUpdatingId(property.id)
-    const { error } = await updateProperty(property.id, { featured: newVal })
+    const { error } = await updateProperty(property.id, { featured: newVal }, tenant?.id)
     if (error) {
       setError(`Error al actualizar destacado: ${error.message}`)
     } else {

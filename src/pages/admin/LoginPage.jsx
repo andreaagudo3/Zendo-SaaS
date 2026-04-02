@@ -33,9 +33,11 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         {/* Logo Zendo branding */}
         <div className="text-center mb-8 flex flex-col items-center">
-          <div className="flex items-center gap-1">
-            <img src="/zendo-logo.png" alt="Zendo" className="h-14" />
-            <span className="text-white text-3xl font-bold tracking-tight">Zendo</span>
+          <div className="flex items-center gap-2">
+            <img src={tenant?.logo_url || "/zendo-logo.png"} alt={tenant?.name || "Zendo"} className="h-12 w-auto object-contain" />
+            <span className="text-white text-3xl font-bold tracking-tight">
+              {tenant?.name || "Zendo"}
+            </span>
           </div>
           <p className="text-secondary-400 text-sm mt-3">Panel de Administración</p>
         </div>

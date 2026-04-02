@@ -33,9 +33,9 @@ export default function AdminLayout({ children }) {
               alt={tenant?.name ?? ''}
               className="h-8 w-auto object-contain"
             />
-            {(!tenant?.logo_url || tenant?.isMaster) && (
-              <span className="text-white font-bold text-xl tracking-tight hidden sm:block">Zendo</span>
-            )}
+            <span className="text-white font-bold text-xl tracking-tight hidden sm:block">
+              {tenant?.name || 'Zendo'}
+            </span>
           </div>
           <span className="text-secondary-400 text-sm font-medium hidden md:block">Panel Admin</span>
         </div>

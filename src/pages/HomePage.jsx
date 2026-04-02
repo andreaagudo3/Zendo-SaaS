@@ -38,8 +38,8 @@ export default function HomePage() {
   const featuredProperties = store.properties.filter((p) => p.featured)
 
   useEffect(() => {
-    getProvincesWithLocations().then(setProvinces)
-  }, [])
+    getProvincesWithLocations(tenant?.id).then(setProvinces)
+  }, [tenant?.id])
 
   function handleSearch(e) {
     e.preventDefault()

@@ -1,17 +1,13 @@
 import { useState, useEffect } from 'react'
 import AdminLayout from './AdminLayout'
 import {
-  getProvinces,
-  getLocationsAdmin,
-  createProvince,
-  createLocation,
-  updateProvince,
-  updateLocation,
   deleteProvince,
   deleteLocation,
 } from '../../services/adminService'
+import { useTenant } from '../../context/TenantContext'
 
 export default function AdminLocationsPage() {
+  const tenant = useTenant()
   const [activeTab, setActiveTab] = useState('provinces') // 'provinces' | 'locations'
   const [provinces, setProvinces] = useState([])
   const [locations, setLocations] = useState([])
@@ -40,8 +36,8 @@ export default function AdminLocationsPage() {
     setErrorMsg('')
     try {
       const [provs, locs] = await Promise.all([
-        getProvinces(),
-        getLocationsAdmin()
+        getProvinces(tenant?.id),
+        getLocationsAdmin(tenant?.id)
       ])
       setProvinces(provs)
       setLocations(locs)
@@ -65,11 +61,11 @@ export default function AdminLocationsPage() {
     setErrorMsg('')
     try {
       if (activeTab === 'provinces') {
-        const { data, error } = await createProvince(newName.trim())
+        const { data, error } = await createProvince(newName.trim(), tenant?.id)
         if (error) throw error
         setProvinces((prev) => [...prev, data].sort((a, b) => a.name.localeCompare(b.name)))
       } else {
-        const { data, error } = await createLocation(newName.trim(), newProvId)
+        const { data, error } = await createLocation(newName.trim(), newProvId, tenant?.id)
         if (error) throw error
         // Para location, devolvemos el join a mano en la UI para no hacer refetch
         const provName = provinces.find(p => p.id === newProvId)?.name || ''

@@ -299,10 +299,12 @@ export async function getPropertiesPaginated(filters = {}, page = 1, tenantId) {
  * Usado para construir el selector jerárquico de ubicación.
  * @returns {Promise<Array<{ id: string, name: string, locations: Array<{id,name}> }>>}
  */
-export async function getProvincesWithLocations() {
+export async function getProvincesWithLocations(tenantId) {
+  if (!tenantId) return []
   const { data, error } = await supabase
     .from('provinces')
-    .select('id, name, locations(id, name)')
+    .select('id, name, locations(id, name, tenant_id)')
+    .eq('tenant_id', tenantId)
     .order('name')
 
   if (error) {
@@ -310,11 +312,16 @@ export async function getProvincesWithLocations() {
     return []
   }
 
-  // Ordenar localidades dentro de cada provincia
-  return (data ?? []).map((prov) => ({
-    ...prov,
-    locations: (prov.locations ?? []).sort((a, b) => a.name.localeCompare(b.name, 'es')),
-  }))
+  // Ordenar localidades dentro de cada provincia y filtrar por tenantId si es necesario
+  // (Aunque el select ya filtra, por si acaso la estructura del join pre-filtra la provincia)
+  return (data ?? [])
+    .map((prov) => ({
+      ...prov,
+      locations: (prov.locations ?? [])
+        .filter(loc => loc.tenant_id === tenantId)
+        .sort((a, b) => a.name.localeCompare(b.name, 'es')),
+    }))
+    .filter(prov => prov.locations.length > 0) // Solo provincias que tengan locations de este tenant
 }
 
 export async function searchProperties(filters = {}, tenantId) {
