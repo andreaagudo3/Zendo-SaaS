@@ -90,6 +90,7 @@ export default function PropertyFormPage() {
 
       setReferenceCode(prop.reference_code ?? '')
       setPropertySlug(prop.slug ?? '')
+      setCoverImageUrl(prop.image_cover_url ?? null)
       setForm({
         title: prop.title ?? '',
         description: prop.description ?? '',
@@ -239,6 +240,10 @@ export default function PropertyFormPage() {
   const imageProperty = isEdit && propertySlug
     ? { id, slug: propertySlug }
     : null
+
+  // Tracks the cover URL locally so we can refresh the preview without a full reload.
+  // Seeded from the DB when the property is loaded (see useEffect above).
+  const [coverImageUrl, setCoverImageUrl] = useState(null)
 
   // ─── Render ───────────────────────────────────────────────────────────────
 
@@ -450,7 +455,25 @@ export default function PropertyFormPage() {
                 Las imágenes se pueden subir después de guardar la propiedad.
               </p>
             )}
-            <ImageUploader property={imageProperty} tenant={tenant} />
+            {/* Current cover thumbnail */}
+            {isEdit && coverImageUrl && (
+              <div className="flex items-center gap-3 p-3 bg-secondary-50 rounded-xl border border-secondary-200">
+                <img
+                  src={coverImageUrl}
+                  alt="Portada actual"
+                  className="w-16 h-12 object-cover rounded-lg flex-shrink-0"
+                />
+                <p className="text-xs text-secondary-500">
+                  <span className="font-semibold text-secondary-700">Imagen de portada actual.</span>{' '}
+                  Haz clic en otra imagen de la galería para cambiarla.
+                </p>
+              </div>
+            )}
+            <ImageUploader
+              property={imageProperty}
+              tenant={tenant}
+              onCoverChange={(url) => setCoverImageUrl(url)}
+            />
           </section>
 
           {/* Configuración SEO */}

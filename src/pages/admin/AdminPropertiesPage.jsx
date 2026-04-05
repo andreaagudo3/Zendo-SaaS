@@ -239,6 +239,14 @@ export default function AdminPropertiesPage() {
                 </div>
               </div>
 
+              {/* Cover thumbnail */}
+              <div className="w-full h-32 rounded-xl overflow-hidden bg-secondary-100 flex items-center justify-center">
+                {p.image_cover_url
+                  ? <img src={p.image_cover_url} alt={p.title} className="w-full h-full object-cover" loading="lazy" />
+                  : <span className="text-3xl">🏠</span>
+                }
+              </div>
+
               <p className="font-semibold text-secondary-900 leading-snug">{p.title}</p>
 
               <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-secondary-500">
@@ -303,6 +311,7 @@ export default function AdminPropertiesPage() {
             <thead className="bg-secondary-50 border-b border-secondary-200">
               <tr>
                 <th className="w-8 px-4 py-3" title="Destacada" />
+                <th className="w-14 px-2 py-3" />
                 <th className="text-left px-4 py-3 font-semibold text-secondary-600">Ref.</th>
                 <th className="text-left px-4 py-3 font-semibold text-secondary-600">Título</th>
                 <th className="text-left px-4 py-3 font-semibold text-secondary-600">Ubicación</th>
@@ -328,6 +337,13 @@ export default function AdminPropertiesPage() {
                     </button>
                   </td>
                   <td className="px-4 py-3 font-mono text-secondary-500 text-xs">{p.reference_code}</td>
+                  <td className="px-2 py-2">
+                    <div className="w-12 h-10 rounded-lg overflow-hidden bg-secondary-100 flex items-center justify-center flex-shrink-0">
+                      {p.image_cover_url
+                        ? <img src={p.image_cover_url} alt="" className="w-full h-full object-cover" loading="lazy" />
+                        : <span className="text-lg">🏠</span>}
+                    </div>
+                  </td>
                   <td className="px-4 py-3 font-medium text-secondary-900 max-w-[200px] truncate">{p.title}</td>
                   <td className="px-4 py-3 text-secondary-600">{p.locations?.name ?? '—'}</td>
                   <td className="px-4 py-3 text-secondary-600">{formatPrice(p.price)}</td>

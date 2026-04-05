@@ -36,59 +36,72 @@ export function TenantProvider({ children }) {
     favicon.href = tenant.isMaster ? '/zendo-logo.png' : '/favicon.ico'
   }, [tenant])
 
-  useEffect(() => {
-    async function resolve() {
-      const isAdminPath = window.location.pathname.startsWith('/admin') || window.location.pathname === '/login'
+  // ─── Admin tenant resolution (triggered by auth events) ────────────────────
 
-      // ══════════════════════════════════════════════════════════════════════
-      // PATH A — ADMIN: identity comes exclusively from the auth session.
-      //   The URL is irrelevant for identity in admin routes.
-      // ══════════════════════════════════════════════════════════════════════
-      if (isAdminPath) {
-        try {
-          const { data: { session } } = await supabase.auth.getSession()
-
-          if (!session?.user) {
-            // No session — render nothing (ProtectedRoute will redirect to /login)
-            setLoading(false)
-            return
-          }
-
-          // Look up which tenant this user belongs to
-          const { data: memberData } = await supabase
-            .from('members')
-            .select('tenant_id')
-            .eq('user_id', session.user.id)
-            .maybeSingle()
-
-          if (memberData?.tenant_id) {
-            const { data: tenantData } = await supabase
-              .from('tenants')
-              .select('*')
-              .eq('id', memberData.tenant_id)
-              .single()
-
-            if (tenantData) {
-              applyTenant(tenantData, tenantData.slug === 'zendo')
-              return
-            }
-          }
-
-          // Member has no tenant assignment — show master as fallback
-          applyTenant(null, true)
-        } catch (err) {
-          console.error('[TenantContext] Admin resolution error:', err)
-          setError('Error de conexión al cargar el panel.')
-        } finally {
-          setLoading(false)
-        }
+  async function resolveAdminTenant(session) {
+    setLoading(true)
+    try {
+      if (!session?.user) {
+        // Not logged in — leave tenant null so ProtectedRoute redirects to /login
+        setTenant(null)
         return
       }
 
-      // ══════════════════════════════════════════════════════════════════════
-      // PATH B — PUBLIC: identity comes exclusively from the URL / hostname.
-      //   No auth calls. Fast and clean.
-      // ══════════════════════════════════════════════════════════════════════
+      const { data: memberData } = await supabase
+        .from('members')
+        .select('tenant_id')
+        .eq('id', session.user.id)
+        .maybeSingle()
+
+      if (memberData?.tenant_id) {
+        const { data: tenantData } = await supabase
+          .from('tenants')
+          .select('*')
+          .eq('id', memberData.tenant_id)
+          .single()
+
+        if (tenantData) {
+          applyTenant(tenantData, tenantData.slug === 'zendo')
+          return
+        }
+      }
+
+      // Member exists but has no tenant_id — show master fallback
+      applyTenant(null, true)
+    } catch (err) {
+      console.error('[TenantContext] Admin resolution error:', err)
+      setError('Error de conexión al cargar el panel.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // ─── Public path resolution (URL / hostname only) ───────────────────────────
+
+  useEffect(() => {
+    const isAdminPath = window.location.pathname.startsWith('/admin') || window.location.pathname === '/login'
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // PATH A — ADMIN: re-resolve on every auth state change.
+    // ══════════════════════════════════════════════════════════════════════════
+    if (isAdminPath) {
+      // Initial check
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        resolveAdminTenant(session)
+      })
+
+      // Re-resolve whenever the session changes (login / logout / token refresh)
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+        resolveAdminTenant(session)
+      })
+
+      return () => subscription.unsubscribe()
+    }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // PATH B — PUBLIC: URL/hostname only, no auth calls.
+    // ══════════════════════════════════════════════════════════════════════════
+    async function resolvePublic() {
       try {
         const hostname = window.location.hostname
         const params = new URLSearchParams(window.location.search)
@@ -103,7 +116,6 @@ export function TenantProvider({ children }) {
         if (result.data) {
           applyTenant(result.data, result.isMaster)
         } else {
-          // Master identity (Zendo SaaS landing)
           applyTenant(null, true)
         }
       } catch (err) {
@@ -114,8 +126,9 @@ export function TenantProvider({ children }) {
       }
     }
 
-    resolve()
+    resolvePublic()
   }, [])
+
 
   // ─── Helpers ───────────────────────────────────────────────────────────────
 
