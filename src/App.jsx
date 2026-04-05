@@ -20,6 +20,21 @@ import PropertyFormPage    from './pages/admin/PropertyFormPage'
 import ProtectedRoute      from './components/admin/ProtectedRoute'
 
 /**
+ * Redirects to the Demo tenant.
+ * - Local: /?tenant=demo
+ * - Production: https://demo.zendoapp.es
+ */
+function DemoRedirect() {
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  const target = isLocal
+    ? `${window.location.origin}/?tenant=demo`
+    : 'https://demo.zendoapp.es'
+  window.location.replace(target)
+  return null
+}
+
+
+/**
  * App — Routing completo de la aplicación.
  * Separado en dos mundos: isMaster (Marketing B2B) y Tenant (Real Estate B2C).
  */
@@ -69,6 +84,9 @@ export default function App() {
             </Layout>
           }
         />
+
+        {/* ── Demo redirect ── */}
+        <Route path="/demo" element={<DemoRedirect />} />
 
         {/* ── Login (sin layout público) ── */}
         <Route path="/login" element={<LoginPage />} />

@@ -1,67 +1,88 @@
 import { supabase } from './supabaseClient'
 
 /**
- * resolveTenantConfig — Core logic to determine which tenant should be active
- * based on the hostname, search parameters, and database records.
+ * resolveTenantConfig
  * 
- * @param {string} hostname - window.location.hostname
- * @param {URLSearchParams} params - window.location.search params
- * @returns {Promise<{ data: any, isMaster: boolean, isDemoMode: boolean, error: string|null }>}
+ * Resolves which TENANT should be active for PUBLIC routes only.
+ * Admin routes resolve their identity via auth session (see TenantContext).
+ *
+ * Priority:
+ *  1. Local dev  → ?tenant=<slug> param  (fallback: master identity)
+ *  2. Production → subdomain (demo.zendoapp.es → slug "demo")
+ *  3. Production → custom domain (inmobiliaria.es)
+ *  4. Production → master domains (zendoapp.com/es)  → master identity
+ *
+ * @param {string} hostname
+ * @param {URLSearchParams} params
+ * @returns {Promise<{ data: object|null, isMaster: boolean, error: string|null }>}
  */
 export async function resolveTenantConfig(hostname, params) {
-  const isLocal = hostname === 'localhost' || hostname === '127.0.0.1' || hostname.endsWith('.localhost');
-  const isMasterProd = hostname === 'zendoapp.com' || hostname === 'www.zendoapp.com';
-  const isSubdomain = hostname.endsWith('.zendoapp.com') && !isMasterProd;
+  const isLocal = hostname === 'localhost' || hostname === '127.0.0.1' || hostname.endsWith('.localhost')
 
-  let slugToFetch = null;
-  let customDomainToFetch = null;
+  const MASTER_DOMAINS = [
+    'zendoapp.com', 'www.zendoapp.com',
+    'zendoapp.es',  'www.zendoapp.es',
+  ]
+  const isMasterDomain = MASTER_DOMAINS.includes(hostname)
+  const isZendoSubdomain = hostname.endsWith('.zendoapp.com') || hostname.endsWith('.zendoapp.es')
+  const isSubdomain = isZendoSubdomain && !isMasterDomain
 
-  // 1. RESOLUTION STRATEGY
+  // ── LOCAL ──────────────────────────────────────────────────────────────────
   if (isLocal) {
-    slugToFetch = params.get('tenant');
-    if (!slugToFetch) {
-      return { data: null, isMaster: true, isDemoMode: false, error: null };
-    }
-  } else if (isMasterProd) {
-    slugToFetch = 'zendo';
-  } else if (isSubdomain) {
-    slugToFetch = hostname.split('.')[0];
-  } else {
-    customDomainToFetch = hostname;
+    const slug = params.get('tenant')
+    if (!slug) return { data: null, isMaster: true, error: null }
+    return fetchBySlug(slug)
   }
 
+  // ── MASTER PRODUCTION DOMAIN ───────────────────────────────────────────────
+  if (isMasterDomain) {
+    return { data: null, isMaster: true, error: null }
+  }
+
+  // ── SUBDOMAIN (demo.zendoapp.es) ───────────────────────────────────────────
+  if (isSubdomain) {
+    const slug = hostname.split('.')[0]
+    return fetchBySlug(slug)
+  }
+
+  // ── CUSTOM DOMAIN ──────────────────────────────────────────────────────────
+  return fetchByCustomDomain(hostname)
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+async function fetchBySlug(slug) {
   try {
-    let query = supabase.from('tenants').select('*');
+    const { data, error } = await supabase
+      .from('tenants')
+      .select('*')
+      .eq('slug', slug)
+      .single()
 
-    if (slugToFetch) {
-      query = query.eq('slug', slugToFetch);
-    } else if (customDomainToFetch) {
-      query = query.eq('custom_domain', customDomainToFetch);
+    if (error || !data) {
+      return { data: null, isMaster: false, error: `Inmobiliaria "${slug}" no encontrada.` }
     }
-
-    const { data, error: dbError } = await query.single();
-
-    if (dbError || !data) {
-      if (slugToFetch === 'zendo') {
-        // Fallback for master if database record is missing
-        return { data: null, isMaster: true, isDemoMode: false, error: null };
-      }
-      return {
-        data: null,
-        isMaster: false,
-        isDemoMode: false,
-        error: 'Inmobiliaria no encontrada. El dominio o subdominio no existe en nuestro sistema.'
-      };
-    }
-
-    return {
-      data,
-      isMaster: data.slug === 'zendo',
-      isDemoMode: !!data.features?.isDemo,
-      error: null
-    };
+    return { data, isMaster: data.slug === 'zendo', error: null }
   } catch (err) {
-    console.error('[resolveTenantConfig] Critical error:', err);
-    return { data: null, isMaster: false, isDemoMode: false, error: 'Error crítico al cargar el sitio.' };
+    console.error('[tenantResolver] fetchBySlug:', err)
+    return { data: null, isMaster: false, error: 'Error de conexión.' }
+  }
+}
+
+async function fetchByCustomDomain(domain) {
+  try {
+    const { data, error } = await supabase
+      .from('tenants')
+      .select('*')
+      .eq('custom_domain', domain)
+      .single()
+
+    if (error || !data) {
+      return { data: null, isMaster: false, error: `Dominio "${domain}" no registrado en el sistema.` }
+    }
+    return { data, isMaster: false, error: null }
+  } catch (err) {
+    console.error('[tenantResolver] fetchByCustomDomain:', err)
+    return { data: null, isMaster: false, error: 'Error de conexión.' }
   }
 }
