@@ -21,7 +21,7 @@ import {
  *  - Hover to reveal delete button
  *  - Deleting the cover auto-promotes the next image
  */
-export default function ImageUploader({ property, tenant }) {
+export default function ImageUploader({ property, tenant, onCoverChange }) {
   const [images,    setImages]    = useState([]) // { id, url, path, is_cover, order_index }
   const [uploading, setUploading] = useState(false)
   const [error,     setError]     = useState(null)
@@ -78,9 +78,13 @@ export default function ImageUploader({ property, tenant }) {
       return
     }
 
+    // Optimistic update of local state
     setImages((prev) =>
       prev.map((i) => ({ ...i, is_cover: i.id === img.id }))
     )
+
+    // Notify parent so it can refresh image_cover_url without a full refetch
+    onCoverChange?.(img.url)
   }
 
   // ── Guard: property not yet saved ──────────────────────────────────────────

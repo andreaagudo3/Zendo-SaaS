@@ -64,8 +64,10 @@ const ADMIN_FIELDS = [
   'property_type', 'listing_type', 'status', 'featured', 'published',
   'meta_description',
   'meta_title',
+  'image_cover_url',
   'locations!properties_location_id_fkey(id, name, slug, provinces(name))'
 ].join(', ')
+
 
 /**
  * Obtiene TODAS las propiedades (publicadas o no) para el panel admin.
