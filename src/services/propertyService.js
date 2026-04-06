@@ -301,28 +301,44 @@ export async function getPropertiesPaginated(filters = {}, page = 1, tenantId) {
  */
 export async function getProvincesWithLocations(tenantId) {
   if (!tenantId) return []
-  const { data, error } = await supabase
-    .from('provinces')
-    .select('id, name, locations(id, name, tenant_id)')
-    .eq('tenant_id', tenantId)
-    .order('name')
 
-  if (error) {
-    console.error('[propertyService] getProvincesWithLocations:', error.message)
+  // Two separate queries to avoid RLS join issues for anonymous users
+  const [provResult, locResult] = await Promise.all([
+    supabase
+      .from('provinces')
+      .select('id, name')
+      .eq('tenant_id', tenantId)
+      .order('name'),
+    supabase
+      .from('locations')
+      .select('id, name, province_id')
+      .eq('tenant_id', tenantId)
+      .order('name'),
+  ])
+
+  if (provResult.error) {
+    console.error('[propertyService] getProvincesWithLocations provinces:', provResult.error.message)
+    return []
+  }
+  if (locResult.error) {
+    console.error('[propertyService] getProvincesWithLocations locations:', locResult.error.message)
     return []
   }
 
-  // Ordenar localidades dentro de cada provincia y filtrar por tenantId si es necesario
-  // (Aunque el select ya filtra, por si acaso la estructura del join pre-filtra la provincia)
-  return (data ?? [])
+  const provinces = provResult.data ?? []
+  const locations = locResult.data ?? []
+
+  // Build hierarchy client-side
+  return provinces
     .map((prov) => ({
       ...prov,
-      locations: (prov.locations ?? [])
-        .filter(loc => loc.tenant_id === tenantId)
+      locations: locations
+        .filter((loc) => loc.province_id === prov.id)
         .sort((a, b) => a.name.localeCompare(b.name, 'es')),
     }))
-    .filter(prov => prov.locations.length > 0) // Solo provincias que tengan locations de este tenant
+    .filter((prov) => prov.locations.length > 0)
 }
+
 
 export async function searchProperties(filters = {}, tenantId) {
   if (!tenantId) return []
