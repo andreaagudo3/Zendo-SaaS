@@ -66,7 +66,7 @@ const ADMIN_FIELDS = [
   'meta_title',
   'image_cover_url',
   'internal_notes', 'owner_contact',
-  'occupancy_status', 'condition', 'energy_rating', 'is_luxury', 'is_bank_owned', 'tags',
+  'occupancy_status', 'condition', 'energy_rating', 'is_luxury', 'is_bank_owned',
   'locations!properties_location_id_fkey(id, name, slug, provinces(name))'
 ].join(', ')
 
