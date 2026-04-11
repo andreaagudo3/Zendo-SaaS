@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
+import PricingSection from '../../components/marketing/pricing/PricingSection';
 
 /**
  * SaaSLandingPage — The B2B marketing landing for Zendo.
@@ -107,6 +107,7 @@ export default function SaaSLandingPage() {
             </section>
 
             {/* 3. EL "DOLOR" (Zendo vs WordPress) — Card Layout */}
+            {/*
             <section className="py-20 bg-slate-50">
                 <div className="max-w-6xl mx-auto px-6">
                     <div className="text-center mb-16">
@@ -190,6 +191,7 @@ export default function SaaSLandingPage() {
                     </div>
                 </div>
             </section>
+            */}
 
             {/* 4. LA SOLUCIÓN (CRM + Features) */}
             <section id="features" className="py-20 bg-white">
@@ -235,126 +237,10 @@ export default function SaaSLandingPage() {
                 </div>
             </section>
 
-            {/* 5. LAS TARIFAS (Pricing) */}
-            <section id="pricing" className="py-20 bg-slate-50 relative border-t border-slate-200">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-24">
-                        <h2 className="text-4xl md:text-5xl font-bold text-slate-950 mb-6 italic text-glow">Tarifas Zendo 2026</h2>
-                        <p className="text-xl text-slate-600 max-w-2xl mx-auto italic mb-8">"No es solo una web, es tu propia casa digital sin intermediarios."</p>
+            {/* 5. LAS TARIFAS (Pricing Component) */}
+            <PricingSection />
 
-                        {/* Escalabilidad Sticker */}
-                        <div className="inline-flex items-center gap-3 bg-blue-50 text-blue-700 px-6 py-3 rounded-2xl border border-blue-100 font-bold text-sm shadow-sm animate-soft-float cursor-default group transition-shadow hover:shadow-md">
-                            <span className="text-xl group-hover:rotate-12 transition-transform">📈</span>
-                            Paga solo la diferencia si subes de plan en el futuro. Protegemos tu inversión.
-                        </div>
-                    </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start mb-16 relative">
-                        {/* PLAN PRO */}
-                        <div className="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm hover:shadow-xl transition-all duration-300">
-                            <div className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-4">Agente Independiente</div>
-                            <h3 className="text-2xl font-bold text-slate-900 mb-2">PLAN PRO</h3>
-                            <div className="mb-2">
-                                <span className="text-4xl font-extrabold text-slate-950">850€</span>
-                                <span className="text-slate-500 text-sm font-medium ml-2">Setup único</span>
-                            </div>
-                            <div className="mb-8 border-b border-slate-100 pb-6 font-semibold">
-                                <span className="text-2xl font-bold text-slate-950">49€</span>
-                                <span className="text-slate-500 text-sm">/mes</span>
-                            </div>
-                            <ul className="space-y-4 mb-10 text-sm leading-relaxed">
-                                {[
-                                    'Límite: Hasta 30 propiedades',
-                                    'CRM / Panel Admin Completo',
-                                    'Contacto via Email Directo',
-                                    '1 Idioma (Español)',
-                                    'Ubicación Maps: No incluido',
-                                    '1 Tema UI a elegir (Fijo)',
-                                    'Filtros: Precio / Tipo / Zona'
-                                ].map((f, i) => (
-                                    <li key={i} className="flex items-start gap-3 text-slate-700">
-                                        <svg className="w-5 h-5 text-green-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
-                                        <span>{f}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                            <button className="w-full py-4 px-6 border-2 border-slate-900 text-slate-900 rounded-2xl font-bold hover:bg-slate-900 hover:text-white transition-all">Seleccionar PRO</button>
-                        </div>
-
-                        {/* PLAN BUSINESS */}
-                        <div className="bg-slate-950 rounded-3xl p-8 shadow-2xl relative lg:-translate-y-8 border-4 border-blue-500 ring-8 ring-blue-500/10">
-                            <div className="absolute top-0 right-8 -translate-y-1/2 bg-blue-500 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest leading-relaxed">Más vendido ⭐ Agencia Pro</div>
-                            <h3 className="text-2xl font-bold text-white mb-2">PLAN BUSINESS</h3>
-                            <div className="mb-2">
-                                <span className="text-4xl font-extrabold text-white">1.590€</span>
-                                <span className="text-slate-400 text-sm font-medium ml-2">Setup único</span>
-                            </div>
-                            <div className="mb-8 border-b border-white/10 pb-6 font-semibold">
-                                <span className="text-2xl font-bold text-white">79€</span>
-                                <span className="text-slate-400 text-sm">/mes</span>
-                            </div>
-                            <ul className="space-y-4 mb-10 text-sm leading-relaxed">
-                                {[
-                                    'Límite: Hasta 120 propiedades',
-                                    'CRM / Panel Admin Completo',
-                                    'Contacto via Email + WhatsApp',
-                                    '2 Idiomas (Español / Inglés)',
-                                    'Link a Google Maps incluido',
-                                    'Acceso a los 3 Temas UI',
-                                    'Filtros: + Hab / m² / Estado'
-                                ].map((f, i) => (
-                                    <li key={i} className="flex items-start gap-3 text-slate-200">
-                                        <svg className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
-                                        <span className="font-semibold">{f}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                            <button className="w-full py-4 px-6 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-500 transition-all shadow-lg shadow-blue-900/20">Impulsar mi Negocio</button>
-                        </div>
-
-                        {/* PLAN ENTERPRISE */}
-                        <div className="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm hover:shadow-xl transition-all duration-300">
-                            <div className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-4">Líderes del Mercado</div>
-                            <h3 className="text-2xl font-bold text-slate-900 mb-2">PLAN ENTERPRISE</h3>
-                            <div className="mb-2">
-                                <span className="text-inline font-medium text-slate-500 mr-1">Desde</span>
-                                <span className="text-4xl font-extrabold text-slate-950">2.900€</span>
-                                <span className="text-slate-500 text-xs font-medium ml-1">Setup</span>
-                            </div>
-                            <div className="mb-8 border-b border-slate-100 pb-6 font-semibold">
-                                <span className="text-2xl font-bold text-slate-950">149€</span>
-                                <span className="text-slate-500 text-sm">/mes</span>
-                            </div>
-                            <ul className="space-y-4 mb-10 text-sm leading-relaxed">
-                                {[
-                                    'Límite: Hasta 500 propiedades',
-                                    'CRM / Panel Admin Completo',
-                                    'Full Integración de Contacto',
-                                    'Multi-idioma (Hasta 4)',
-                                    'Link a Google Maps incluido',
-                                    'Acceso a los 3 Temas UI',
-                                    'Filtros: Gestión Total'
-                                ].map((f, i) => (
-                                    <li key={i} className="flex items-start gap-3 text-slate-700">
-                                        <svg className="w-5 h-5 text-purple-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
-                                        <span>{f}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                            <button className="w-full py-4 px-6 border-2 border-slate-900 text-slate-900 rounded-2xl font-bold hover:bg-slate-900 hover:text-white transition-all">Hablar con Ventas</button>
-                        </div>
-                    </div>
-
-                    <div className="max-w-4xl mx-auto">
-                        <div className="bg-blue-50 py-6 px-8 rounded-3xl border border-blue-100 shadow-sm relative overflow-hidden group">
-                            <p className="text-blue-900 text-sm md:text-base font-semibold italic leading-relaxed relative z-10 transition-transform group-hover:-translate-y-0.5 duration-300">
-                                <span className="font-extrabold uppercase mr-2 tracking-wider block mb-1">🛡️ Actualizaciones de por vida:</span>
-                                Todos los planes incluyen actualizaciones de seguridad y mejoras de la plataforma para siempre. <span className="text-blue-600 font-bold underline decoration-blue-200">Tu activo digital nunca envejece.</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             {/* 6. MÓDULOS "A LA CARTA" (Add-ons) */}
             <section className="py-20 bg-white border-t border-slate-100">

@@ -1,0 +1,55 @@
+{
+  "hero": {
+    "badge": "Listas en solo 7 días"
+  },
+  "pricing": {
+    "title": "Tu sistema inmobiliario",
+    "value1": "Web lista en 7 días",
+    "value2": "Cero dolores de cabeza con WordPress",
+    "value3": "Panel de control súper sencillo",
+    "cta": {
+      "getStarted": "Empezar ahora",
+      "boost": "Impulsar mi Negocio",
+      "sales": "Hablar con Ventas"
+    },
+    "starter": {
+      "title": "Starter",
+      "badge": "Empieza a captar clientes",
+      "desc": "Tu primera web profesional para atraer clientes sin depender de portales.",
+      "f1": "Hasta 30 propiedades",
+      "f2": "Optimizada para móviles",
+      "f3": "Panel de control básico",
+      "f4": "Contacto por email",
+      "f5": "Filtros básicos (precio, tipo, ubicación)",
+      "f6": "1 idioma",
+      "f7": "1 diseño fijo",
+      "f8": "Hosting y mantenimiento incluido"
+    },
+    "growth": {
+      "title": "Growth",
+      "badge": "Más vendido",
+      "desc": "Un sistema diseñado para convertir visitas en potenciales clientes automáticamente.",
+      "f1": "Hasta 120 propiedades",
+      "f2": "Todo lo de Starter +",
+      "f3": "Contacto vía Email + WhatsApp",
+      "f4": "2 idiomas",
+      "f5": "Integración con Google Maps",
+      "f6": "Filtros avanzados (habs, m², estado)",
+      "f7": "Elige entre 3 temas UI",
+      "f8": "Estructura optimizada para SEO"
+    },
+    "pro": {
+      "title": "Pro",
+      "badge": "Escala tu negocio",
+      "setupFee": "Desde 3.500€",
+      "desc": "Una plataforma completa para escalar tu agencia con funciones avanzadas y flexibilidad.",
+      "f1": "Hasta 500 propiedades",
+      "f2": "Todo lo de Growth +",
+      "f3": "Multi-idioma (hasta 4)",
+      "f4": "Sistema de contacto completo",
+      "f5": "Soporte prioritario",
+      "f6": "Personalización avanzada",
+      "f7": "Preparado para captación en Ads (Meta / Google)"
+    }
+  }
+}

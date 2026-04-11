@@ -1,0 +1,55 @@
+{
+  "hero": {
+    "badge": "Listas en solo 7 días"
+  },
+  "pricing": {
+    "title": "Your Real Estate System",
+    "value1": "Website ready in 7 days",
+    "value2": "No WordPress headaches",
+    "value3": "Easy admin panel",
+    "cta": {
+      "getStarted": "Get Started",
+      "boost": "Boost My Business",
+      "sales": "Talk to Sales"
+    },
+    "starter": {
+      "title": "Starter",
+      "badge": "Start attracting clients",
+      "desc": "Your first professional website to start attracting clients without relying on portals.",
+      "f1": "Up to 30 properties",
+      "f2": "Mobile-optimized website",
+      "f3": "Simple admin panel",
+      "f4": "Contact via email",
+      "f5": "Basic filters (price, type, location)",
+      "f6": "1 language",
+      "f7": "1 fixed design",
+      "f8": "Hosting & maintenance included"
+    },
+    "growth": {
+      "title": "Growth",
+      "badge": "Most Popular",
+      "desc": "A system designed to convert visitors into real leads automatically.",
+      "f1": "Up to 120 properties",
+      "f2": "Everything in Starter +",
+      "f3": "Contact via Email + WhatsApp",
+      "f4": "2 languages",
+      "f5": "Google Maps integration",
+      "f6": "Advanced filters (rooms, m², status)",
+      "f7": "Choose between 3 UI themes",
+      "f8": "SEO optimized structure"
+    },
+    "pro": {
+      "title": "Pro",
+      "badge": "Scale your business",
+      "setupFee": "From 3.500€",
+      "desc": "A complete platform to scale your agency with advanced features and flexibility.",
+      "f1": "Up to 500 properties",
+      "f2": "Everything in Growth +",
+      "f3": "Multi-language (up to 4)",
+      "f4": "Full contact system (forms + WhatsApp + tracking)",
+      "f5": "Priority support",
+      "f6": "Advanced customization",
+      "f7": "Ready for paid ads (Meta / Google)"
+    }
+  }
+}
