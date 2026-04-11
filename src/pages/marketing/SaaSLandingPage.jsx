@@ -180,7 +180,7 @@ export default function SaaSLandingPage() {
                 </div>
             </section>
 
-            {/* 5. WORDPRESS COMPARISON — The "Truth" */}
+            {/* 5. WORDPRESS COMPARISON — The "Truth" 
             <section className="py-24 bg-white">
                 <div className="max-w-4xl mx-auto px-6 text-center">
                     <h2 className="text-4xl md:text-5xl font-bold text-slate-950 mb-10 tracking-tight">
@@ -193,6 +193,7 @@ export default function SaaSLandingPage() {
                     </div>
                 </div>
             </section>
+            */}
 
             {/* 8. PRICING — Final Conversion */}
             <PricingSection />

@@ -4,7 +4,7 @@
     "headlineHighlight": "tu propia web inmobiliaria",
     "subline": "Sin depender de portales. Sin WordPress. Con un sistema diseñado para convertir visitas en contactos reales.",
     "cta": "Ver cómo funciona",
-    "badge": "Listas en solo 7 días"
+    "badge": "Lista en solo 7 días"
   },
   "problem": {
     "title": "¿Tu web te está trayendo clientes… o solo está ahí?",
@@ -23,8 +23,8 @@
   },
   "differentiation": {
     "b1": "Web lista en 7 días",
-    "b2": "Sin WordPress ni plugins",
-    "b3": "Panel tan fácil como usar Instagram",
+    "b2": "Sin WordPress",
+    "b3": "Panel fácil de usar",
     "b4": "Rápida, moderna y sin mantenimiento"
   },
   "wp": {
@@ -51,7 +51,7 @@
   "pricing": {
     "title": "Tu sistema inmobiliario",
     "value1": "Web lista en 7 días",
-    "value2": "Cero dolores de cabeza con WordPress",
+    "value2": "Cero dolores de cabeza",
     "value3": "Panel de control súper sencillo",
     "setup": "pago único",
     "monthly": "/ mes",
