@@ -140,13 +140,6 @@ export default function AdminSettingsPage() {
             )
           })()}
 
-          {/* Descripción Interna / Meta Description fallback */}
-          <div className="space-y-2">
-            <label htmlFor="description" className="block text-sm font-semibold text-secondary-700">
-              {t('admin:seo.fallbackDesc')}
-            </label>
-          </div>
-
           {/* Estado */}
           {error && (
             <div className="p-4 bg-red-50 border border-red-100 text-red-600 rounded-xl text-sm font-medium">
