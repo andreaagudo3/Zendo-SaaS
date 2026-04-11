@@ -9,8 +9,8 @@ export default function PricingSection() {
         {
             title: t('marketing:pricing.starter.title', 'Starter'),
             badge: t('marketing:pricing.starter.badge', 'Start attracting clients'),
-            setupFee: "990€",
-            monthlyFee: "79€",
+            setupFee: t('marketing:pricing.starter.setupFee', '1.200€'),
+            monthlyFee: t('marketing:pricing.starter.monthlyFee', '99€'),
             description: t('marketing:pricing.starter.desc', 'Your first professional website to start attracting clients without relying on portals.'),
             ctaText: t('marketing:pricing.cta.getStarted', 'Get Started'),
             isHighlighted: false,
@@ -28,8 +28,8 @@ export default function PricingSection() {
         {
             title: t('marketing:pricing.growth.title', 'Growth'),
             badge: t('marketing:pricing.growth.badge', 'Most Popular'),
-            setupFee: "1.990€",
-            monthlyFee: "149€",
+            setupFee: t('marketing:pricing.growth.setupFee', '2.400€'),
+            monthlyFee: t('marketing:pricing.growth.monthlyFee', '199€'),
             description: t('marketing:pricing.growth.desc', 'A system designed to convert visitors into real leads automatically.'),
             ctaText: t('marketing:pricing.cta.boost', 'Boost My Business'),
             isHighlighted: true,
@@ -47,8 +47,8 @@ export default function PricingSection() {
         {
             title: t('marketing:pricing.pro.title', 'Pro'),
             badge: t('marketing:pricing.pro.badge', 'Scale your business'),
-            setupFee: t('marketing:pricing.pro.setupFee', 'Desde 3.500€'),
-            monthlyFee: "249€",
+            setupFee: t('marketing:pricing.pro.setupFee', 'Desde 3.900€'),
+            monthlyFee: t('marketing:pricing.pro.monthlyFee', '299€'),
             description: t('marketing:pricing.pro.desc', 'A complete platform to scale your agency with advanced features and flexibility.'),
             ctaText: t('marketing:pricing.cta.sales', 'Talk to Sales'),
             isHighlighted: false,
@@ -67,12 +67,12 @@ export default function PricingSection() {
     return (
         <section id="pricing" className="py-20 bg-slate-50 relative border-t border-slate-200">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                
+
                 {/* Global Value Block */}
                 <div className="text-center mb-16">
                     <h2 className="text-4xl md:text-5xl font-bold text-slate-950 mb-8 tracking-tight">{t('marketing:pricing.title', 'Your Real Estate System')}</h2>
-                    
-                    <div className="flex flex-col md:flex-row items-center justify-center gap-6 max-w-4xl mx-auto mb-10">
+
+                    <div className="flex flex-col md:flex-row items-center justify-center gap-6 max-w-4xl mx-auto mb-25">
                         {/* Value Bullet 1 */}
                         <div className="flex items-center gap-2 bg-white px-5 py-3 rounded-2xl shadow-sm border border-slate-100">
                             <span className="flex-shrink-0 flex items-center justify-center w-6 h-6 bg-blue-100 text-blue-600 rounded-full">

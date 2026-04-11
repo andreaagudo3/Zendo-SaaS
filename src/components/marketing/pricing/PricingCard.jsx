@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import PricingFeatureList from './PricingFeatureList';
 import PricingCTA from './PricingCTA';
 
@@ -6,6 +7,7 @@ import PricingCTA from './PricingCTA';
  * Reusable Card component for individual SaaS plans.
  */
 export default function PricingCard({ plan }) {
+    const { t } = useTranslation(['marketing']);
     const {
         title,
         badge,
@@ -49,7 +51,7 @@ export default function PricingCard({ plan }) {
                     {setupFee}
                 </span>
                 <span className={`text-sm font-medium ${isHighlighted ? 'text-slate-400' : 'text-slate-500'}`}>
-                    setup
+                    {t('marketing:pricing.setup', 'setup')}
                 </span>
             </div>
             
@@ -58,7 +60,7 @@ export default function PricingCard({ plan }) {
                     {monthlyFee}
                 </span>
                 <span className={`text-sm ${isHighlighted ? 'text-slate-400' : 'text-slate-500'}`}>
-                    /mes
+                    {t('marketing:pricing.monthly', '/ month')}
                 </span>
             </div>
 

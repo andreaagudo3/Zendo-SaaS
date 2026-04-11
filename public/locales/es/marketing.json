@@ -1,12 +1,60 @@
 {
   "hero": {
+    "headlinePart1": "Consigue clientes desde",
+    "headlineHighlight": "tu propia web inmobiliaria",
+    "subline": "Sin depender de portales. Sin WordPress. Con un sistema diseñado para convertir visitas en contactos reales.",
+    "cta": "Ver cómo funciona",
     "badge": "Listas en solo 7 días"
+  },
+  "problem": {
+    "title": "¿Tu web te está trayendo clientes… o solo está ahí?",
+    "b1": "Pagas portales cada mes y no es suficiente",
+    "b2": "Tu web no convierte visitas en contactos",
+    "b3": "Pierdes oportunidades sin darte cuenta"
+  },
+  "solution": {
+    "title": "Un sistema completo para inmobiliarias",
+    "c1": "Captación",
+    "d1": "Aparece en Google y atrae clientes interesados",
+    "c2": "Conversión",
+    "d2": "Convierte visitas en contactos en segundos con WhatsApp y formularios",
+    "c3": "Gestión",
+    "d3": "Gestiona propiedades y clientes desde un panel simple y sin complicaciones"
+  },
+  "differentiation": {
+    "b1": "Web lista en 7 días",
+    "b2": "Sin WordPress ni plugins",
+    "b3": "Panel tan fácil como usar Instagram",
+    "b4": "Rápida, moderna y sin mantenimiento"
+  },
+  "wp": {
+    "title": "Olvídate de WordPress y sus problemas",
+    "p1": "La mayoría de webs inmobiliarias están hechas con WordPress. Y eso suele significar webs lentas, problemas técnicos y dependencia constante de alguien que las mantenga.",
+    "p2": "Nosotros lo hacemos diferente.",
+    "p3": "Un sistema moderno, rápido y sin mantenimiento, diseñado específicamente para inmobiliarias."
+  },
+  "trust": {
+    "b1": "Todo en un solo sistema",
+    "b2": "Sin depender de terceros",
+    "b3": "Sin actualizaciones que rompan la web",
+    "b4": "Control total desde un panel simple"
+  },
+  "roi": {
+    "title": "Una sola venta puede cubrir años de servicio",
+    "demoTitle": "Pruébalo en vivo",
+    "headlineMain": "No te lo imagines.",
+    "headlineHighlight": "Pruébalo ahora.",
+    "demoDesc": "No te lo imagines, pruébalo. Entra en nuestra inmobiliaria demo y experimenta la velocidad real que tendrán tus clientes.",
+    "demoBtn": "Explorar Demo en Vivo",
+    "imageAlt": "Vista previa de la Demo en vivo"
   },
   "pricing": {
     "title": "Tu sistema inmobiliario",
     "value1": "Web lista en 7 días",
     "value2": "Cero dolores de cabeza con WordPress",
     "value3": "Panel de control súper sencillo",
+    "setup": "pago único",
+    "monthly": "/ mes",
     "cta": {
       "getStarted": "Empezar ahora",
       "boost": "Impulsar mi Negocio",
@@ -15,6 +63,8 @@
     "starter": {
       "title": "Starter",
       "badge": "Empieza a captar clientes",
+      "setupFee": "1.200€",
+      "monthlyFee": "99€",
       "desc": "Tu primera web profesional para atraer clientes sin depender de portales.",
       "f1": "Hasta 30 propiedades",
       "f2": "Optimizada para móviles",
@@ -27,7 +77,9 @@
     },
     "growth": {
       "title": "Growth",
-      "badge": "Más vendido",
+      "badge": "⭐️ Más vendido",
+      "setupFee": "2.400€",
+      "monthlyFee": "199€",
       "desc": "Un sistema diseñado para convertir visitas en potenciales clientes automáticamente.",
       "f1": "Hasta 120 propiedades",
       "f2": "Todo lo de Starter +",
@@ -41,7 +93,8 @@
     "pro": {
       "title": "Pro",
       "badge": "Escala tu negocio",
-      "setupFee": "Desde 3.500€",
+      "setupFee": "Desde 3.900€",
+      "monthlyFee": "299€",
       "desc": "Una plataforma completa para escalar tu agencia con funciones avanzadas y flexibilidad.",
       "f1": "Hasta 500 propiedades",
       "f2": "Todo lo de Growth +",
@@ -51,5 +104,22 @@
       "f6": "Personalización avanzada",
       "f7": "Preparado para captación en Ads (Meta / Google)"
     }
+  },
+  "addons": {
+    "title": "💎 Módulos \"A la Carta\" (Add-ons)",
+    "subline": "¿Necesitas algo específico sin subir de plan? Puedes contratar funcionalidades sueltas de alto impacto.",
+    "items": {
+      "whatsapp": "WhatsApp Pro",
+      "maps": "Google Maps",
+      "locations": "Localidades",
+      "i18n": "Idioma i18n",
+      "catalog": "Catálogo"
+    }
+  },
+  "closing": {
+    "title": "¿Hablamos sobre tu éxito digital?",
+    "subline": "Deja de perder clientes por una web obsoleta. Empieza hoy y en 7 días tendrás tu sistema inmobiliario de alto rendimiento funcionando.",
+    "cta": "Quiero informarme ahora",
+    "quote": "\"Menos técnica, más resultados.\""
   }
 }

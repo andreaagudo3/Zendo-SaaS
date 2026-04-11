@@ -1,12 +1,60 @@
 {
   "hero": {
-    "badge": "Listas en solo 7 días"
+    "headlinePart1": "Get clients from",
+    "headlineHighlight": "your own real estate website",
+    "subline": "Without relying on portals. Without WordPress. With a system designed to turn visitors into real leads.",
+    "cta": "See how it works",
+    "badge": "Ready in just 7 days"
+  },
+  "problem": {
+    "title": "Is your website bringing in clients... or is it just sitting there?",
+    "b1": "You pay portals every month and it's not enough",
+    "b2": "Your website doesn't convert visits into leads",
+    "b3": "You're losing opportunities without realizing it"
+  },
+  "solution": {
+    "title": "A complete system for real estate",
+    "c1": "Acquisition",
+    "d1": "Appear on Google and attract interested clients",
+    "c2": "Conversion",
+    "d2": "Turn visits into leads in seconds with WhatsApp and forms",
+    "c3": "Management",
+    "d3": "Manage properties and clients from a simple, hassle-free panel"
+  },
+  "differentiation": {
+    "b1": "Website ready in 7 days",
+    "b2": "No WordPress or plugins",
+    "b3": "Panel as easy to use as Instagram",
+    "b4": "Fast, modern, and maintenance-free"
+  },
+  "wp": {
+    "title": "Forget about WordPress and its problems",
+    "p1": "Most real estate websites are built with WordPress. And that usually means slow websites, technical issues, and a constant dependence on someone to maintain them.",
+    "p2": "We do it differently.",
+    "p3": "A modern, fast, and maintenance-free system, designed specifically for real estate agencies."
+  },
+  "trust": {
+    "b1": "Everything in one system",
+    "b2": "No reliance on third parties",
+    "b3": "No updates that break the site",
+    "b4": "Total control from a simple panel"
+  },
+  "roi": {
+    "title": "A single sale can cover years of service",
+    "demoTitle": "Try it live",
+    "headlineMain": "Don't just imagine it.",
+    "headlineHighlight": "Try it now.",
+    "demoDesc": "Don't just imagine it, try it. Enter our demo agency and experience the real speed your clients will get.",
+    "demoBtn": "Explore Live Demo",
+    "imageAlt": "Live Demo Preview"
   },
   "pricing": {
     "title": "Your Real Estate System",
     "value1": "Website ready in 7 days",
     "value2": "No WordPress headaches",
     "value3": "Easy admin panel",
+    "setup": "one-time",
+    "monthly": "/ month",
     "cta": {
       "getStarted": "Get Started",
       "boost": "Boost My Business",
@@ -15,6 +63,8 @@
     "starter": {
       "title": "Starter",
       "badge": "Start attracting clients",
+      "setupFee": "1.200€",
+      "monthlyFee": "99€",
       "desc": "Your first professional website to start attracting clients without relying on portals.",
       "f1": "Up to 30 properties",
       "f2": "Mobile-optimized website",
@@ -27,7 +77,9 @@
     },
     "growth": {
       "title": "Growth",
-      "badge": "Most Popular",
+      "badge": "⭐️ Most Popular",
+      "setupFee": "2.400€",
+      "monthlyFee": "199€",
       "desc": "A system designed to convert visitors into real leads automatically.",
       "f1": "Up to 120 properties",
       "f2": "Everything in Starter +",
@@ -41,7 +93,8 @@
     "pro": {
       "title": "Pro",
       "badge": "Scale your business",
-      "setupFee": "From 3.500€",
+      "setupFee": "From 3.900€",
+      "monthlyFee": "299€",
       "desc": "A complete platform to scale your agency with advanced features and flexibility.",
       "f1": "Up to 500 properties",
       "f2": "Everything in Growth +",
@@ -51,5 +104,22 @@
       "f6": "Advanced customization",
       "f7": "Ready for paid ads (Meta / Google)"
     }
+  },
+  "addons": {
+    "title": "💎 \"A la Carte\" Modules (Add-ons)",
+    "subline": "Need something specific without upgrading your plan? You can purchase individual high-impact features.",
+    "items": {
+      "whatsapp": "WhatsApp Pro",
+      "maps": "Google Maps",
+      "locations": "Locations",
+      "i18n": "i18n Language",
+      "catalog": "Catalog"
+    }
+  },
+  "closing": {
+    "title": "Shall we talk about your digital success?",
+    "subline": "Stop losing clients due to an obsolete website. Start today and in 7 days you will have your high-performance real estate system running.",
+    "cta": "I want to get informed now",
+    "quote": "\"Less technical, more results.\""
   }
 }
