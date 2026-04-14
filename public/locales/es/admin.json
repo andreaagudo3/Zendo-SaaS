@@ -157,7 +157,22 @@
     "title": "Configuración del Perfil",
     "subtitle": "Gestiona la identidad y el SEO de tu inmobiliaria.",
     "agencyName": "Nombre de la Inmobiliaria",
-    "success": "¡Cambios guardados correctamente! Refrescando..."
+    "success": "¡Cambios guardados correctamente! Refrescando...",
+    "branding": {
+      "title": "Imágenes de Marca",
+      "logoLabel": "Logo de la Inmobiliaria",
+      "logoDesc": "Aparece en la barra de navegación y en el pie de página. Formatos recomendados: PNG o SVG.",
+      "homeHeaderLabel": "Imagen de Cabecera (Home)",
+      "homeHeaderDesc": "Imagen de fondo del hero en la página principal. Usa una fotografía horizontal de alta calidad (mín. 1600px de ancho).",
+      "uploadBtn": "Subir imagen",
+      "changeBtn": "Cambiar imagen",
+      "uploading": "Subiendo...",
+      "uploadSuccess": "¡Imagen actualizada correctamente!",
+      "uploadError": "Error al subir la imagen: {{message}}",
+      "invalidFormat": "Solo se aceptan imágenes JPG y PNG.",
+      "currentImage": "Imagen actual",
+      "preview": "Vista previa"
+    }
   },
   "seo": {
     "advancedTitle": "SEO Avanzado",

@@ -155,7 +155,22 @@
     "title": "Profile Settings",
     "subtitle": "Manage your agency's identity and SEO.",
     "agencyName": "Real Estate Agency Name",
-    "success": "Changes saved successfully! Refreshing..."
+    "success": "Changes saved successfully! Refreshing...",
+    "branding": {
+      "title": "Brand Images",
+      "logoLabel": "Agency Logo",
+      "logoDesc": "Shown in the navigation bar and footer. Recommended formats: PNG or SVG.",
+      "homeHeaderLabel": "Home Header Image",
+      "homeHeaderDesc": "Background image for the hero section on the homepage. Use a high-quality horizontal photo (min. 1600px wide).",
+      "uploadBtn": "Upload image",
+      "changeBtn": "Change image",
+      "uploading": "Uploading...",
+      "uploadSuccess": "Image updated successfully!",
+      "uploadError": "Error uploading image: {{message}}",
+      "invalidFormat": "Only JPG and PNG images are accepted.",
+      "currentImage": "Current image",
+      "preview": "Preview"
+    }
   },
   "seo": {
     "advancedTitle": "Advanced SEO",

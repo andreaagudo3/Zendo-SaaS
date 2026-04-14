@@ -76,7 +76,7 @@ export function Navbar() {
             aria-label={t('navbar.logoAriaLabel', { name: fullName })}
           >
             <img
-              src={tenant?.isMaster ? '/zendo-logo.png' : '/logo.png'}
+              src={tenant?.isMaster ? '/zendo-logo.png' : (tenant?.logo_url ?? '/logo.png')}
               alt={fullName}
               className={logoClass}
             />

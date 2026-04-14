@@ -35,7 +35,7 @@ export function Footer() {
           <div className="space-y-4">
             <Link to="/" className="inline-flex items-center gap-2 hover:opacity-90 transition-opacity" aria-label={`${fullName} – Inicio`}>
               <img
-                src={tenant?.isMaster ? '/zendo-logo.png' : logoSrc}
+                src={tenant?.isMaster ? '/zendo-logo.png' : (tenant?.logo_url ?? logoSrc)}
                 alt={fullName}
                 className={`h-10 w-auto object-contain ${tenant?.isMaster ? '' : 'brightness-0 invert'}`}
               />
