@@ -30,6 +30,11 @@ export default function HomePage() {
   const heroSpan = heroData.titleSpan || t('home:hero.titleSpan', { zone: tenant?.zone })
   const heroSub = heroData.subtitle || t('home:hero.subtitle')
 
+  // Branding images — fall back to Unsplash placeholder when not set
+  const FALLBACK_HEADER = 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&q=80'
+  const heroHeaderImage = tenant?.home_header_url || FALLBACK_HEADER
+  const logoSrc = tenant?.logo_url || '/logo.png'
+
   // ── Estado y Lógica de Búsqueda ──
   const [locationFilter, setLocationFilter] = useState('all')
   const [activeType, setActiveType] = useState('all')
@@ -119,11 +124,11 @@ export default function HomePage() {
       {/* ── MINIMAL Hero ────────────────────────────────────────────── */}
       {isMinimal && (
         <section className="relative bg-secondary-950 overflow-hidden">
-          <div className="absolute inset-0 bg-cover bg-center opacity-20" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&q=80')" }} />
+          <div className="absolute inset-0 bg-cover bg-center opacity-20" style={{ backgroundImage: `url('${heroHeaderImage}')` }} />
           <div className="absolute inset-0 bg-gradient-to-b from-secondary-950/80 via-secondary-950/60 to-secondary-950" />
           <div className="relative max-w-7xl mx-auto px-4 py-28 md:py-40 text-center space-y-8">
             <div className="flex flex-col items-center justify-center gap-8 mb-10 md:mb-16">
-              <img src="/logo.png" alt={tenant?.name} className="h-16 md:h-20 w-auto object-contain brightness-0 invert" />
+              <img src={logoSrc} alt={tenant?.name} className="h-16 md:h-20 w-auto object-contain brightness-0 invert" />
               <p className="inline-block px-4 py-1.5 rounded-full bg-primary-700/20 text-primary-300 text-sm font-medium tracking-wide border border-primary-600/30">
                 {heroEyebrow}
               </p>
@@ -155,7 +160,7 @@ export default function HomePage() {
               <div className="order-1 lg:order-2">
                 <div className="relative aspect-[4/3] w-full max-w-lg mx-auto lg:max-w-none">
                   <div className="absolute inset-0 bg-secondary-100 translate-x-4 translate-y-4" />
-                  <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80" alt={tenant?.name} className="absolute inset-0 w-full h-full object-cover border border-secondary-200 z-10" />
+                  <img src={heroHeaderImage} alt={tenant?.name} className="absolute inset-0 w-full h-full object-cover border border-secondary-200 z-10" />
                 </div>
               </div>
             </div>
@@ -166,7 +171,7 @@ export default function HomePage() {
       {/* ── PORTAL Hero ─────────────────────────────────────────────── */}
       {isPortal && (
         <section className="relative bg-secondary-900 overflow-hidden">
-          <div className="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-overlay" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&q=80')" }} />
+          <div className="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-overlay" style={{ backgroundImage: `url('${heroHeaderImage}')` }} />
           <div className="relative max-w-7xl mx-auto px-4 py-24 md:py-36 flex flex-col items-center text-center">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 drop-shadow-lg">
               {heroTitle} <span className="text-primary-400">{heroSpan}</span>

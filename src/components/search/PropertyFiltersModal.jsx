@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { HierarchicalLocationSelect } from './HierarchicalLocationSelect'
+import { getPublicFeatures } from '../../services/propertyService'
 
 const PRICE_FORMAT = new Intl.NumberFormat('es-ES', {
   style: 'currency', currency: 'EUR', maximumFractionDigits: 0,
@@ -10,24 +11,31 @@ const PRICE_FORMAT = new Intl.NumberFormat('es-ES', {
  * PropertyFiltersModal
  *
  * • Móvil (<640px): pantalla completa que entra por la derecha (estilo app nativa).
- *   Sin bottom sheet. Sin gestos de arrastre.
  * • Desktop (≥640px): modal centrado con overlay oscuro y animación fade+scale.
  *
  * Props:
  *   isOpen    — boolean
  *   onClose   — fn()
  *   filters   — objeto de filtros actual
- *   locations — array {id, name}
+ *   provinces — array {id, name, locations: [{id,name}]}
  *   onApply   — fn(partialFilters) — solo se aplica al pulsar "Aplicar filtros"
  */
 export function PropertyFiltersModal({ isOpen, onClose, filters, provinces = [], onApply }) {
-  const { t } = useTranslation(['properties', 'common'])
+  const { t } = useTranslation(['properties', 'common', 'features'])
+
   // Estado local — no se aplica hasta pulsar "Aplicar filtros"
   const [local, setLocal] = useState({
     locationFilter: filters.locationFilter,
     bedrooms:       filters.bedrooms,
     maxPrice:       filters.maxPrice === Infinity ? 2_000_000 : filters.maxPrice,
+    featureIds:     filters.featureIds ?? [],
   })
+
+  // Features loaded from DB
+  const [groupedFeatures, setGroupedFeatures] = useState({})
+  const [categories, setCategories]           = useState([])
+  const [activeTab, setActiveTab]             = useState('')
+  const [featuresLoading, setFeaturesLoading] = useState(true)
 
   const set = (key, val) => setLocal(prev => ({ ...prev, [key]: val }))
 
@@ -38,9 +46,27 @@ export function PropertyFiltersModal({ isOpen, onClose, filters, provinces = [],
         locationFilter: filters.locationFilter,
         bedrooms:       filters.bedrooms,
         maxPrice:       filters.maxPrice === Infinity ? 2_000_000 : filters.maxPrice,
+        featureIds:     filters.featureIds ?? [],
       })
     }
-  }, [isOpen, filters.locationFilter, filters.bedrooms, filters.maxPrice])
+  }, [isOpen, filters.locationFilter, filters.bedrooms, filters.maxPrice, filters.featureIds])
+
+  // Load features once
+  useEffect(() => {
+    getPublicFeatures().then((data) => {
+      const grouped = data.reduce((acc, feat) => {
+        const cat = feat.category || 'general'
+        if (!acc[cat]) acc[cat] = []
+        acc[cat].push(feat)
+        return acc
+      }, {})
+      setGroupedFeatures(grouped)
+      const cats = Object.keys(grouped).sort()
+      setCategories(cats)
+      if (cats.length > 0) setActiveTab(cats[0])
+      setFeaturesLoading(false)
+    })
+  }, [])
 
   // Bloquear scroll del body + cerrar con ESC
   useEffect(() => {
@@ -61,12 +87,28 @@ export function PropertyFiltersModal({ isOpen, onClose, filters, provinces = [],
       locationFilter: local.locationFilter,
       bedrooms:       local.bedrooms,
       maxPrice:       local.maxPrice >= 2_000_000 ? Infinity : local.maxPrice,
+      featureIds:     local.featureIds,
     })
     onClose()
   }
 
   function handleReset() {
-    setLocal({ locationFilter: 'all', bedrooms: 'all', maxPrice: 2_000_000 })
+    setLocal({ locationFilter: 'all', bedrooms: 'all', maxPrice: 2_000_000, featureIds: [] })
+  }
+
+  function toggleFeature(id) {
+    setLocal(prev => ({
+      ...prev,
+      featureIds: prev.featureIds.includes(id)
+        ? prev.featureIds.filter((f) => f !== id)
+        : [...prev.featureIds, id],
+    }))
+  }
+
+  // Prettify fallback when translation key isn't found
+  function fmt(key) {
+    if (!key) return ''
+    return key.replace(/[-_.]/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
   }
 
   const PillGroup = ({ options, value, onChange }) => (
@@ -89,13 +131,89 @@ export function PropertyFiltersModal({ isOpen, onClose, filters, provinces = [],
     </div>
   )
 
-  const SectionDivider = () => <hr className="border-secondary-100" />
+  // ── Shared features section (rendered inside both mobile and desktop) ─────
+  const FeaturesSection = ({ mobile = false }) => {
+    if (featuresLoading) return null
+    if (categories.length === 0) return null
+
+    return (
+      <div className={mobile ? 'px-5 py-6' : ''}>
+        {!mobile && (
+          <p className="text-sm font-semibold text-secondary-800 mb-3">
+            {t('properties:filters.featuresLabel', 'Características')}
+          </p>
+        )}
+        {mobile && (
+          <h2 className="text-sm font-bold text-secondary-900 mb-4">
+            {t('properties:filters.featuresLabel', 'Características')}
+          </h2>
+        )}
+
+        {/* Category tabs */}
+        <div className="flex gap-2 overflow-x-auto pb-2 mb-4 scrollbar-none border-b border-secondary-100">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              type="button"
+              onClick={() => setActiveTab(cat)}
+              className={`px-3 py-1.5 rounded-t-lg text-xs font-semibold whitespace-nowrap transition-colors border-b-2 ${
+                activeTab === cat
+                  ? 'text-primary-700 border-primary-700 bg-primary-50/50'
+                  : 'text-secondary-500 border-transparent hover:text-secondary-800 hover:bg-secondary-50'
+              }`}
+            >
+              {t(`admin:properties.features.categories.${cat}`, { ns: 'admin', defaultValue: fmt(cat) })}
+              {groupedFeatures[cat]?.some((f) => local.featureIds.includes(f.id)) && (
+                <span className="ml-1.5 inline-flex items-center justify-center w-4 h-4 rounded-full bg-primary-700 text-white text-[9px] font-bold">
+                  {groupedFeatures[cat].filter((f) => local.featureIds.includes(f.id)).length}
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
+
+        {/* Feature checkboxes */}
+        {activeTab && groupedFeatures[activeTab] && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {groupedFeatures[activeTab].map((feat) => {
+              const checked = local.featureIds.includes(feat.id)
+              return (
+                <label
+                  key={feat.id}
+                  className={`flex items-center gap-3 px-3 py-2.5 rounded-xl border cursor-pointer transition-all ${
+                    checked
+                      ? 'bg-primary-50 border-primary-300 ring-1 ring-primary-300'
+                      : 'bg-white border-secondary-200 hover:border-primary-200 hover:bg-secondary-50'
+                  }`}
+                >
+                  <input
+                    type="checkbox"
+                    checked={checked}
+                    onChange={() => toggleFeature(feat.id)}
+                    className="w-4 h-4 rounded text-primary-600 focus:ring-primary-500 border-secondary-300 shrink-0 pointer-events-none"
+                  />
+                  <span className={`text-sm font-medium ${checked ? 'text-primary-900' : 'text-secondary-700'}`}>
+                    {t(feat.feature_key, { ns: 'features', defaultValue: fmt(feat.feature_key) })}
+                  </span>
+                </label>
+              )
+            })}
+          </div>
+        )}
+
+        {/* Active features count */}
+        {local.featureIds.length > 0 && (
+          <p className="mt-3 text-xs text-primary-700 font-medium">
+            {local.featureIds.length} {local.featureIds.length === 1 ? 'característica seleccionada' : 'características seleccionadas'}
+          </p>
+        )}
+      </div>
+    )
+  }
 
   return (
     <>
-      {/* ═══ MÓVIL: pantalla completa, sin overlay ═══
-          La pantalla ocupa el 100% del viewport y entra desde la derecha.
-          El layout es idéntico a una pantalla nativa de iOS/Android.            */}
+      {/* ═══ MÓVIL: pantalla completa, sin overlay ═══ */}
       <div
         role="dialog"
         aria-modal="true"
@@ -104,7 +222,6 @@ export function PropertyFiltersModal({ isOpen, onClose, filters, provinces = [],
       >
         {/* Header sticky */}
         <div className="shrink-0 flex items-center gap-3 px-5 py-4 border-b border-secondary-100">
-          {/* Botón volver (izquierda) */}
           <button
             type="button"
             onClick={onClose}
@@ -116,7 +233,6 @@ export function PropertyFiltersModal({ isOpen, onClose, filters, provinces = [],
             </svg>
           </button>
           <h1 className="flex-1 text-base font-bold text-secondary-900">{t('properties:filters.title', 'Filtros')}</h1>
-          {/* Botón cerrar (derecha) */}
           <button
             type="button"
             onClick={onClose}
@@ -184,6 +300,11 @@ export function PropertyFiltersModal({ isOpen, onClose, filters, provinces = [],
             </div>
           </section>
 
+          {/* Características */}
+          <section>
+            <FeaturesSection mobile />
+          </section>
+
         </div>
 
         {/* Footer sticky */}
@@ -214,13 +335,13 @@ export function PropertyFiltersModal({ isOpen, onClose, filters, provinces = [],
           aria-hidden="true"
         />
 
-        {/* Panel */}
+        {/* Panel — wider to accommodate features grid */}
         <div
           role="dialog"
           aria-modal="true"
           aria-label="Filtros de búsqueda"
           className="animate-modal-in fixed z-50 inset-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-                     bg-white rounded-2xl shadow-2xl w-[min(540px,95vw)] max-h-[88dvh]
+                     bg-white rounded-2xl shadow-2xl w-[min(680px,95vw)] max-h-[88dvh]
                      flex flex-col overflow-hidden"
         >
           {/* Header */}
@@ -239,7 +360,7 @@ export function PropertyFiltersModal({ isOpen, onClose, filters, provinces = [],
           </div>
 
           {/* Body */}
-          <div className="flex-1 overflow-y-auto px-6 py-6 space-y-8">
+          <div className="flex-1 overflow-y-auto px-6 py-6 space-y-7">
 
             <div>
               <label className="text-sm font-semibold text-secondary-800 block mb-3">{t('properties:filters.location', 'Ubicación')}</label>
@@ -288,6 +409,11 @@ export function PropertyFiltersModal({ isOpen, onClose, filters, provinces = [],
                 <span>{t('properties:filters.priceMin', '50.000 €')}</span>
                 <span>{t('properties:filters.noLimit', 'Sin límite')}</span>
               </div>
+            </div>
+
+            {/* ── Features ── */}
+            <div>
+              <FeaturesSection mobile={false} />
             </div>
 
           </div>

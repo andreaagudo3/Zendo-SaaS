@@ -3,10 +3,11 @@ import { useTranslation } from 'react-i18next'
 /**
  * FilterChips — fila de chips removibles que muestran los filtros activos.
  * Props:
- *   filters    — objeto de filtros actual
- *   provinces  — array de { id, name, locations: [{id, name}] }
- *   onRemove   — fn(key) para quitar un filtro individual
- *   onClearAll — fn() para limpiar todos los filtros
+ *   filters      — objeto de filtros actual
+ *   provinces    — array de { id, name, locations: [{id, name}] }
+ *   allFeatures  — array de { id, feature_key } para resolver labels de features
+ *   onRemove     — fn(key, value?) para quitar un filtro individual
+ *   onClearAll   — fn() para limpiar todos los filtros
  */
 
 const PRICE_FORMAT = new Intl.NumberFormat('es-ES', {
@@ -30,20 +31,30 @@ function resolveLocationLabel(locationFilter, provinces) {
   return null
 }
 
-export function FilterChips({ filters, provinces = [], onRemove, onClearAll }) {
-  const { t } = useTranslation(['properties', 'common'])
+function fmt(key) {
+  if (!key) return ''
+  return key.replace(/[-_.]/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
+}
+
+export function FilterChips({ filters, provinces = [], allFeatures = [], onRemove, onClearAll }) {
+  const { t } = useTranslation(['properties', 'common', 'features'])
   const chips = []
 
   if (filters.type !== 'all') {
     chips.push({
       key: 'type',
       label: filters.type === 'sale' ? t('common:type.sale') : t('common:type.rent'),
+      onRemove: () => onRemove('type'),
     })
   }
 
   const locationLabel = resolveLocationLabel(filters.locationFilter, provinces)
   if (locationLabel) {
-    chips.push({ key: 'locationFilter', label: locationLabel })
+    chips.push({
+      key: 'locationFilter',
+      label: locationLabel,
+      onRemove: () => onRemove('locationFilter'),
+    })
   }
 
   if (filters.bedrooms !== 'all') {
@@ -52,17 +63,38 @@ export function FilterChips({ filters, provinces = [], onRemove, onClearAll }) {
       label: filters.bedrooms === '0'
         ? t('properties:filters.bedrooms.studio')
         : `${filters.bedrooms}+ hab.`,
+      onRemove: () => onRemove('bedrooms'),
     })
   }
+
   if (filters.maxPrice !== Infinity) {
-    chips.push({ key: 'maxPrice', label: `Hasta ${PRICE_FORMAT.format(filters.maxPrice)}` })
+    chips.push({
+      key: 'maxPrice',
+      label: `Hasta ${PRICE_FORMAT.format(filters.maxPrice)}`,
+      onRemove: () => onRemove('maxPrice'),
+    })
+  }
+
+  // Feature chips — one per active feature
+  if (filters.featureIds?.length > 0) {
+    filters.featureIds.forEach((fid) => {
+      const feat = allFeatures.find((f) => f.id === fid)
+      const label = feat
+        ? t(feat.feature_key, { ns: 'features', defaultValue: fmt(feat.feature_key) })
+        : fid
+      chips.push({
+        key: `feature_${fid}`,
+        label,
+        onRemove: () => onRemove('featureIds', fid),
+      })
+    })
   }
 
   if (chips.length === 0) return null
 
   return (
     <div className="flex flex-wrap items-center gap-2 mt-3">
-      {chips.map(({ key, label }) => (
+      {chips.map(({ key, label, onRemove: handleRemove }) => (
         <span
           key={key}
           className="inline-flex items-center gap-1.5 pl-3 pr-2 py-1.5 rounded-full bg-primary-50 text-primary-800 border border-primary-200 text-sm font-medium"
@@ -70,7 +102,7 @@ export function FilterChips({ filters, provinces = [], onRemove, onClearAll }) {
           {label}
           <button
             type="button"
-            onClick={() => onRemove(key)}
+            onClick={handleRemove}
             aria-label={`Quitar filtro: ${label}`}
             className="flex items-center justify-center w-4 h-4 rounded-full hover:bg-primary-200 transition-colors"
           >

@@ -1,9 +1,13 @@
 /**
- * imageService.js — Property image management for the multi-tenant system.
+ * imageService.js — Property & tenant image management for the multi-tenant system.
  *
- * Storage path convention:
+ * Storage path convention (properties bucket):
  *   {tenant.id}/{property.id}/{filename}
  *   e.g. 123e4567-e89b-12d3.../123e4567-e89b-12d3.../1700000000000-photo.jpg
+ *
+ * Storage path convention (tenants bucket):
+ *   {tenant.id}/{imageName}.{ext}   — imageName is 'logo' or 'home_header'
+ *   e.g. 123e4567-e89b-12d3.../logo.png
  *
  * DB table: property_images
  *   id, property_id, tenant_id, url, path, is_cover, order_index, created_at
@@ -11,7 +15,8 @@
 
 import { supabase } from './supabaseClient'
 
-const IMAGE_BUCKET = 'properties'
+const IMAGE_BUCKET  = 'properties'  // property photos
+const TENANT_BUCKET = 'tenants'     // tenant branding images (logo, home_header)
 
 export const IMAGE_PLACEHOLDER = '/images/property-placeholder.jpg'
 
@@ -185,5 +190,79 @@ export async function setImageAsCover(imageId, propertyId) {
     .eq('id', imageId)
 
   if (error) console.error('[imageService] setImageAsCover failed:', error.message)
+  return { error: error ?? null }
+}
+
+// ─── Tenant Branding Images ───────────────────────────────────────────────────
+
+/** Supported extensions for tenant branding images. */
+const BRANDING_EXTS = ['jpg', 'jpeg', 'png']
+
+/**
+ * Uploads a branding image (logo or home_header) for a tenant.
+ *
+ * Rules:
+ *  - Only jpg / jpeg / png are accepted.
+ *  - ALL previous variants ({imageName}.jpg, .jpeg, .png) are deleted first
+ *    so storage never accumulates stale files.
+ *  - The file is stored at: {tenant.id}/{imageName}.{normalizedExt}
+ *    where normalizedExt is 'jpg' for jpeg/jpg and 'png' for png.
+ *
+ * @param {File}   file      — The image file to upload
+ * @param {string} imageName — 'logo' | 'home_header'
+ * @param {{ id: string }} tenant
+ * @returns {Promise<{ url: string|null, path: string|null, error: object|null }>}
+ */
+export async function uploadTenantImage(file, imageName, tenant) {
+  // ── Validate extension ────────────────────────────────────────────────────
+  const rawExt = file.name.split('.').pop().toLowerCase()
+  if (!BRANDING_EXTS.includes(rawExt)) {
+    return {
+      url: null,
+      path: null,
+      error: { message: 'Only JPG and PNG images are supported.' },
+    }
+  }
+
+  // Normalise: treat jpeg → jpg so we only ever have .jpg or .png on disk
+  const ext  = rawExt === 'jpeg' ? 'jpg' : rawExt
+  const path = `${tenant.id}/${imageName}.${ext}`
+
+  // ── Delete all previous variants (jpg + jpeg + png) ───────────────────────
+  // We ignore errors here intentionally — files may not exist yet.
+  const prevPaths = BRANDING_EXTS.map((e) => `${tenant.id}/${imageName}.${e}`)
+  await supabase.storage.from(TENANT_BUCKET).remove(prevPaths)
+
+  // ── Upload new file ───────────────────────────────────────────────────────
+  const { error: storageError } = await supabase.storage
+    .from(TENANT_BUCKET)
+    .upload(path, file, { upsert: true, contentType: file.type })
+
+  if (storageError) {
+    console.error('[imageService] uploadTenantImage failed:', storageError.message)
+    return { url: null, path: null, error: storageError }
+  }
+
+  // Add cache-bust timestamp so browsers don't serve a stale version
+  const { data: { publicUrl } } = supabase.storage
+    .from(TENANT_BUCKET)
+    .getPublicUrl(path)
+
+  const url = `${publicUrl}?t=${Date.now()}`
+  return { url, path, error: null }
+}
+
+/**
+ * Deletes ALL extension variants of a tenant branding image from storage.
+ * (Useful when a tenant account is removed or branding is reset.)
+ *
+ * @param {string} imageName — 'logo' | 'home_header'
+ * @param {{ id: string }} tenant
+ * @returns {Promise<{ error: object|null }>}
+ */
+export async function deleteTenantImage(imageName, tenant) {
+  const paths = BRANDING_EXTS.map((e) => `${tenant.id}/${imageName}.${e}`)
+  const { error } = await supabase.storage.from(TENANT_BUCKET).remove(paths)
+  if (error) console.error('[imageService] deleteTenantImage failed:', error.message)
   return { error: error ?? null }
 }

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { getPropertiesPaginated, getProvincesWithLocations, PAGE_SIZE } from '../services/propertyService'
+import { getPropertiesPaginated, getProvincesWithLocations, getPublicFeatures, PAGE_SIZE } from '../services/propertyService'
 import { PropertyCard } from '../components/shared/PropertyCard'
 import { SkeletonCard } from '../components/shared/SkeletonCard'
 import { Pagination } from '../components/shared/Pagination'
@@ -17,6 +17,7 @@ const INITIAL_FILTERS = {
   locationFilter: 'all',  // 'all' | 'prov:uuid' | 'loc:uuid'
   minPrice: 0,
   maxPrice: Infinity,
+  featureIds: [],         // array of feature UUIDs
 }
 
 function filtersToParams(filters, page) {
@@ -25,17 +26,20 @@ function filtersToParams(filters, page) {
   if (filters.bedrooms !== 'all') p.set('bedrooms', filters.bedrooms)
   if (filters.locationFilter !== 'all') p.set('loc', filters.locationFilter)
   if (filters.maxPrice !== Infinity) p.set('maxPrice', String(filters.maxPrice))
+  if (filters.featureIds?.length) p.set('features', filters.featureIds.join(','))
   if (page > 1) p.set('page', String(page))
   return p
 }
 
 function paramsToFilters(searchParams) {
+  const featParam = searchParams.get('features')
   return {
     type: searchParams.get('type') || 'all',
     bedrooms: searchParams.get('bedrooms') || 'all',
     locationFilter: searchParams.get('loc') || 'all',
     minPrice: 0,
     maxPrice: searchParams.get('maxPrice') ? Number(searchParams.get('maxPrice')) : Infinity,
+    featureIds: featParam ? featParam.split(',').filter(Boolean) : [],
   }
 }
 
@@ -52,6 +56,7 @@ export default function PropertiesPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [provinces, setProvinces] = useState([])  // jerarquía provincia → localidades
+  const [allFeatures, setAllFeatures] = useState([]) // para resolver labels en FilterChips
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const theme = useThemeStore((s) => s.theme)
@@ -63,12 +68,18 @@ export default function PropertiesPage() {
     filters.bedrooms !== 'all',
     filters.locationFilter !== 'all',
     filters.maxPrice !== Infinity,
+    ...(filters.featureIds ?? []).map(() => true),
   ].filter(Boolean).length
 
   // Cargar árbol de provincias con localidades (una sola vez)
   useEffect(() => {
     getProvincesWithLocations(tenant?.id).then(setProvinces)
   }, [tenant?.id])
+
+  // Cargar features (una sola vez, sin tenant_id — son globales)
+  useEffect(() => {
+    getPublicFeatures().then(setAllFeatures)
+  }, [])
 
   useEffect(() => {
     let cancelled = false
@@ -81,6 +92,7 @@ export default function PropertiesPage() {
       locationFilter: filters.locationFilter,
       minPrice: filters.minPrice,
       maxPrice: filters.maxPrice,
+      featureIds: filters.featureIds,
     }
 
     getPropertiesPaginated(serviceFilters, page, tenant?.id)
@@ -110,8 +122,13 @@ export default function PropertiesPage() {
     setPage(1)
   }, [])
 
-  const removeFilter = useCallback((key) => {
-    setFiltersState(prev => ({ ...prev, [key]: INITIAL_FILTERS[key] }))
+  const removeFilter = useCallback((key, value) => {
+    if (key === 'featureIds' && value !== undefined) {
+      // Remove a single feature ID from the array
+      setFiltersState(prev => ({ ...prev, featureIds: prev.featureIds.filter((id) => id !== value) }))
+    } else {
+      setFiltersState(prev => ({ ...prev, [key]: INITIAL_FILTERS[key] }))
+    }
     setPage(1)
   }, [])
 
@@ -156,6 +173,7 @@ export default function PropertiesPage() {
         <FilterChips
           filters={filters}
           provinces={provinces}
+          allFeatures={allFeatures}
           onRemove={removeFilter}
           onClearAll={resetFilters}
         />

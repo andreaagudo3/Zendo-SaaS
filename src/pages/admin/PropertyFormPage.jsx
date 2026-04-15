@@ -420,7 +420,7 @@ export default function PropertyFormPage() {
             </div>
 
             <Field label={t('admin:properties.form.description')} htmlFor="f-desc">
-              <textarea id="f-desc" name="description" rows={4} value={form.description} onChange={handleChange}
+              <textarea id="f-desc" name="description" rows={15} value={form.description} onChange={handleChange}
                 placeholder={t('admin:properties.form.descriptionPlaceholder')} className={INPUT_CLS + ' resize-none'} />
             </Field>
           </section>
@@ -488,7 +488,7 @@ export default function PropertyFormPage() {
           {/* Imágenes */}
           <section className="bg-white rounded-2xl border border-secondary-200 p-6 shadow-sm space-y-3">
             <h2 className="font-semibold text-secondary-700 text-sm uppercase tracking-wide">Imágenes</h2>
-            
+
             {coverUpdatedStatus && (
               <div className="mb-4 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm rounded-xl px-4 py-3 animate-fade-in-down" style={{ animationDuration: '0.3s' }}>
                 ✅ Portada de la propiedad actualizada correctamente.
@@ -531,11 +531,10 @@ export default function PropertyFormPage() {
           {/* Gestión Interna */}
           {(() => {
             const internalEnabled = tenant?.effective_features?.internalManagement === true
-            const fieldCls = `w-full px-4 py-2.5 rounded-xl border border-secondary-200 text-sm text-secondary-900 placeholder-secondary-400 outline-none transition ${
-              internalEnabled
+            const fieldCls = `w-full px-4 py-2.5 rounded-xl border border-secondary-200 text-sm text-secondary-900 placeholder-secondary-400 outline-none transition ${internalEnabled
                 ? 'bg-white focus:ring-2 focus:ring-primary-600 focus:border-transparent'
                 : 'bg-secondary-50 opacity-50 cursor-not-allowed'
-            }`
+              }`
             return (
               <section className="bg-white rounded-2xl border border-secondary-200 p-6 space-y-4 shadow-sm">
                 <div className="flex items-center justify-between">
@@ -611,11 +610,10 @@ export default function PropertyFormPage() {
           {/* Configuración SEO */}
           {(() => {
             const seoEnabled = tenant?.effective_features?.manualSeo === true
-            const fieldCls = `w-full px-4 py-2.5 rounded-xl border border-secondary-200 text-sm text-secondary-900 placeholder-secondary-400 outline-none transition ${
-              seoEnabled
+            const fieldCls = `w-full px-4 py-2.5 rounded-xl border border-secondary-200 text-sm text-secondary-900 placeholder-secondary-400 outline-none transition ${seoEnabled
                 ? 'bg-white focus:ring-2 focus:ring-primary-600 focus:border-transparent'
                 : 'bg-secondary-50 opacity-50 cursor-not-allowed'
-            }`
+              }`
             return (
               <section className="bg-white rounded-2xl border border-secondary-200 p-6 space-y-4 shadow-sm">
                 <div className="flex items-center justify-between">
