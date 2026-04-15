@@ -22,6 +22,25 @@ const STORAGE_BUCKET = 'properties'
 
 const PROPERTY_FIELDS = '*, locations(id, name, slug, provinces(name))'
 
+/**
+ * Fetches ALL features from the master features table.
+ * Used by the public search modal to render the feature checkboxes.
+ * @returns {Promise<Array<{ id: string, feature_key: string, category: string }>>}
+ */
+export async function getPublicFeatures() {
+  const { data, error } = await supabase
+    .from('features')
+    .select('id, feature_key, category')
+    .order('category')
+    .order('feature_key')
+
+  if (error) {
+    console.error('[propertyService] getPublicFeatures:', error.message)
+    return []
+  }
+  return data ?? []
+}
+
 // ─── Storage helpers ─────────────────────────────────────────────────────────
 
 /**
@@ -208,7 +227,7 @@ export const PAGE_SIZE = 12
 
 export async function getPropertiesPaginated(filters = {}, page = 1, tenantId) {
   if (!tenantId) return { data: [], count: 0 }
-  const { locationFilter, listing_type, bedrooms, minPrice, maxPrice } = filters
+  const { locationFilter, listing_type, bedrooms, minPrice, maxPrice, featureIds } = filters
 
   const from = (page - 1) * PAGE_SIZE
   const to = from + PAGE_SIZE - 1
@@ -224,8 +243,6 @@ export async function getPropertiesPaginated(filters = {}, page = 1, tenantId) {
     if (type === 'loc') {
       query = query.eq('location_id', id)
     } else if (type === 'prov') {
-      // PostgREST no soporta filtrar por campo de tabla joined en la tabla padre.
-      // Solución: sub-query para obtener los location_id de esa provincia.
       const { data: locs, error: locErr } = await supabase
         .from('locations')
         .select('id')
@@ -237,12 +254,7 @@ export async function getPropertiesPaginated(filters = {}, page = 1, tenantId) {
       }
 
       const locationIds = (locs ?? []).map((l) => l.id)
-
-      if (locationIds.length === 0) {
-        // No hay localidades en esta provincia → resultado vacío garantizado
-        return { data: [], count: 0 }
-      }
-
+      if (locationIds.length === 0) return { data: [], count: 0 }
       query = query.in('location_id', locationIds)
     }
   }
@@ -257,6 +269,37 @@ export async function getPropertiesPaginated(filters = {}, page = 1, tenantId) {
   }
   if (maxPrice != null && maxPrice < Infinity) {
     query = query.lte('price', maxPrice)
+  }
+
+  // Feature filter: intersection — property must have ALL selected features.
+  // property_features is a global junction table (no tenant_id); tenant isolation
+  // is enforced by the main query's .eq('tenant_id', tenantId) + .in('id', matchingIds).
+  if (featureIds && featureIds.length > 0) {
+    const sets = await Promise.all(
+      featureIds.map(async (fid) => {
+        const { data, error } = await supabase
+          .from('property_features')
+          .select('property_id')
+          .eq('feature_id', fid)
+        if (error) {
+          console.error('[propertyService] feature sub-query:', error.message)
+          return null
+        }
+        return new Set((data ?? []).map((r) => r.property_id))
+      })
+    )
+
+    if (sets.some((s) => s === null)) return { data: [], count: 0 }
+
+    // Intersection: property must appear in every set
+    const intersection = sets.reduce((acc, set) => {
+      if (acc === null) return set
+      return new Set([...acc].filter((id) => set.has(id)))
+    }, null)
+
+    const matchingIds = intersection ? [...intersection] : []
+    if (matchingIds.length === 0) return { data: [], count: 0 }
+    query = query.in('id', matchingIds)
   }
 
   query = query.order('created_at', { ascending: false }).range(from, to)

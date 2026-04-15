@@ -23,7 +23,10 @@
       "2":      "2",
       "3":      "3",
       "4plus":  "4+"
-    }
+    },
+    "featuresLabel": "Features & amenities",
+    "operation":     "Operation",
+    "minPriceLabel":  "Min price"
   },
   "chips": {
     "type":     "Type: {{value}}",

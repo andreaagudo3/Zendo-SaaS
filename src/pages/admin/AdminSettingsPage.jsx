@@ -250,7 +250,7 @@ export default function AdminSettingsPage() {
 
   return (
     <AdminLayout>
-      <div className="max-w-5xl mx-auto space-y-8">
+      <div className="space-y-8">
         <header className="mb-2">
           <h1 className="text-3xl font-bold text-secondary-900">{t('admin:settings.title', 'Configuración del Perfil')}</h1>
           <p className="text-secondary-500 mt-1">{t('admin:settings.subtitle', 'Gestiona la identidad y el SEO de tu inmobiliaria.')}</p>

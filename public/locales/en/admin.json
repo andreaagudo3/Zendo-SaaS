@@ -1,4 +1,49 @@
 {
+  "login": {
+    "subtitle": "Administration Panel",
+    "title": "Sign in",
+    "email": "Email",
+    "password": "Password",
+    "entering": "Signing in...",
+    "enter": "Sign in"
+  },
+  "layout": {
+    "subtitle": "Admin Panel",
+    "logout": "Logout",
+    "nav": {
+      "properties": "Properties",
+      "locations": "Locations",
+      "settings": "Profile / SEO"
+    }
+  },
+  "locations": {
+    "title": "Location Manager",
+    "subtitle": "Manage provinces and their associated locations.",
+    "tabs": {
+      "provinces": "Provinces ({{count}})",
+      "locations": "Locations ({{count}})"
+    },
+    "form": {
+      "newProvince": "New Province",
+      "newLocation": "New Location",
+      "namePlaceholder": "Type the name here...",
+      "assignProvince": "Assign to Province",
+      "select": "— Select —",
+      "adding": "Adding...",
+      "add": "+ Add"
+    },
+    "search": {
+      "placeholderProvince": "Search province...",
+      "placeholderLocation": "Search location or province...",
+      "ariaLabel": "Search location"
+    },
+    "table": {
+      "name": "Name",
+      "province": "Province",
+      "noResults": "Sadly, no results for your search.",
+      "empty": "No records in this section."
+    }
+  },
   "properties": {
     "title": "Property Management",
     "newTitle": "New Property",
@@ -82,51 +127,6 @@
       "selectProvinceError": "Select a province for this location.",
       "loginError": "Invalid credentials. Please check your email and password."
     },
-    "login": {
-      "subtitle": "Administration Panel",
-      "title": "Sign in",
-      "email": "Email",
-      "password": "Password",
-      "entering": "Signing in...",
-      "enter": "Sign in"
-    },
-    "layout": {
-      "subtitle": "Admin Panel",
-      "logout": "Logout",
-      "nav": {
-        "properties": "Properties",
-        "locations": "Locations",
-        "settings": "Profile / SEO"
-      }
-    },
-    "locations": {
-      "title": "Location Manager",
-      "subtitle": "Manage provinces and their associated locations.",
-      "tabs": {
-        "provinces": "Provinces ({{count}})",
-        "locations": "Locations ({{count}})"
-      },
-      "form": {
-        "newProvince": "New Province",
-        "newLocation": "New Location",
-        "namePlaceholder": "Type the name here...",
-        "assignProvince": "Assign to Province",
-        "select": "— Select —",
-        "adding": "Adding...",
-        "add": "+ Add"
-      },
-      "search": {
-        "placeholderProvince": "Search province...",
-        "placeholderLocation": "Search location or province...",
-        "ariaLabel": "Search location"
-      },
-      "table": {
-        "name": "Name",
-        "province": "Province",
-        "noResults": "Sadly, no results for your search.",
-        "empty": "No records in this section."
-      }
-    },
     "list": {
       "title": "Properties",
       "totalCount_one": "{{count}} property in total",
@@ -134,7 +134,9 @@
       "searchPlaceholder": "Search by title, reference or location...",
       "empty": "No properties yet.",
       "noResults": "No results for your search.",
-      "createFirst": "Create the first one →"
+      "createFirst": "Create the first one →",
+      "limitReachedBtn": "(Limit reached)",
+      "limitReachedTooltip": "You have reached the property limit for your plan"
     },
     "filters": {
       "all": "All",
@@ -159,7 +161,7 @@
     "branding": {
       "title": "Brand Images",
       "logoLabel": "Agency Logo",
-      "logoDesc": "Shown in the navigation bar and footer. Recommended formats: PNG or SVG.",
+      "logoDesc": "Shown in the navigation bar and footer. Recommended formats: PNG or PNG.",
       "homeHeaderLabel": "Home Header Image",
       "homeHeaderDesc": "Background image for the hero section on the homepage. Use a high-quality horizontal photo (min. 1600px wide).",
       "uploadBtn": "Upload image",
