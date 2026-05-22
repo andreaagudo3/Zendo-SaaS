@@ -8,17 +8,25 @@ import { Link } from 'react-router-dom'
  */
 function MarketingNavbar() {
   return (
-    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 h-16 flex items-center justify-between px-6 md:px-12">
-      <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
-        <img src="/zendo-logo.png" alt="Zendo Logo" className="h-8 w-auto object-contain" />
-        <span className="font-bold text-xl tracking-tight text-slate-900">Zendo</span>
+    <nav className="sticky top-0 z-50 border-b border-white/8 h-16 flex items-center justify-between px-6 md:px-12"
+      style={{ background: 'rgba(2,6,23,0.85)', backdropFilter: 'blur(12px)' }}>
+      <Link to="/" className="flex items-center gap-2.5 hover:opacity-90 transition-opacity">
+        <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={2.5}>
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" /><polyline points="9,22 9,12 15,12 15,22" />
+          </svg>
+        </div>
+        <span className="font-bold text-lg tracking-tight text-white">Zendo</span>
       </Link>
       <div className="hidden md:flex items-center gap-8">
-        <a href="#features" className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">Características</a>
-        <a href="#pricing" className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">Precios</a>
-        <button className="px-5 py-2 bg-slate-900 text-white rounded-lg text-sm font-bold hover:bg-slate-800 transition-all shadow-sm active:scale-95">
-          Ver cómo funciona
-        </button>
+        <a href="#pricing" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Precios</a>
+        <a href={typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+            ? `${window.location.origin}/?tenant=demo` : 'https://demo.zendoapp.es'}
+          target="_blank" rel="noopener noreferrer"
+          className="px-5 py-2 rounded-lg text-sm font-bold text-white transition-all hover:opacity-90"
+          style={{ background: 'linear-gradient(135deg,#2563eb,#4f46e5)' }}>
+          Ver demo
+        </a>
       </div>
     </nav>
   )
@@ -56,12 +64,12 @@ function MarketingFooter() {
 export function Layout({ children, isMarketing = false }) {
   if (isMarketing) {
     return (
-      <div className="min-h-screen flex flex-col selection:bg-blue-100 selection:text-blue-900">
+      <div className="min-h-screen flex flex-col bg-slate-950 selection:bg-blue-100 selection:text-blue-900">
         <MarketingNavbar />
         <main id="main-content" className="flex-1">
           {children}
         </main>
-        <MarketingFooter />
+        {/* Footer is embedded inside SaaSLandingPage itself — no duplicate here */}
       </div>
     )
   }
