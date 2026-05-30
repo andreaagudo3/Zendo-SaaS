@@ -10,12 +10,14 @@ import HomePage           from './pages/HomePage'
 import PropertiesPage     from './pages/PropertiesPage'
 import PropertyDetailPage from './features/property-detail/PropertyDetailPage'
 import ContactPage        from './pages/ContactPage'
+import LegalPage          from './pages/LegalPage'
 
 // Admin pages
 import LoginPage           from './pages/admin/LoginPage'
 import AdminPropertiesPage from './pages/admin/AdminPropertiesPage'
 import AdminLocationsPage  from './pages/admin/AdminLocationsPage'
 import AdminSettingsPage   from './pages/admin/AdminSettingsPage'
+import AdminLegalPage      from './pages/admin/AdminLegalPage'
 import PropertyFormPage    from './pages/admin/PropertyFormPage'
 import ProtectedRoute      from './components/admin/ProtectedRoute'
 
@@ -62,6 +64,7 @@ export default function App() {
                     <Route path="/properties"       element={<PropertiesPage />} />
                     <Route path="/properties/:slug" element={<PropertyDetailPage />} />
                     <Route path="/contact"          element={<ContactPage />} />
+                    <Route path="/legal"            element={<LegalPage />} />
                   </>
                 )}
 
@@ -95,6 +98,7 @@ export default function App() {
         <Route path="/admin"           element={<ProtectedRoute><AdminPropertiesPage /></ProtectedRoute>} />
         <Route path="/admin/locations" element={<ProtectedRoute><AdminLocationsPage /></ProtectedRoute>} />
         <Route path="/admin/settings"  element={<ProtectedRoute><AdminSettingsPage /></ProtectedRoute>} />
+        <Route path="/admin/legal"     element={<ProtectedRoute><AdminLegalPage /></ProtectedRoute>} />
         <Route path="/admin/new"       element={<ProtectedRoute><PropertyFormPage /></ProtectedRoute>} />
         <Route path="/admin/edit/:id"  element={<ProtectedRoute><PropertyFormPage /></ProtectedRoute>} />
       </Routes>

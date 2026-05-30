@@ -191,5 +191,85 @@
     "googleDescDesc": "This is the summary that appears under the title in Google results. Try not to exceed 155 characters.",
     "placeholderTitle": "E.g.: Luxury villa with views in Aracena | Zendo",
     "placeholderDesc": "The system will use an automatic summary if you leave this empty."
+  },
+  "legal": {
+    "pageTitle": "Legal & Privacy Management",
+    "breadcrumb": "Legal",
+    "syncBtn": "Sync & Publish",
+    "syncingBtn": "Syncing...",
+    "sidebarLabel": "Legal Blocks",
+    "templateLibraryTitle": "Template Library",
+    "templateLibraryDesc": "Pre-drafted legal texts by experts.",
+    "templateLibraryBtn": "View Template Library",
+    "templateLibrarySubtitle": "Drafted for the real estate sector",
+    "activeLanguageLabel": "Active language:",
+    "activeLanguageES": "Espa\u00f1ol (ES)",
+    "activeLanguageEN": "English (EN)",
+    "applyToEditor": "Apply to Editor",
+    "activeSection": "Active section",
+    "autoSmartNote": "If you have Google Analytics or the Meta Pixel configured in Settings, third-party clauses will be automatically inserted when applying the Cookies template from the Library.",
+    "autoSmartLabel": "Auto-smart:",
+    "editorCanvas": "WYSIWYG Canvas - professional-grade editing",
+    "words_one": "{{count}} word",
+    "words_other": "{{count}} words",
+    "statusLabel": "Status:",
+    "statusDraft": "Draft",
+    "statusPublished": "Published",
+    "langES": "Espa\u00f1ol",
+    "langEN": "English",
+    "footerPreviewTitle": "Public Footer Preview",
+    "footerPreviewDesc": "Simulation of your real estate agency's footer",
+    "technicalRoutesTitle": "Technical Route Mapping",
+    "technicalRoutesDesc": "All legal links point to the public route",
+    "dynamicRoute": "Dynamic route",
+    "copyright": "Copyright {{year}} {{name}}. All rights reserved.",
+    "footerLinks": {
+      "terms": "Legal Notice",
+      "privacy": "Privacy",
+      "cookies": "Cookies"
+    },
+    "sections": {
+      "terms":   { "title": "Legal Notice & Terms", "desc": "Portal usage regulation" },
+      "privacy": { "title": "Privacy Policy",       "desc": "GDPR data protection" },
+      "cookies": { "title": "Cookies Policy",       "desc": "Tracker management and usage" }
+    },
+    "enLocked": {
+      "planRequired": "PRO+ plan required",
+      "planMsg": "Multi-language editing in English is available from the Business plan or higher."
+    },
+    "cookiesAlert": {
+      "label": "Zendo Tip",
+      "msg": "If you enable Google Analytics or Meta Pixel in your Settings, your template will automatically include the mandatory third-party clauses when applying the template from the Library."
+    },
+    "successBanner": {
+      "title": "Legal texts synced successfully!",
+      "desc": "Changes are now published on your real estate website."
+    },
+    "dbWarningBanner": {
+      "title": "Database migration required!",
+      "desc": "The legal_translations column does not exist yet. Please run the corresponding database migration in Supabase."
+    },
+    "disclaimer": {
+      "title": "\u26a0\ufe0f Zendo Liability Disclaimer Notice",
+      "body": "The templates provided by the platform are standard models of a purely informational nature. Zendo does not provide legal advice and is not responsible for the accuracy, adequacy, or validity of the texts. It is the sole responsibility of the agency to ensure compliance with applicable regulations (GDPR/local data protection law)."
+    },
+    "cookiesLocked": {
+      "title": "\ud83d\udd12 Zendo Technical Cookies (Read-Only) [Protected System]",
+      "body": "This platform uses essential technical cookies to maintain the session and ensure security. These cookies do not collect private data and are mandatory.",
+      "thirdPartyLabel": "Your third-party cookies (Marketing)",
+      "thirdPartyPlaceholder": "Add your marketing cookies here (Google Analytics, Pixel, etc.) under your own responsibility."
+    },
+    "gaClause": "<h3>Google Analytics Cookies</h3><p>This website uses Google Analytics, a web analytics service provided by Google LLC. Google Analytics uses cookies to help analyze how users use the website.</p>",
+    "metaPixelClause": "<h3>Meta Pixel (Facebook) Cookies</h3><p>This website uses the Meta Pixel, an analytics tool that allows us to measure the effectiveness of our advertising.</p>",
+    "unsavedChangesWarning": "You have unsaved changes in this legal session that will be completely lost if you exit the CRM or switch sections. Are you sure you want to leave without saving?",
+    "publishModal": {
+      "title": "\u26a0\ufe0f Legal Publication Confirmation and Liability Assumption",
+      "body": "You are about to sync and publish these texts on your public website. By confirming this action, you explicitly declare and agree that:",
+      "point1": "You have reviewed, completed, and personally adapted these texts to the actual activity of your business.",
+      "point2": "You fully release Zendo from any civil, legal, or administrative liability arising from the content published by your agency.",
+      "checkboxLabel": "I understand and accept these sole responsibility terms.",
+      "cancelBtn": "Cancel",
+      "confirmBtn": "Understood, Publish Site"
+    }
   }
 }
