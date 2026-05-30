@@ -150,9 +150,7 @@ export function Footer() {
             {tenant?.legal_status?.has_privacy && (
               <Link to="/legal?section=privacy" className="hover:text-secondary-300 transition-colors">{t('footer.privacy')}</Link>
             )}
-            {tenant?.legal_status?.has_cookies && (
-              <Link to="/legal?section=cookies" className="hover:text-secondary-300 transition-colors">{t('footer.cookies')}</Link>
-            )}
+            <Link to="/legal?section=cookies" className="hover:text-secondary-300 transition-colors">{t('footer.cookies')}</Link>
             {tenant?.legal_status?.has_terms && (
               <Link to="/legal?section=terms" className="hover:text-secondary-300 transition-colors">{t('footer.terms')}</Link>
             )}

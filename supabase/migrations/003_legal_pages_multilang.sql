@@ -63,11 +63,7 @@ SELECT
       (legal_translations->'en'->>'privacy' IS NOT NULL AND legal_translations->'en'->>'privacy' <> ''), 
       false
     ),
-    'has_cookies', COALESCE(
-      (legal_translations->'es'->>'cookies' IS NOT NULL AND legal_translations->'es'->>'cookies' <> '') OR 
-      (legal_translations->'en'->>'cookies' IS NOT NULL AND legal_translations->'en'->>'cookies' <> ''), 
-      false
-    )
+    'has_cookies', true
   ) AS legal_status
 FROM public.tenants;
 

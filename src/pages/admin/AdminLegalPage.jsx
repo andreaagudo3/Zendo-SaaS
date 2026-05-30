@@ -421,7 +421,7 @@ export default function AdminLegalPage() {
   const legalStatus = {
     has_terms: currentTenant?.legal_status?.has_terms ?? true,
     has_privacy: currentTenant?.legal_status?.has_privacy ?? true,
-    has_cookies: currentTenant?.legal_status?.has_cookies ?? false,
+    has_cookies: true,
   }
 
   const footerLinks = [
@@ -673,24 +673,6 @@ export default function AdminLegalPage() {
                     <p className="text-xs text-secondary-500">{t('legal.footerPreviewDesc')}</p>
                   </div>
                 </div>
-                <div className="relative group">
-                  <button id="footer-schema-info" className="p-1.5 text-secondary-400 hover:text-secondary-600 hover:bg-secondary-100 rounded-lg transition-colors cursor-help" aria-label="Ver mapeo tecnico de rutas">
-                    <Info size={14} />
-                  </button>
-                  <div className="absolute right-0 bottom-full mb-2.5 w-80 p-4 bg-secondary-950 text-secondary-200 text-xs rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-30 leading-relaxed border border-secondary-800">
-                    <p className="font-bold text-white mb-2 flex items-center gap-1.5"><ExternalLink size={12} className="text-primary-400" />{t('legal.technicalRoutesTitle')}</p>
-                    <p className="mb-3 text-secondary-400 text-xs">{t('legal.technicalRoutesDesc')} <code className="bg-secondary-800 px-1.5 py-0.5 rounded text-primary-400">/legal</code>:</p>
-                    <ul className="space-y-1.5 font-mono text-xs">
-                      {footerLinks.map(({ label, route, color }) => (
-                        <li key={route} className="flex items-center gap-2">
-                          <span className={`w-1.5 h-1.5 rounded-full ${color} shrink-0`} />
-                          <span className="text-secondary-400">{label} -&gt;</span>
-                          <code className="text-primary-400">{route}</code>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
               </div>
               <div className="p-5">
                 <div className="bg-secondary-950 rounded-xl px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -701,67 +683,19 @@ export default function AdminLegalPage() {
                     </p>
                   </div>
                   <div className="flex flex-wrap items-center gap-4">
-                    {footerLinks.map(({ label, route, color, statusKey }) => {
+                    {footerLinks.map(({ label, route, statusKey }) => {
                       const isRendered = legalStatus[statusKey]
-
-                      if (isRendered) {
-                        return (
-                          <div key={route} className="relative group">
-                            {/* Rendered Link with Green Highlight */}
-                            <a
-                              href={route}
-                              onClick={(e) => e.preventDefault()}
-                              className="inline-flex items-center gap-1.5 bg-emerald-950/40 border border-emerald-500/40 text-emerald-400 hover:text-emerald-200 hover:border-emerald-400 transition-all duration-200 text-xs font-semibold px-2.5 py-1.5 rounded-lg shadow-sm"
-                            >
-                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-                              {label}
-                            </a>
-                            
-                            {/* Hover Micro-Tooltip with logic */}
-                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 pointer-events-none z-20">
-                              <div className="bg-secondary-900 border border-secondary-800 rounded-xl p-3 shadow-2xl min-w-[280px]">
-                                <div className="flex items-center gap-1.5 mb-1.5">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
-                                  <p className="text-xs font-bold text-emerald-400 uppercase tracking-wider font-mono">legal_status.{statusKey} === true</p>
-                                </div>
-                                <div className="space-y-1 font-mono text-[10px] text-secondary-300 border-t border-secondary-800 pt-1.5">
-                                  <p className="text-secondary-400 font-bold">Pointing to {route}</p>
-                                  <p className="text-emerald-400 font-semibold mt-1">✓ RENDERED SUCCESS</p>
-                                </div>
-                              </div>
-                              <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-secondary-800" />
-                            </div>
-                          </div>
-                        )
-                      } else {
-                        return (
-                          <div key={route} className="relative group flex items-center gap-2 bg-red-950/20 border border-dashed border-red-500/40 text-secondary-500 text-xs font-medium px-2.5 py-1.5 rounded-lg opacity-85 select-none hover:border-red-400/50 hover:bg-red-950/30 transition-all duration-200">
-                            {/* Grayed-out omitted element container */}
-                            <span className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0 animate-pulse" />
-                            <span className="line-through decoration-red-500/50">{label}</span>
-                            
-                            {/* Developer visual flag overlay banner badge */}
-                            <span className="text-[9px] font-bold font-mono bg-red-950/80 border border-red-800 text-red-400 px-1.5 py-0.5 rounded leading-none shrink-0">
-                              {`Condition Failed: legal_status.${statusKey} is NULL/False -> Link Hidden`}
-                            </span>
-
-                            {/* Hover Micro-Tooltip with logic */}
-                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 pointer-events-none z-20">
-                              <div className="bg-secondary-900 border border-secondary-800 rounded-xl p-3 shadow-2xl min-w-[280px]">
-                                <div className="flex items-center gap-1.5 mb-1.5">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0" />
-                                  <p className="text-xs font-bold text-red-400 uppercase tracking-wider font-mono">legal_status.{statusKey} === false</p>
-                                </div>
-                                <div className="space-y-1 font-mono text-[10px] text-secondary-300 border-t border-secondary-800 pt-1.5">
-                                  <p className="text-secondary-400 font-bold">Pointing to {route}</p>
-                                  <p className="text-red-400 font-semibold mt-1">✗ OMITTED FROM LAYOUT</p>
-                                </div>
-                              </div>
-                              <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-secondary-800" />
-                            </div>
-                          </div>
-                        )
-                      }
+                      if (!isRendered) return null
+                      return (
+                        <a
+                          key={route}
+                          href={route}
+                          onClick={(e) => e.preventDefault()}
+                          className="text-secondary-400 hover:text-white transition-colors text-xs font-semibold"
+                        >
+                          {label}
+                        </a>
+                      )
                     })}
                   </div>
                 </div>
