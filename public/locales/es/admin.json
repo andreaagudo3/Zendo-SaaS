@@ -191,5 +191,82 @@
     "googleDescDesc": "Este es el resumen que aparece bajo el título en los resultados de Google. Intenta no superar los 155 caracteres.",
     "placeholderTitle": "Ej: Chalet de lujo con vistas en Aracena | Zendo",
     "placeholderDesc": "El sistema usará un resumen automático si dejas esto vacío."
+  },
+  "legal": {
+    "pageTitle": "Gestion Legal y Privacidad",
+    "breadcrumb": "Legal",
+    "syncBtn": "Sincronizar y Publicar",
+    "syncingBtn": "Sincronizando...",
+    "sidebarLabel": "Bloques Legales",
+    "templateLibraryTitle": "Biblioteca de Plantillas",
+    "templateLibraryDesc": "Textos legales pre-redactados por expertos.",
+    "templateLibraryBtn": "Ver Biblioteca de Plantillas",
+    "templateLibrarySubtitle": "Redactadas para el sector inmobiliario",
+    "activeLanguageLabel": "Idioma activo:",
+    "activeLanguageES": "Español (ES)",
+    "activeLanguageEN": "English (EN)",
+    "applyToEditor": "Aplicar al Editor",
+    "activeSection": "Sección activa",
+    "autoSmartNote": "Si tienes Google Analytics o el Pixel de Meta configurados en Ajustes, las cláusulas de terceros se insertan automáticamente al aplicar la plantilla de Cookies.",
+    "autoSmartLabel": "Auto-smart:",
+    "editorCanvas": "Lienzo WYSIWYG - edición de nivel profesional",
+    "words_one": "{{count}} palabra",
+    "words_other": "{{count}} palabras",
+    "statusLabel": "Estado:",
+    "statusDraft": "Borrador",
+    "statusPublished": "Publicado",
+    "langES": "Español",
+    "langEN": "English",
+    "footerPreviewTitle": "Vista Previa del Footer Público",
+    "footerPreviewDesc": "Simulación del pie de página de tu inmobiliaria",
+    "technicalRoutesTitle": "Mapeo Técnico de Rutas",
+    "technicalRoutesDesc": "Todos los enlaces legales apuntan a la ruta pública",
+    "dynamicRoute": "Ruta dinámica",
+    "copyright": "Copyright {{year}} {{name}}. Todos los derechos reservados.",
+    "footerLinks": {
+      "terms": "Aviso Legal",
+      "privacy": "Privacidad",
+      "cookies": "Cookies"
+    },
+    "sections": {
+      "terms":   { "title": "Aviso Legal & Términos", "desc": "Regulación del uso del portal" },
+      "privacy": { "title": "Política de Privacidad",  "desc": "Protección de datos RGPD" },
+      "cookies": { "title": "Política de Cookies",     "desc": "Gestión y uso de rastreadores" }
+    },
+    "enLocked": {
+      "planRequired": "Plan PRO+ requerido",
+      "planMsg": "La edición multilenguaje en inglés está disponible a partir del plan Business o superior."
+    },
+    "cookiesAlert": {
+      "label": "Consejo Zendo",
+      "msg": "Si activas Google Analytics o el Pixel de Meta en tus Ajustes, tu plantilla incluirá automáticamente las cláusulas obligatorias de terceros al aplicar la plantilla desde la Biblioteca."
+    },
+    "successBanner": {
+      "title": "¡Textos legales sincronizados con éxito!",
+      "desc": "Los cambios están ahora publicados en tu web de inmobiliaria."
+    },
+    "dbWarningBanner": {
+      "title": "¡Se requiere migración de base de datos!",
+      "desc": "La columna legal_translations no existe todavía. Ejecuta la migración correspondiente en Supabase."
+    },
+    "disclaimer": {
+      "title": "⚠️ Aviso de Exención de Responsabilidad de Zendo",
+      "body": "Las plantillas facilitadas por la plataforma son modelos estándar de carácter puramente orientativo. Zendo no proporciona asesoramiento legal ni se hace responsable de la exactitud, adecuación o validez de los textos. Es responsabilidad única de la agencia asegurarse de cumplir con la normativa vigente (RGPD/LOPDGDD)."
+    },
+    "cookiesLocked": {
+      "title": "🔒 Cookies Técnicas Zendo (Solo Lectura) [Sistema Protegido]",
+      "body": "Esta plataforma utiliza cookies técnicas esenciales para mantener la sesión y garantizar la seguridad. Estas cookies no recopilan datos privados y son obligatorias.",
+      "thirdPartyLabel": "Tus cookies de terceros (Marketing)",
+      "thirdPartyPlaceholder": "Añada aquí sus cookies de marketing (Google Analytics, Pixel, etc.) bajo su propia responsabilidad."
+    },
+    "publishModal": {
+      "title": "⚠️ Confirmación de Publicación Legal y Asunción de Responsabilidad",
+      "body": "Estás a punto de sincronizar y publicar estos textos en tu sitio web público. Al confirmar esta acción, declaras y aceptas de forma explícita:",
+      "point1": "Has revisado, completado y adaptado de forma personalizada estos textos a la actividad real de tu negocio.",
+      "point2": "Eximes por completo a Zendo de cualquier tipo de responsabilidad civil, legal o sanción administrativa derivada de los contenidos publicados por tu agencia.",
+      "checkboxLabel": "Entiendo y acepto estos términos de responsabilidad única.",
+      "cancelBtn": "Cancelar",
+      "confirmBtn": "Entendido, Publicar Sitio"
+    }
   }
 }

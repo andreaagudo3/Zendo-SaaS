@@ -43,16 +43,17 @@ export default function AdminLayout({ children }) {
         </div>
 
         {/* Nav */}
-        <nav className="flex items-center gap-1">
+        <nav className="flex items-center gap-1 overflow-x-auto">
           {[
-            { to: '/admin', label: t('admin:layout.nav.properties'), icon: '🏠' },
-            { to: '/admin/locations', label: t('admin:layout.nav.locations'), icon: '📍' },
-            { to: '/admin/settings', label: t('admin:layout.nav.settings'), icon: '⚙️' },
+            { to: '/admin', label: t('admin:layout.nav.properties', 'Propiedades'), icon: '🏠' },
+            { to: '/admin/locations', label: t('admin:layout.nav.locations', 'Ubicaciones'), icon: '📍' },
+            { to: '/admin/legal', label: t('admin:layout.nav.legal', 'Legal'), icon: '⚖️' },
+            { to: '/admin/settings', label: t('admin:layout.nav.settings', 'Perfil / SEO'), icon: '⚙️' },
           ].map(({ to, label, icon }) => (
             <Link
               key={to}
               to={to}
-              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${location.pathname === to
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${location.pathname === to
                   ? 'bg-primary-700 text-white'
                   : 'text-secondary-400 hover:text-white hover:bg-secondary-800'
                 }`}
