@@ -205,7 +205,6 @@ export default function AdminLegalPage() {
       }
     }
     const fallback = JSON.parse(JSON.stringify(DEFAULT_LEGAL_TRANSLATIONS))
-    if (currentTenant?.terms_and_conditions) fallback.es.terms = currentTenant.terms_and_conditions
     return fallback
   })
 
@@ -249,7 +248,6 @@ export default function AdminLegalPage() {
       })
     } else {
       const fallback = JSON.parse(JSON.stringify(DEFAULT_LEGAL_TRANSLATIONS))
-      if (currentTenant.terms_and_conditions) fallback.es.terms = currentTenant.terms_and_conditions
       setLocalLegalTranslations(fallback)
     }
   }, [currentTenant])
@@ -274,12 +272,63 @@ export default function AdminLegalPage() {
 
   const isContentEmpty = (section, lang) => (localLegalTranslations[lang]?.[section] || '').replace(/<[^>]*>/g, '').trim() === ''
 
+  const handleLoadTemplate = (sectionId = activeSection) => {
+    console.log('[handleLoadTemplate] Triggered for:', { sectionId, activeLang, activeSection })
+    const lang = activeLang
+    const template = legalTemplates[lang]?.[sectionId] || LEGAL_TEMPLATES[sectionId]?.[lang] || ''
+    
+    if (!editor) {
+      console.warn('[handleLoadTemplate] Editor instance is not ready yet!')
+      return
+    }
+    if (!template) {
+      console.warn('[handleLoadTemplate] Template content is empty or not found for:', { lang, sectionId })
+      return
+    }
+
+    let resolved = template
+    const analyticsId = currentTenant?.analytics_id || currentTenant?.google_analytics_id
+    resolved = resolved.replace('[GOOGLE_ANALYTICS_PLACEHOLDER]', analyticsId ? (lang === 'es' ? GA_CLAUSE_ES : GA_CLAUSE_EN) : '')
+    const metaPixelId = currentTenant?.meta_pixel_id || currentTenant?.facebook_pixel_id
+    resolved = resolved.replace('[META_PIXEL_PLACEHOLDER]', metaPixelId ? (lang === 'es' ? META_CLAUSE_ES : META_CLAUSE_EN) : '')
+
+    console.log('[handleLoadTemplate] Resolved template length:', resolved.length)
+
+    // Set dirty state
+    setIsDirty(true)
+
+    // Update state first
+    setLocalLegalTranslations(prev => {
+      console.log('[handleLoadTemplate] setLocalLegalTranslations prev state:', prev)
+      const updated = {
+        ...prev,
+        [lang]: {
+          ...prev[lang],
+          [sectionId]: resolved
+        }
+      }
+      console.log('[handleLoadTemplate] setLocalLegalTranslations updated state:', updated)
+      return updated
+    })
+
+    // If section matches the current active section, set the editor content directly.
+    // If not, we switch activeSection and let the useEffect do the setting.
+    if (sectionId === activeSection) {
+      console.log('[handleLoadTemplate] Setting editor content directly for active section')
+      editor.commands.setContent(resolved)
+    } else {
+      console.log('[handleLoadTemplate] Switching active section to:', sectionId)
+      setActiveSection(sectionId)
+    }
+
+    setIsTemplateSidebarOpen(false)
+  }
+
   const handleSave = async () => {
     if (!currentTenant) return
     setLoading(true); setSuccess(false); setErrorMessage(null); setDbWarning(false)
     const updates = {
-      legal_translations: localLegalTranslations,
-      terms_and_conditions: localLegalTranslations.es.terms
+      legal_translations: localLegalTranslations
     }
     const { error } = await updateTenant(currentTenant.id, updates)
     if (!error) {

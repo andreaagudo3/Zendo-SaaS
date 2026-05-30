@@ -247,7 +247,7 @@
     },
     "dbWarningBanner": {
       "title": "Database migration required!",
-      "desc": "The legal_pages column does not exist yet. Run the 003_legal_pages_multilang.sql script in Supabase."
+      "desc": "The legal_translations column does not exist yet. Please run the corresponding database migration in Supabase."
     },
     "disclaimer": {
       "title": "\u26a0\ufe0f Zendo Liability Disclaimer Notice",

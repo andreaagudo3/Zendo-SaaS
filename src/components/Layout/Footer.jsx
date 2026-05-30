@@ -147,9 +147,15 @@ export function Footer() {
         <div className="border-t border-secondary-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-secondary-500">
           <p>{t('footer.copyright', { year: new Date().getFullYear(), name: fullName })}</p>
           <div className="flex gap-6">
-            <Link to="/legal?section=privacy" className="hover:text-secondary-300 transition-colors">{t('footer.privacy')}</Link>
-            <Link to="/legal?section=cookies" className="hover:text-secondary-300 transition-colors">{t('footer.cookies')}</Link>
-            <Link to="/legal?section=terms" className="hover:text-secondary-300 transition-colors">{t('footer.terms')}</Link>
+            {tenant?.legal_status?.has_privacy && (
+              <Link to="/legal?section=privacy" className="hover:text-secondary-300 transition-colors">{t('footer.privacy')}</Link>
+            )}
+            {tenant?.legal_status?.has_cookies && (
+              <Link to="/legal?section=cookies" className="hover:text-secondary-300 transition-colors">{t('footer.cookies')}</Link>
+            )}
+            {tenant?.legal_status?.has_terms && (
+              <Link to="/legal?section=terms" className="hover:text-secondary-300 transition-colors">{t('footer.terms')}</Link>
+            )}
           </div>
         </div>
       </div>

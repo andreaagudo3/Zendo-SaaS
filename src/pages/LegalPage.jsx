@@ -1,9 +1,11 @@
+import { useState, useEffect } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useTenant } from '../context/TenantContext'
 import { Layout } from '../components/Layout/Layout'
 import { ShieldCheck, Scale, Cookie, AlertCircle, Calendar, ChevronRight, Globe } from 'lucide-react'
 import { useThemeStore } from '../store/themeStore'
+import { fetchTenantLegalTranslations } from '../services/tenantResolver'
 
 const SECTION_INFO = {
   terms: {
@@ -50,7 +52,7 @@ export default function LegalPage() {
   const isMinimal = theme === 'MINIMAL'
   const { i18n, t } = useTranslation(['nav', 'common'])
   const [searchParams, setSearchParams] = useSearchParams()
-  
+
   // Section resolution: default to 'terms'
   const activeSection = searchParams.get('section') || 'terms'
   const sectionKey = SECTION_INFO[activeSection] ? activeSection : 'terms'
@@ -59,16 +61,32 @@ export default function LegalPage() {
   // Language resolution: sync with i18n browser language, no manual override
   const currentLang = i18n.language?.startsWith('en') ? 'en' : 'es'
 
-  // Get content from tenant.legal_translations
-  const legalTranslations = tenant?.legal_translations || {}
-  let content = legalTranslations[currentLang]?.[sectionKey] || ''
+  // Dedicated dynamic state to load the isolated heavy legal translations context
+  const [legalTranslations, setLegalTranslations] = useState(null)
+  const [loadingLegal, setLoadingLegal] = useState(true)
 
-  // Fallback for terms and conditions (backward compatibility)
-  if (!content && sectionKey === 'terms' && currentLang === 'es' && tenant?.terms_and_conditions) {
-    content = tenant.terms_and_conditions
-  }
+  useEffect(() => {
+    if (!tenant?.id || tenant.isMaster) {
+      setLoadingLegal(false)
+      return
+    }
+    setLoadingLegal(true)
+    fetchTenantLegalTranslations(tenant.id)
+      .then(({ data, error }) => {
+        if (!error && data) {
+          setLegalTranslations(data)
+        } else {
+          console.error('[LegalPage] Error loading from tenant_legal_context:', error)
+        }
+        setLoadingLegal(false)
+      })
+  }, [tenant?.id])
 
-  const isPublished = content && content.replace(/<[^>]*>/g, '').trim() !== ''
+  // Get content from the fetched tenant_legal_context state
+  const activeTranslations = legalTranslations || {}
+  let content = activeTranslations[currentLang]?.[sectionKey] || ''
+
+  const isPublished = (sectionKey === 'cookies') || (content && content.replace(/<[^>]*>/g, '').trim() !== '')
 
   const handleSectionChange = (key) => {
     setSearchParams({ section: key })
@@ -96,7 +114,7 @@ export default function LegalPage() {
       {/* Main Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
+
           {/* Left Navigation Sidebar (Span 3) */}
           <aside className="lg:col-span-3 space-y-4">
             <div className="bg-white border border-secondary-200 rounded-2xl p-4 shadow-xs sticky top-24">
@@ -111,11 +129,10 @@ export default function LegalPage() {
                     <button
                       key={item.key}
                       onClick={() => handleSectionChange(item.key)}
-                      className={`w-full text-left px-4 py-3 rounded-xl transition-all flex items-center gap-3 font-semibold text-sm cursor-pointer ${
-                        isSelected
+                      className={`w-full text-left px-4 py-3 rounded-xl transition-all flex items-center gap-3 font-semibold text-sm cursor-pointer ${isSelected
                           ? 'bg-primary-700 text-white shadow-md'
                           : 'bg-transparent text-secondary-700 hover:bg-secondary-50 border border-transparent hover:border-secondary-100'
-                      }`}
+                        }`}
                     >
                       <TabIcon size={16} className={isSelected ? 'text-white' : 'text-secondary-400'} />
                       <span>{item.title[currentLang]}</span>
@@ -126,11 +143,17 @@ export default function LegalPage() {
             </div>
           </aside>
 
-          {/* Right Content Panel (Span 9) */}
           <main className="lg:col-span-9 bg-white border border-secondary-200 rounded-3xl p-6 sm:p-10 shadow-xs">
-            {isPublished ? (
+
+            {loadingLegal ? (
+              <div className="py-20 flex flex-col items-center justify-center space-y-4">
+                <div style={{ width: 32, height: 32, borderRadius: '50%', border: '3px solid #e2e8f0', borderTopColor: '#059669', animation: 'tz-spin 0.8s linear infinite' }} />
+                <style>{`@keyframes tz-spin { to { transform: rotate(360deg); } }`}</style>
+                <p className="text-secondary-400 text-xs font-mono">Fetching isolated legal payload...</p>
+              </div>
+            ) : isPublished ? (
               <div className="space-y-6">
-                
+
                 {/* Header of Content card */}
                 <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-secondary-150">
                   <div className="flex items-center gap-3">
@@ -146,7 +169,7 @@ export default function LegalPage() {
                       </p>
                     </div>
                   </div>
-                  
+
                   {/* Calendar/Updated Info */}
                   <div className="flex items-center gap-1.5 text-xs font-semibold text-secondary-500 bg-secondary-50 px-3 py-1.5 rounded-lg border border-secondary-100">
                     <Calendar size={14} className="text-secondary-400" />
@@ -157,10 +180,45 @@ export default function LegalPage() {
                 </div>
 
                 {/* Main Legal text in TipTap format */}
-                <div 
-                  className="tiptap-editor font-sans prose max-w-none text-secondary-800 leading-relaxed"
-                  dangerouslySetInnerHTML={{ __html: content }}
-                />
+                {sectionKey === 'cookies' ? (
+                  <div className="space-y-6">
+                    {/* Immutable Layer */}
+                    <div className="prose max-w-none text-secondary-800 space-y-3">
+                      <h3 className="font-extrabold text-secondary-900 text-base">
+                        {currentLang === 'es' ? '1. Cookies Técnicas Obligatorias (Zendo)' : '1. Mandatory Technical Cookies (Zendo)'}
+                      </h3>
+                      <p className="text-secondary-600 text-sm leading-relaxed">
+                        {currentLang === 'es' 
+                          ? 'Este sitio web utiliza cookies técnicas esenciales y estrictamente necesarias para el correcto funcionamiento y la navegación segura a través del portal. Estas cookies permiten gestionar la sesión del usuario, garantizar la seguridad del sitio y recordar preferencias básicas (como el idioma de navegación). Al ser indispensables para la prestación del servicio, no requieren de su consentimiento y no pueden ser desactivadas en nuestros sistemas.'
+                          : 'This website uses essential technical cookies strictly necessary for the proper functioning and secure navigation of the portal. These cookies handle user sessions, guarantee site security, and remember basic preferences (such as your browser language). As they are indispensable for providing our services, they do not require consent and cannot be deactivated in our systems.'}
+                      </p>
+                    </div>
+
+                    {/* Dynamic Layer / Fallback */}
+                    <div className="pt-6 border-t border-secondary-150 prose max-w-none text-secondary-800 space-y-3">
+                      <h3 className="font-extrabold text-secondary-900 text-base">
+                        {currentLang === 'es' ? '2. Cookies de Terceros y Servicios de Rastreo' : '2. Third-Party Cookies & Tracking Services'}
+                      </h3>
+                      {content && content.replace(/<[^>]*>/g, '').trim() !== '' ? (
+                        <div
+                          className="tiptap-editor font-sans text-secondary-800 leading-relaxed"
+                          dangerouslySetInnerHTML={{ __html: content }}
+                        />
+                      ) : (
+                        <div className="p-4 bg-secondary-50 border border-secondary-200 rounded-2xl text-secondary-500 text-sm italic leading-relaxed">
+                          {currentLang === 'es'
+                            ? 'Esta agencia no utiliza cookies de terceros ni herramientas de rastreo adicionales (como Google Analytics o Meta Pixel) en este momento.'
+                            : 'This agency does not use third-party cookies or additional tracking tools (such as Google Analytics or Meta Pixel) at this time.'}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  <div
+                    className="tiptap-editor font-sans prose max-w-none text-secondary-800 leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: content }}
+                  />
+                )}
               </div>
             ) : (
               /* High-fidelity Empty/Draft State */
@@ -168,14 +226,14 @@ export default function LegalPage() {
                 <div className="h-16 w-16 rounded-full bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-500 shadow-xs">
                   <AlertCircle size={28} />
                 </div>
-                
+
                 <div className="space-y-2">
                   <h3 className="font-extrabold text-secondary-900 text-xl tracking-tight">
                     {currentLang === 'es' ? 'Documento no publicado' : 'Document not published'}
                   </h3>
                   <p className="text-secondary-500 text-sm leading-relaxed">
-                    {currentLang === 'es' 
-                      ? 'Este bloque legal se encuentra temporalmente en borrador o no ha sido publicado aún por el administrador de la inmobiliaria.' 
+                    {currentLang === 'es'
+                      ? 'Este bloque legal se encuentra temporalmente en borrador o no ha sido publicado aún por el administrador de la inmobiliaria.'
                       : 'This legal section is temporarily in draft mode or has not been published yet by the real estate administrator.'}
                   </p>
                 </div>
