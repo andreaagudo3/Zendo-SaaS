@@ -261,6 +261,7 @@
     },
     "gaClause": "<h3>Google Analytics Cookies</h3><p>This website uses Google Analytics, a web analytics service provided by Google LLC. Google Analytics uses cookies to help analyze how users use the website.</p>",
     "metaPixelClause": "<h3>Meta Pixel (Facebook) Cookies</h3><p>This website uses the Meta Pixel, an analytics tool that allows us to measure the effectiveness of our advertising.</p>",
+    "unsavedChangesWarning": "You have unsaved changes in this legal session that will be completely lost if you exit the CRM or switch sections. Are you sure you want to leave without saving?",
     "publishModal": {
       "title": "\u26a0\ufe0f Legal Publication Confirmation and Liability Assumption",
       "body": "You are about to sync and publish these texts on your public website. By confirming this action, you explicitly declare and agree that:",

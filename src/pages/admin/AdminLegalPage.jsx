@@ -265,16 +265,82 @@ export default function AdminLegalPage() {
     }
   }, [activeSection, activeLang, editor, localLegalTranslations])
 
+  // ─── SESSION NAVIGATION BLOCKER (UNSAVED CHANGES WARNING) ─────────────────
+  // Intercepts and warns users before they close the tab, click on any link that 
+  // navigates away from this CRM page, or hit the browser back/forward buttons,
+  // preventing accidental data loss when the editor state is dirty (isDirty === true).
   useEffect(() => {
+    // A. Intercept browser tab close, refresh (F5/Cmd+R), or direct URL editing
     const handleBeforeUnload = (e) => {
       if (isDirty) {
         e.preventDefault()
-        e.returnValue = ''
+        e.returnValue = '' // Triggers native browser leave confirmation prompt
       }
     }
+
+    // B. Intercept internal client-side React Router navigation links (click capture phase)
+    const handleGlobalClick = (e) => {
+      if (!isDirty) return
+
+      // Find the clicked link or button that initiates a navigation
+      const target = e.target.closest('a, button')
+      if (!target) return
+
+      const href = target.getAttribute('href') || (target.closest('a')?.getAttribute('href'))
+      
+      // EXCEPTION: Allow internal CRM Legal page actions (switching tabs, loading templates, toggling lang, etc.)
+      if (target.id && (
+        target.id.startsWith('section-tab-') || 
+        target.id.startsWith('apply-template-') || 
+        target.id.startsWith('lang-toggle-') || 
+        target.id === 'btn-sincronizar-publicar'
+      )) {
+        return // Bypass warnings for local state modifications
+      }
+
+      // Check if the click navigates away from the '/admin/legal' panel
+      const isNavigatingAway = href && href !== '/admin/legal' && !href.startsWith('#')
+      // Check if the click triggers the logout action
+      const isLogoutButton = target.innerText?.toLowerCase().includes('salir') || 
+                             target.innerText?.toLowerCase().includes('log out') || 
+                             target.closest('button')?.innerText?.toLowerCase().includes('salir')
+
+      if (isNavigatingAway || isLogoutButton) {
+        const confirmLeave = window.confirm(
+          t('legal.unsavedChangesWarning', { lng: activeLang })
+        )
+        if (!confirmLeave) {
+          // Block React Router and standard link behaviors by halting event propagation
+          e.preventDefault()
+          e.stopPropagation()
+        }
+      }
+    }
+
+    // C. Intercept browser history transitions (back/forward mouse buttons)
+    const handlePopState = () => {
+      if (!isDirty) return
+      const confirmLeave = window.confirm(
+        t('legal.unsavedChangesWarning', { lng: activeLang })
+      )
+      if (!confirmLeave) {
+        // Re-inject current location into window history to effectively freeze the transition
+        window.history.pushState(null, '', window.location.href)
+      }
+    }
+
+    // Attach listeners. Use capture phase (true) for clicks to intercept before router handlers fire.
     window.addEventListener('beforeunload', handleBeforeUnload)
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload)
-  }, [isDirty])
+    document.addEventListener('click', handleGlobalClick, true)
+    window.addEventListener('popstate', handlePopState)
+
+    // Cleanup listeners on component unmount or state update
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+      document.removeEventListener('click', handleGlobalClick, true)
+      window.removeEventListener('popstate', handlePopState)
+    }
+  }, [isDirty, activeLang])
 
   const isContentEmpty = (section, lang) => (localLegalTranslations[lang]?.[section] || '').replace(/<[^>]*>/g, '').trim() === ''
 
