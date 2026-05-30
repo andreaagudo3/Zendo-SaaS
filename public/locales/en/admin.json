@@ -259,6 +259,8 @@
       "thirdPartyLabel": "Your third-party cookies (Marketing)",
       "thirdPartyPlaceholder": "Add your marketing cookies here (Google Analytics, Pixel, etc.) under your own responsibility."
     },
+    "gaClause": "<h3>Google Analytics Cookies</h3><p>This website uses Google Analytics, a web analytics service provided by Google LLC. Google Analytics uses cookies to help analyze how users use the website.</p>",
+    "metaPixelClause": "<h3>Meta Pixel (Facebook) Cookies</h3><p>This website uses the Meta Pixel, an analytics tool that allows us to measure the effectiveness of our advertising.</p>",
     "publishModal": {
       "title": "\u26a0\ufe0f Legal Publication Confirmation and Liability Assumption",
       "body": "You are about to sync and publish these texts on your public website. By confirming this action, you explicitly declare and agree that:",

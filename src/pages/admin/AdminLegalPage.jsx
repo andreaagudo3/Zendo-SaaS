@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useTenant } from '../../context/TenantContext'
 import { updateTenant } from '../../services/adminService'
+import { fetchTenantLegalTranslations } from '../../services/tenantResolver'
 import AdminLayout from './AdminLayout'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
@@ -29,10 +30,7 @@ const DEFAULT_LEGAL_TRANSLATIONS = {
   }
 }
 
-const GA_CLAUSE_ES = '<h3>Cookies de Google Analytics</h3><p>Este sitio utiliza Google Analytics, un servicio de analisis web prestado por Google LLC. Google Analytics emplea cookies para ayudar al portal a analizar el uso que hacen los usuarios del sitio web.</p>'
-const GA_CLAUSE_EN = '<h3>Google Analytics Cookies</h3><p>This website uses Google Analytics, a web analytics service provided by Google LLC. Google Analytics uses cookies to help analyze how users use the website.</p>'
-const META_CLAUSE_ES = '<h3>Cookies del Pixel de Meta (Facebook)</h3><p>Este sitio web utiliza el Pixel de Meta, una herramienta de analisis que nos permite medir la eficacia de nuestra publicidad.</p>'
-const META_CLAUSE_EN = '<h3>Meta Pixel (Facebook) Cookies</h3><p>This website uses the Meta Pixel, an analytics tool that allows us to measure the effectiveness of our advertising.</p>'
+
 
 function ToolbarSep() {
   return <div className="w-px h-5 bg-secondary-200 mx-0.5 self-center" />
@@ -209,6 +207,7 @@ export default function AdminLegalPage() {
   })
 
   const [isDirty, setIsDirty] = useState(false)
+  const [loadingTranslations, setLoadingTranslations] = useState(true)
 
   const activeSectionRef = useRef(activeSection)
   const activeLangRef    = useRef(activeLang)
@@ -240,16 +239,23 @@ export default function AdminLegalPage() {
   useEffect(() => {
     if (!currentTenant || tenantLoadedRef.current) return
     tenantLoadedRef.current = true
-    if (currentTenant.legal_translations) {
-      const loaded = JSON.parse(JSON.stringify(currentTenant.legal_translations))
-      setLocalLegalTranslations({
-        en: { terms: null, cookies: null, privacy: null, ...loaded.en },
-        es: { terms: null, cookies: null, privacy: null, ...loaded.es }
+    setLoadingTranslations(true)
+
+    fetchTenantLegalTranslations(currentTenant.id)
+      .then(({ data, error }) => {
+        if (!error && data) {
+          const loaded = JSON.parse(JSON.stringify(data))
+          setLocalLegalTranslations({
+            en: { terms: null, cookies: null, privacy: null, ...loaded.en },
+            es: { terms: null, cookies: null, privacy: null, ...loaded.es }
+          })
+        } else {
+          console.error('[AdminLegalPage] Error loading legal translations:', error)
+          const fallback = JSON.parse(JSON.stringify(DEFAULT_LEGAL_TRANSLATIONS))
+          setLocalLegalTranslations(fallback)
+        }
+        setLoadingTranslations(false)
       })
-    } else {
-      const fallback = JSON.parse(JSON.stringify(DEFAULT_LEGAL_TRANSLATIONS))
-      setLocalLegalTranslations(fallback)
-    }
   }, [currentTenant])
 
   useEffect(() => {
@@ -288,9 +294,9 @@ export default function AdminLegalPage() {
 
     let resolved = template
     const analyticsId = currentTenant?.analytics_id || currentTenant?.google_analytics_id
-    resolved = resolved.replace('[GOOGLE_ANALYTICS_PLACEHOLDER]', analyticsId ? (lang === 'es' ? GA_CLAUSE_ES : GA_CLAUSE_EN) : '')
+    resolved = resolved.replace('[GOOGLE_ANALYTICS_PLACEHOLDER]', analyticsId ? t('legal.gaClause', { lng: lang }) : '')
     const metaPixelId = currentTenant?.meta_pixel_id || currentTenant?.facebook_pixel_id
-    resolved = resolved.replace('[META_PIXEL_PLACEHOLDER]', metaPixelId ? (lang === 'es' ? META_CLAUSE_ES : META_CLAUSE_EN) : '')
+    resolved = resolved.replace('[META_PIXEL_PLACEHOLDER]', metaPixelId ? t('legal.metaPixelClause', { lng: lang }) : '')
 
     console.log('[handleLoadTemplate] Resolved template length:', resolved.length)
 
@@ -570,7 +576,14 @@ export default function AdminLegalPage() {
               )}
 
               {/* Editor */}
-              <div className="flex-1 flex flex-col">
+              <div className="flex-1 flex flex-col relative">
+                {loadingTranslations && (
+                  <div className="absolute inset-0 bg-white/80 backdrop-blur-xs flex flex-col items-center justify-center z-30 space-y-3">
+                    <div style={{ width: 28, height: 28, borderRadius: '50%', border: '3px solid #e2e8f0', borderTopColor: '#059669', animation: 'tz-spin 0.8s linear infinite' }} />
+                    <style>{`@keyframes tz-spin { to { transform: rotate(360deg); } }`}</style>
+                    <p className="text-secondary-400 text-xs font-mono">Loading saved legal content from database...</p>
+                  </div>
+                )}
                 <TipTapToolbar editor={editor} />
                 <div className="flex-1 min-h-[460px] bg-white"><EditorContent editor={editor} /></div>
               </div>
