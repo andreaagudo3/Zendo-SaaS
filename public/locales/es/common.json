@@ -67,5 +67,13 @@
     "demoLabel":      "Tu número de WhatsApp",
     "demoBtn":        "Abrir WhatsApp",
     "demoCancel":     "Cancelar"
+  },
+  "demoPanel": {
+    "title": "¡Explora los diseños! 🎨",
+    "desc": "Usa este botón para cambiar el tema y el color de toda la web al instante.",
+    "theme": "Theme",
+    "color": "Color",
+    "btnAria": "Demo environment settings",
+    "closeAria": "Cerrar"
   }
 }

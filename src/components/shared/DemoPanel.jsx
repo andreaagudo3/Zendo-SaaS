@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useThemeStore } from '../../store/themeStore'
 
 const THEMES = ['MINIMAL', 'CORPORATE', 'PORTAL']
@@ -14,6 +15,7 @@ const COLORS = [
 const TOOLTIP_KEY = 'zendo_demo_tooltip_seen'
 
 export function DemoPanel() {
+  const { t } = useTranslation('common')
   const { theme, setTheme, primaryColor, setPrimaryColor } = useThemeStore()
   const [isExpanded, setIsExpanded] = useState(false)
   const [showTooltip, setShowTooltip] = useState(false)
@@ -60,7 +62,7 @@ export function DemoPanel() {
           {/* Close button */}
           <button
             onClick={dismissTooltip}
-            aria-label="Cerrar"
+            aria-label={t('demoPanel.closeAria')}
             style={{
               position: 'absolute', top: 8, right: 8,
               background: 'none', border: 'none', cursor: 'pointer',
@@ -71,10 +73,10 @@ export function DemoPanel() {
 
           {/* Content */}
           <p style={{ fontSize: 13, fontWeight: 700, marginBottom: 4 }}>
-            ¡Explora los diseños! 🎨
+            {t('demoPanel.title')}
           </p>
           <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', lineHeight: 1.5, marginBottom: 0 }}>
-            Usa este botón para cambiar el tema y el color de toda la web al instante.
+            {t('demoPanel.desc')}
           </p>
 
           {/* Arrow pointing down at badge */}
@@ -112,7 +114,7 @@ export function DemoPanel() {
           gap: 12,
         }}>
           <div>
-            <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', marginBottom: 8, textTransform: 'uppercase' }}>Theme</p>
+            <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', marginBottom: 8, textTransform: 'uppercase' }}>{t('demoPanel.theme')}</p>
             <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
               {THEMES.map(t => (
                 <button key={t} onClick={() => { setTheme(t); setIsExpanded(false) }} style={{
@@ -128,7 +130,7 @@ export function DemoPanel() {
           <div style={{ height: 1, background: 'rgba(255,255,255,0.08)' }} />
 
           <div>
-            <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', marginBottom: 8, textTransform: 'uppercase' }}>Color</p>
+            <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', marginBottom: 8, textTransform: 'uppercase' }}>{t('demoPanel.color')}</p>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
               {COLORS.map(c => (
                 <button key={c.hex} onClick={() => { setPrimaryColor(c.hex); setIsExpanded(false) }}
@@ -148,7 +150,7 @@ export function DemoPanel() {
       {/* ── Badge — always visible ── */}
       <button
         onClick={() => { dismissTooltip(); setIsExpanded(v => !v) }}
-        aria-label="Demo environment settings"
+        aria-label={t('demoPanel.btnAria')}
         style={{
           display: 'flex', alignItems: 'center', gap: 6,
           padding: '6px 12px', borderRadius: '999px',

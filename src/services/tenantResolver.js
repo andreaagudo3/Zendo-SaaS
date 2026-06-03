@@ -74,7 +74,7 @@ async function fetchByCustomDomain(domain) {
     const { data, error } = await supabase
       .from('tenant_context')
       .select('*')
-      .eq('custom_domain', domain)
+      .eq('domain', domain)
       .single()
 
     if (error || !data) {
@@ -84,5 +84,29 @@ async function fetchByCustomDomain(domain) {
   } catch (err) {
     console.error('[tenantResolver] fetchByCustomDomain:', err)
     return { data: null, isMaster: false, error: 'Error de conexión.' }
+  }
+}
+
+/**
+ * fetchTenantLegalTranslations
+ * 
+ * Fetches the isolated legal_translations payload from tenant_legal_context view
+ * for a specific tenant ID.
+ * 
+ * @param {string} tenantId 
+ * @returns {Promise<{ data: object|null, error: any }>}
+ */
+export async function fetchTenantLegalTranslations(tenantId) {
+  try {
+    const { data, error } = await supabase
+      .from('tenant_legal_context')
+      .select('legal_translations')
+      .eq('id', tenantId)
+      .maybeSingle()
+
+    return { data: data?.legal_translations || null, error }
+  } catch (err) {
+    console.error('[tenantResolver] fetchTenantLegalTranslations error:', err)
+    return { data: null, error: err }
   }
 }
