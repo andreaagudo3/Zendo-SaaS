@@ -32,8 +32,12 @@ export function TenantProvider({ children }) {
     const metaDesc = document.querySelector('meta[name="description"]')
     if (metaDesc && tenant.description) metaDesc.setAttribute('content', tenant.description)
     let favicon = document.querySelector('link[rel="icon"]')
-    if (!favicon) { favicon = document.createElement('link'); favicon.rel = 'icon'; document.head.appendChild(favicon) }
-    favicon.href = tenant.isMaster ? '/zendo-logo.png' : '/favicon.ico'
+    if (!favicon) {
+      favicon = document.createElement('link')
+      favicon.rel = 'icon'
+      document.head.appendChild(favicon)
+    }
+    favicon.href = tenant.isMaster ? '/zendo-logo.png' : (tenant.logo_url || '/favicon.ico')
   }, [tenant])
 
   // ─── Admin tenant resolution (triggered by auth events) ────────────────────
