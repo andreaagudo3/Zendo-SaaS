@@ -262,6 +262,8 @@
     "gaClause": "<h3>Cookies de Google Analytics</h3><p>Este sitio utiliza Google Analytics, un servicio de analisis web prestado por Google LLC. Google Analytics emplea cookies para ayudar al portal a analizar el uso que hacen los usuarios del sitio web.</p>",
     "metaPixelClause": "<h3>Cookies del Pixel de Meta (Facebook)</h3><p>Este sitio web utiliza el Pixel de Meta, una herramienta de analisis que nos permite medir la eficacia de nuestra publicidad.</p>",
     "unsavedChangesWarning": "Tienes cambios sin guardar en esta sesión legal que se perderán por completo si sales del CRM o cambias de sección. ¿Estás seguro de que deseas salir sin guardar?",
+    "sessionWarningTitle": "⚠️ Los cambios no publicados se perderán",
+    "sessionWarningBody": "Todos los textos que edites en esta sesión se mantendrán únicamente de forma temporal en tu navegador. <strong>Si cierras la pestaña o navegas a otra sección del CRM, perderás los cambios</strong> a menos que hagas clic en el botón <strong>\"Sincronizar y Publicar\"</strong> en la parte superior derecha para salvar los cambios en el servidor.",
     "publishModal": {
       "title": "⚠️ Confirmación de Publicación Legal y Asunción de Responsabilidad",
       "body": "Estás a punto de sincronizar y publicar estos textos en tu sitio web público. Al confirmar esta acción, declaras y aceptas de forma explícita:",

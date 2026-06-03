@@ -501,10 +501,11 @@ export default function AdminLegalPage() {
             <Info size={18} className="text-orange-700" />
           </div>
           <div className="space-y-0.5">
-            <p className="text-sm font-extrabold text-orange-950">⚠️ Los cambios no publicados se perderán</p>
-            <p className="text-sm text-orange-900 leading-relaxed">
-              Todos los textos que edites en esta sesión se mantendrán únicamente de forma temporal en tu navegador. <strong>Si cierras la pestaña o navegas a otra sección del CRM, perderás los cambios</strong> a menos que hagas clic en el botón <strong>"Sincronizar y Publicar"</strong> en la parte superior derecha para salvar los cambios en el servidor.
-            </p>
+            <p className="text-sm font-extrabold text-orange-950">{t('legal.sessionWarningTitle')}</p>
+            <p 
+              className="text-sm text-orange-900 leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: t('legal.sessionWarningBody') }}
+            />
           </div>
         </div>
 
