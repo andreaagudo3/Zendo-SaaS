@@ -21,7 +21,7 @@ export async function resolveTenantConfig(hostname, params) {
 
   const MASTER_DOMAINS = [
     'zendoapp.com', 'www.zendoapp.com',
-    'zendoapp.es',  'www.zendoapp.es',
+    'zendoapp.es', 'www.zendoapp.es',
   ]
   const isMasterDomain = MASTER_DOMAINS.includes(hostname)
   const isZendoSubdomain = hostname.endsWith('.zendoapp.com') || hostname.endsWith('.zendoapp.es')
@@ -71,10 +71,16 @@ async function fetchBySlug(slug) {
 
 async function fetchByCustomDomain(domain) {
   try {
+    // 1. Normalizamos el dominio: le quitamos el 'www.' si lo lleva
+    // 'www.parquesierra.es' -> 'parquesierra.es'
+    // 'parquesierra.es'     -> 'parquesierra.es'
+    const cleanDomain = domain.replace(/^www\./, '').toLowerCase();
+
     const { data, error } = await supabase
       .from('tenant_context')
       .select('*')
-      .eq('domain', domain)
+      // 2. Buscamos en Supabase usando el dominio limpio
+      .eq('domain', cleanDomain)
       .single()
 
     if (error || !data) {
