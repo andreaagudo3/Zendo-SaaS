@@ -18,6 +18,7 @@ import AdminPropertiesPage from './pages/admin/AdminPropertiesPage'
 import AdminLocationsPage  from './pages/admin/AdminLocationsPage'
 import AdminSettingsPage   from './pages/admin/AdminSettingsPage'
 import AdminLegalPage      from './pages/admin/AdminLegalPage'
+import AdminDomainPage     from './pages/admin/AdminDomainPage'
 import PropertyFormPage    from './pages/admin/PropertyFormPage'
 import ProtectedRoute      from './components/admin/ProtectedRoute'
 
@@ -99,6 +100,7 @@ export default function App() {
         <Route path="/admin/locations" element={<ProtectedRoute><AdminLocationsPage /></ProtectedRoute>} />
         <Route path="/admin/settings"  element={<ProtectedRoute><AdminSettingsPage /></ProtectedRoute>} />
         <Route path="/admin/legal"     element={<ProtectedRoute><AdminLegalPage /></ProtectedRoute>} />
+        <Route path="/admin/domain"    element={<ProtectedRoute><AdminDomainPage /></ProtectedRoute>} />
         <Route path="/admin/new"       element={<ProtectedRoute><PropertyFormPage /></ProtectedRoute>} />
         <Route path="/admin/edit/:id"  element={<ProtectedRoute><PropertyFormPage /></ProtectedRoute>} />
       </Routes>

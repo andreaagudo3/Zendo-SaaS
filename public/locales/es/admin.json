@@ -13,6 +13,8 @@
     "nav": {
       "properties": "Propiedades",
       "locations": "Ubicaciones",
+      "legal": "Legal",
+      "domain": "Dominio",
       "settings": "Perfil / SEO"
     }
   },
@@ -172,6 +174,49 @@
       "invalidFormat": "Solo se aceptan imágenes JPG y PNG.",
       "currentImage": "Imagen actual",
       "preview": "Vista previa"
+    }
+  },
+  "domain": {
+    "pageTitle": "Dominio Personalizado",
+    "pageSubtitle": "Conecta tu propio dominio para eliminar la marca de agua de Zendo.",
+    "cardTitle": "Configuración de Dominio Personalizado",
+    "cardSubtitle": "Conecta tu propio dominio para eliminar la marca de agua de Zendo",
+    "inputLabel": "Dominio actual",
+    "inputPlaceholder": "www.tuinmobiliaria.com",
+    "inputHelper": "Introduce tu dominio sin https://",
+    "badgePending": "⚠️ Pendiente de Configuración CNAME",
+    "badgeConnected": "✅ Conectado y Activo",
+    "dnsTitle": "Cómo configurar tu DNS",
+    "dnsDesc": "Accede al panel de tu proveedor de dominio (GoDaddy, Namecheap, etc.) y crea el siguiente registro CNAME:",
+    "dnsType": "Tipo",
+    "dnsHost": "Host",
+    "dnsTarget": "Destino",
+    "dnsTtl": "TTL",
+    "dnsTtlValue": "3600 (o Automático)",
+    "tableColField": "Campo",
+    "tableColValue": "Valor",
+    "dnsNote": "Los cambios de DNS pueden tardar hasta 48 horas en propagarse globalmente.",
+    "verifyBtn": "Verificar Conexión",
+    "verifyingBtn": "Verificando...",
+    "saveBtn": "Guardar Dominio",
+    "savingBtn": "Guardando...",
+    "verifySuccess": "✅ ¡Dominio verificado y conectado correctamente!",
+    "verifyError": "❌ No se pudo verificar el dominio. Asegúrate de que el registro CNAME esté correctamente configurado.",
+    "saveSuccess": "Dominio guardado. Ahora verifica la conexión CNAME.",
+    "saveError": "Error al guardar el dominio: {{message}}",
+    "noDomainWarning": "Introduce primero un dominio para poder verificar la conexión.",
+    "contactSupport": "¿Necesitas ayuda? Contacta con soporte en contrataciones@zendoapp.es",
+    "blueprintLabel": "Backend: Invokes Supabase Edge Function [verify-domain] -> Updates tenants table via Service Role",
+    "err": {
+      "cnameNotFound": "❌ No hemos encontrado ningún registro CNAME para tu dominio. Asegúrate de haberlo creado en el panel de tu proveedor de dominio (GoDaddy, Namecheap, etc.).",
+      "wrongTarget": "❌ El registro CNAME existe pero apunta al destino incorrecto. Debe apuntar a \"cname.zendo.co\". Revisa la configuración en tu proveedor.",
+      "dnsTimeout": "⏱ La consulta DNS ha tardado demasiado. Los cambios en DNS pueden tardar hasta 48 horas. Inténtalo de nuevo más tarde.",
+      "invalidDomain": "⚠️ El dominio introducido no tiene un formato válido. Introduce algo como \"www.tuinmobiliaria.com\" sin https://.",
+      "domainUnreachable": "⚠️ Tu dominio no responde. Comprueba que el sitio esté activo y que el registro CNAME esté correctamente configurado.",
+      "tenantNotFound": "⚠️ No se encontró tu cuenta. Cierra sesión y vuelve a entrar para solucionar el problema.",
+      "domainInUse": "⚠️ Este dominio ya está registrado por otra inmobiliaria en Zendo. Si crees que es un error, contacta con soporte.",
+      "networkError": "🚨 No se pudo conectar con el servidor de verificación. Comprueba tu conexión a internet e inténtalo de nuevo.",
+      "functionError": "🚨 El servicio de verificación no está disponible en este momento. Por favor, inténtalo de nuevo en unos minutos o contacta con soporte."
     }
   },
   "seo": {

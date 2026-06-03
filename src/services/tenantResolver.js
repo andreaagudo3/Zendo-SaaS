@@ -74,7 +74,7 @@ async function fetchByCustomDomain(domain) {
     const { data, error } = await supabase
       .from('tenant_context')
       .select('*')
-      .eq('custom_domain', domain)
+      .eq('domain', domain)
       .single()
 
     if (error || !data) {

@@ -34,7 +34,7 @@ SELECT
   full_name,
   tagline,
   description,
-  custom_domain,
+  domain,
   is_default,
   primary_color,
   secondary_color,

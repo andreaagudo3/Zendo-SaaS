@@ -56,6 +56,73 @@ export async function updateTenant(id, updates) {
   return { data, error }
 }
 
+// ─── Domain ───────────────────────────────────────────────────────────────────
+
+/**
+ * saveDomain — Persists the tenant's custom domain and resets domain_verified
+ * to false (a domain change always requires re-verification).
+ *
+ * @param {string} tenantId
+ * @param {string|null} domain  — raw input value; pass null/empty to clear
+ * @returns {Promise<{data, error}>}
+ */
+export async function saveDomain(tenantId, domain) {
+  const { data, error } = await supabase
+    .from('tenants')
+    .update({
+      domain: domain?.trim() || null,
+      domain_verified: false,
+    })
+    .eq('id', tenantId)
+    .select('id, domain, domain_verified')
+    .single()
+
+  if (error) console.error('[adminService] saveDomain:', error.message)
+  return { data, error }
+}
+
+/**
+ * verifyDomain — Invokes the Supabase Edge Function 'verify-domain' which
+ * performs a server-side DNS CNAME lookup and, on success, sets
+ * tenants.domain_verified = true via Service Role.
+ *
+ * Expected Edge Function response shapes:
+ *   Success → { success: true }
+ *   Failure → { success: false, code: 'CNAME_NOT_FOUND' | 'WRONG_CNAME_TARGET'
+ *               | 'DNS_TIMEOUT' | 'INVALID_DOMAIN' | 'DOMAIN_UNREACHABLE'
+ *               | 'TENANT_NOT_FOUND', error: string }
+ *
+ * @param {string} tenantId
+ * @param {string} domainInput — the domain value to verify
+ * @returns {Promise<{data: object|null, error: object|null}>}
+ */
+export async function verifyDomain(tenantId, domainInput) {
+  const { data, error } = await supabase.functions.invoke('verify-domain', {
+    body: { tenantId, domainInput: domainInput?.trim() },
+  })
+
+  // ── Key fix ────────────────────────────────────────────────────────────────
+  // When the Edge Function returns a non-2xx HTTP status (e.g. 400 for a
+  // business-logic failure like CNAME mismatch), the Supabase JS client sets
+  // data = null and stores the raw Response in error.context.
+  // We parse it here so callers always receive the structured JSON payload in
+  // `data`, regardless of the HTTP status code used by the function.
+  if (error && !data && error.context?.json) {
+    try {
+      const body = await error.context.json()
+      if (body) {
+        console.error('[adminService] verifyDomain (non-2xx):', error.message, body)
+        return { data: body, error }
+      }
+    } catch {
+      // JSON parse failed — fall through to the generic error path
+    }
+  }
+
+  if (error) console.error('[adminService] verifyDomain:', error.message)
+  return { data, error }
+}
+
 // ─── Properties CRUD ─────────────────────────────────────────────────────────
 
 const ADMIN_FIELDS = [

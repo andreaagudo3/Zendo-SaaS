@@ -13,6 +13,8 @@
     "nav": {
       "properties": "Properties",
       "locations": "Locations",
+      "legal": "Legal",
+      "domain": "Domain",
       "settings": "Profile / SEO"
     }
   },
@@ -172,6 +174,49 @@
       "invalidFormat": "Only JPG and PNG images are accepted.",
       "currentImage": "Current image",
       "preview": "Preview"
+    }
+  },
+  "domain": {
+    "pageTitle": "Custom Domain",
+    "pageSubtitle": "Connect your own domain to remove the Zendo watermark.",
+    "cardTitle": "Custom Domain Configuration",
+    "cardSubtitle": "Connect your own domain to remove the Zendo watermark",
+    "inputLabel": "Current domain",
+    "inputPlaceholder": "www.youragency.com",
+    "inputHelper": "Enter your domain without https://",
+    "badgePending": "\u26a0\ufe0f Pending CNAME Configuration",
+    "badgeConnected": "\u2705 Connected and Active",
+    "dnsTitle": "How to configure your DNS",
+    "dnsDesc": "Log in to your domain provider's dashboard (GoDaddy, Namecheap, etc.) and create the following CNAME record:",
+    "dnsType": "Type",
+    "dnsHost": "Host",
+    "dnsTarget": "Target",
+    "dnsTtl": "TTL",
+    "dnsTtlValue": "3600 (or Automatic)",
+    "tableColField": "Field",
+    "tableColValue": "Value",
+    "dnsNote": "DNS changes can take up to 48 hours to propagate globally.",
+    "verifyBtn": "Verify Connection",
+    "verifyingBtn": "Verifying...",
+    "saveBtn": "Save Domain",
+    "savingBtn": "Saving...",
+    "verifySuccess": "\u2705 Domain verified and connected successfully!",
+    "verifyError": "\u274c Could not verify the domain. Please ensure the CNAME record is correctly configured.",
+    "saveSuccess": "Domain saved. Now verify the CNAME connection.",
+    "saveError": "Error saving the domain: {{message}}",
+    "noDomainWarning": "Please enter a domain first before verifying the connection.",
+    "contactSupport": "Need help? Contact support at contrataciones@zendoapp.es",
+    "blueprintLabel": "Backend: Invokes Supabase Edge Function [verify-domain] -> Updates tenants table via Service Role",
+    "err": {
+      "cnameNotFound": "\u274c We could not find any CNAME record for your domain. Make sure you have created it in your domain provider's dashboard (GoDaddy, Namecheap, etc.).",
+      "wrongTarget": "\u274c The CNAME record exists but points to the wrong target. It must point to \"cname.zendo.co\". Please review the configuration at your provider.",
+      "dnsTimeout": "\u23f1 The DNS lookup took too long. DNS changes can take up to 48 hours to propagate. Please try again later.",
+      "invalidDomain": "\u26a0\ufe0f The domain you entered is not in a valid format. Enter something like \"www.youragency.com\" without https://.",
+      "domainUnreachable": "\u26a0\ufe0f Your domain is not responding. Please check that the site is active and that the CNAME record is correctly configured.",
+      "tenantNotFound": "\u26a0\ufe0f Your account could not be found. Please sign out and sign back in to resolve the issue.",
+      "domainInUse": "\u26a0\ufe0f This domain is already registered by another agency on Zendo. If you think this is a mistake, please contact support.",
+      "networkError": "\ud83d\udea8 Could not connect to the verification server. Please check your internet connection and try again.",
+      "functionError": "\ud83d\udea8 The verification service is temporarily unavailable. Please try again in a few minutes or contact support."
     }
   },
   "seo": {

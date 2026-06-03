@@ -48,6 +48,7 @@ export default function AdminLayout({ children }) {
             { to: '/admin', label: t('admin:layout.nav.properties', 'Propiedades'), icon: '🏠' },
             { to: '/admin/locations', label: t('admin:layout.nav.locations', 'Ubicaciones'), icon: '📍' },
             { to: '/admin/legal', label: t('admin:layout.nav.legal', 'Legal'), icon: '⚖️' },
+            { to: '/admin/domain', label: t('admin:layout.nav.domain', 'Dominio'), icon: '🌐' },
             { to: '/admin/settings', label: t('admin:layout.nav.settings', 'Perfil / SEO'), icon: '⚙️' },
           ].map(({ to, label, icon }) => (
             <Link
